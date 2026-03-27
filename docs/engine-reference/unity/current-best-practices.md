@@ -1,103 +1,84 @@
 # Unity 6.3 LTS — Current Best Practices
 
-**Last verified:** 2026-02-13
+**Last verified:** 2026-03-27
 
 Modern Unity 6 patterns that may not be in the LLM's training data.
 These are production-ready recommendations as of Unity 6.3 LTS.
 
 ---
 
-## Project Setup
+## Project Setup (New Unity 6.3 Projects)
 
-### Use Unity 6.3 LTS for Production
-- **Tech Stream** (6.4+): Latest features, less stable
-- **LTS** (6.3): Production-ready, 2-year support (until Dec 2027)
+1. Start with **URP 2D Renderer** (not Built-in pipeline)
+2. Enable **Render Graph** from the start (Compatibility Mode is read-only in 6.3)
+3. Use **Sprite Atlas** from day one — retrofitting is painful
+4. Set up **Assembly Definitions** early for compile time optimization
+5. Use the **Project Auditor** package for early problem detection
 
 ### Choose the Right Render Pipeline
-- **URP (Universal)**: Mobile, cross-platform, good performance ✅ Recommended for most games
+- **URP (Universal)**: Mobile, cross-platform, good performance — recommended for most games
 - **HDRP (High Definition)**: High-end PC/console, photorealistic
 - **Built-in**: Deprecated, avoid for new projects
 
 ---
 
-## Scripting
+## 2D Sprite Rendering (SYNTHBORN-relevant)
 
-### Use C# 9+ Features (Unity 6 Supports C# 9)
+### Sprite Atlas Management
+- **Always use Sprite Atlases** — packing sprites into one atlas reduces draw calls
+- **Use the Sprite Atlas Analyzer** (new in 6.3) to detect common mistakes
+- **Separate atlases by usage context** — UI, gameplay, VFX in different atlases
+
+### 2D + 3D Mixed Rendering (New in 6.3)
+- 2D URP Renderer now supports 3D elements (Mesh Renderer, Skinned Mesh Renderer)
+- 3D elements can receive 2D lighting and interact with Sprite Masks
+- Use Sorting Groups for proper 2D/3D draw order
+
+### Performance for Many-Entity Games
+- **SRP Batcher** over dynamic batching for Unity 6 projects
+- **Object pooling** is critical for survivor-type games (enemies, projectiles, XP gems)
+- **Tilemaps** over individual GameObjects for static backgrounds
+- **Legacy Animation** evaluation is ~30% faster in 6.3 for complex hierarchies
+- **GPU Instancing** for thousands of repeated objects (enemies with same mesh)
 
 ```csharp
-// ✅ Record types for data
+// GPU Instancing for many identical objects
+Graphics.RenderMeshInstanced(
+    new RenderParams(material),
+    mesh,
+    0,
+    matrices // NativeArray<Matrix4x4>
+);
+```
+
+---
+
+## Physics (2D)
+
+### Box2D v3 API (New in 6.3)
+- New low-level 2D physics API based on Box2D v3
+- Runs alongside existing API; will eventually replace it
+- Better performance for many-body simulations — ideal for survivor games
+
+---
+
+## Scripting (C# 9+ in Unity 6)
+
+```csharp
+// Record types for data
 public record PlayerData(string Name, int Level, float Health);
 
-// ✅ Init-only properties
+// Init-only properties
 public class Config {
     public string GameMode { get; init; }
 }
 
-// ✅ Pattern matching
+// Pattern matching
 var result = enemy switch {
     Boss boss => boss.Enrage(),
     Minion minion => minion.Flee(),
     _ => null
 };
-```
-
-### Async/Await for Asset Loading
-
-```csharp
-// ✅ Modern async pattern
-public async Task<GameObject> LoadEnemyAsync(string key) {
-    var handle = Addressables.LoadAssetAsync<GameObject>(key);
-    return await handle.Task;
-}
-```
-
-### Use Source Generators for Serialization (Unity 6+)
-
-```csharp
-// ✅ Source-generated serialization (faster, less reflection)
-[GenerateSerializer]
-public partial struct PlayerStats : IComponentData {
-    public int Health;
-    public int Mana;
-}
-```
-
----
-
-## DOTS/ECS (Production-Ready in Unity 6.3 LTS)
-
-### Use ISystem (Not ComponentSystem)
-
-```csharp
-// ✅ Modern unmanaged ISystem (Burst-compatible)
-public partial struct MovementSystem : ISystem {
-    public void OnCreate(ref SystemState state) { }
-
-    public void OnUpdate(ref SystemState state) {
-        foreach (var (transform, speed) in
-            SystemAPI.Query<RefRW<LocalTransform>, RefRO<MoveSpeed>>()) {
-            transform.ValueRW.Position += speed.ValueRO.Value * SystemAPI.Time.DeltaTime;
-        }
-    }
-}
-```
-
-### Use IJobEntity for Parallel Jobs
-
-```csharp
-// ✅ IJobEntity (replaces IJobForEach)
-[BurstCompile]
-public partial struct DamageJob : IJobEntity {
-    public float DeltaTime;
-
-    void Execute(ref Health health, in DamageOverTime dot) {
-        health.Value -= dot.DamagePerSecond * DeltaTime;
-    }
-}
-
-// Schedule it
-var job = new DamageJob { DeltaTime = SystemAPI.Time.DeltaTime };
-job.ScheduleParallel();
 ```
 
 ---
@@ -107,7 +88,6 @@ job.ScheduleParallel();
 ### Use Input System Package (Not Legacy Input)
 
 ```csharp
-// ✅ Input Actions (rebindable, cross-platform)
 using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour {
@@ -123,8 +103,6 @@ public class PlayerInput : MonoBehaviour {
 }
 ```
 
-Create Input Actions asset in editor, generate C# class via inspector.
-
 ---
 
 ## UI
@@ -132,23 +110,18 @@ Create Input Actions asset in editor, generate C# class via inspector.
 ### Use UI Toolkit for Runtime UI (Production-Ready in Unity 6)
 
 ```csharp
-// ✅ UI Toolkit (replaces UGUI for new projects)
 using UnityEngine.UIElements;
 
 public class MainMenu : MonoBehaviour {
     void OnEnable() {
         var root = GetComponent<UIDocument>().rootVisualElement;
-
         var playButton = root.Q<Button>("play-button");
         playButton.clicked += StartGame;
-
-        var scoreLabel = root.Q<Label>("score");
-        scoreLabel.text = $"High Score: {PlayerPrefs.GetInt("HighScore")}";
     }
 }
 ```
 
-**UXML** (UI structure) + **USS** (styling) = HTML/CSS-like workflow.
+UXML (structure) + USS (styling) = HTML/CSS-like workflow.
 
 ---
 
@@ -157,39 +130,14 @@ public class MainMenu : MonoBehaviour {
 ### Use Addressables (Not Resources)
 
 ```csharp
-// ✅ Addressables (async, memory-efficient)
 using UnityEngine.AddressableAssets;
 
 public async Task SpawnEnemyAsync(string enemyKey) {
     var handle = Addressables.InstantiateAsync(enemyKey);
     var enemy = await handle.Task;
-
-    // Cleanup: release when destroyed
-    Addressables.ReleaseInstance(enemy);
+    Addressables.ReleaseInstance(enemy); // Cleanup
 }
 ```
-
-**Benefits:** Async loading, remote content delivery, better memory control.
-
----
-
-## Rendering
-
-### Use RenderGraph API for Custom Passes (URP/HDRP)
-
-```csharp
-// ✅ RenderGraph API (Unity 6+)
-public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData) {
-    using (var builder = renderGraph.AddRasterRenderPass<PassData>("My Pass", out var passData)) {
-        // Setup pass
-        builder.SetRenderFunc((PassData data, RasterGraphContext context) => {
-            // Execute commands
-        });
-    }
-}
-```
-
-**Replaces:** Old `CommandBuffer.Execute()` pattern.
 
 ---
 
@@ -198,9 +146,8 @@ public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer
 ### Use Burst Compiler + Jobs System
 
 ```csharp
-// ✅ Burst-compiled job (massive performance gain)
 [BurstCompile]
-struct ParticleUpdateJob : IJobParallelFor {
+struct EnemyUpdateJob : IJobParallelFor {
     public NativeArray<float3> Positions;
     public NativeArray<float3> Velocities;
     public float DeltaTime;
@@ -209,112 +156,55 @@ struct ParticleUpdateJob : IJobParallelFor {
         Positions[index] += Velocities[index] * DeltaTime;
     }
 }
-
-// Schedule
-var job = new ParticleUpdateJob {
-    Positions = positions,
-    Velocities = velocities,
-    DeltaTime = Time.deltaTime
-};
-job.Schedule(positions.Length, 64).Complete();
 ```
 
-**20-100x faster** than equivalent C# code.
+20-100x faster than equivalent managed C# — critical for survivor games with hundreds of enemies.
 
----
-
-### Use GPU Instancing for Repeated Objects
+### Memory: Use NativeContainers
 
 ```csharp
-// ✅ GPU Instancing (thousands of objects, minimal draw calls)
-Graphics.RenderMeshInstanced(
-    new RenderParams(material),
-    mesh,
-    0,
-    matrices // NativeArray<Matrix4x4>
-);
-```
-
----
-
-## Memory Management
-
-### Use NativeContainers (Not Managed Arrays in Jobs)
-
-```csharp
-// ✅ NativeArray (no GC, Burst-compatible)
-NativeArray<int> data = new NativeArray<int>(1000, Allocator.TempJob);
-// ... use in job
-data.Dispose(); // Manual cleanup required
-
-// ✅ Or use using statement
 using var data = new NativeArray<int>(1000, Allocator.TempJob);
-// Auto-disposed
+// Auto-disposed, no GC, Burst-compatible
 ```
 
 ---
 
-## Multiplayer
+## Audio (New in 6.3)
 
-### Use Netcode for GameObjects (Official)
+### Scriptable Audio Processors
+- Burst-compiled C# audio processing units
+- Better performance than old AudioMixer for custom effects
+- Customize audio at specific integration points
 
-```csharp
-// ✅ Unity's official netcode
-using Unity.Netcode;
+---
 
-public class Player : NetworkBehaviour {
-    private NetworkVariable<int> health = new NetworkVariable<int>(100);
+## Cross-Platform (New in 6.3)
 
-    [ServerRpc]
-    public void TakeDamageServerRpc(int damage) {
-        health.Value -= damage;
-    }
-}
-```
-
-**Replaces:** UNet (deprecated), MLAPI (renamed to Netcode for GameObjects).
+### Platform Toolkit
+- Single API for accounts, achievements, save data, controller ownership
+- Supports PlayStation, Xbox, Switch, Steam, Android, iOS
+- Replaces deprecated Social API
 
 ---
 
 ## Testing
 
-### Use Unity Test Framework (NUnit-based)
+### Unity Test Framework (NUnit-based)
 
 ```csharp
-// ✅ Play Mode Test
 [UnityTest]
 public IEnumerator Player_TakesDamage_HealthDecreases() {
     var player = new GameObject().AddComponent<Player>();
     player.Health = 100;
-
     player.TakeDamage(25);
-    yield return null; // Wait one frame
-
+    yield return null;
     Assert.AreEqual(75, player.Health);
 }
 ```
 
 ---
 
-## Debugging
-
-### Use Logging Best Practices
-
-```csharp
-// ✅ Structured logging (Unity 6+)
-using UnityEngine;
-
-Debug.Log($"Player {playerName} scored {score} points");
-
-// ✅ Conditional compilation for debug code
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-    Debug.DrawRay(transform.position, direction, Color.red);
-#endif
-```
-
----
-
-## Summary: Unity 6 Tech Stack
+## Summary: Unity 6.3 Tech Stack
 
 | Feature | Use This (2026) | Avoid This (Legacy) |
 |---------|------------------|----------------------|
@@ -324,11 +214,13 @@ Debug.Log($"Player {playerName} scored {score} points");
 | **Rendering** | URP + RenderGraph | Built-in pipeline |
 | **Assets** | Addressables | Resources |
 | **Jobs** | Burst + IJobParallelFor | Coroutines for heavy work |
-| **Multiplayer** | Netcode for GameObjects | UNet |
+| **2D Physics** | Box2D v3 API (6.3+) | Legacy 2D physics (still works) |
+| **Audio** | Scriptable Audio Processors | Old AudioMixer (still works) |
+| **Platform** | Platform Toolkit | Social API |
 
 ---
 
 **Sources:**
-- https://docs.unity3d.com/6000.0/Documentation/Manual/BestPracticeGuides.html
-- https://docs.unity3d.com/Packages/com.unity.entities@1.3/manual/index.html
-- https://docs.unity3d.com/Packages/com.unity.inputsystem@1.11/manual/index.html
+- https://docs.unity3d.com/6000.3/Documentation/Manual/
+- https://unity.com/blog/unity-6-3-lts-is-now-available
+- https://docs.unity3d.com/6000.3/Documentation/Manual/WhatsNewUnity63.html

@@ -1,6 +1,6 @@
 # Unity 6.3 LTS — Deprecated APIs
 
-**Last verified:** 2026-02-13
+**Last verified:** 2026-03-27
 
 Quick lookup table for deprecated APIs and their replacements.
 Format: **Don't use X** → **Use Y instead**
@@ -17,7 +17,33 @@ Format: **Don't use X** → **Use Y instead**
 | `Input.GetAxis()` | `InputAction` callbacks | New Input System |
 | `Input.mousePosition` | `Mouse.current.position.ReadValue()` | New Input System |
 
-**Migration:** Install `com.unity.inputsystem` package.
+---
+
+## Rendering / URP (6.2+ changes)
+
+| Deprecated | Replacement | Since |
+|------------|-------------|-------|
+| `SetupRenderPasses` (Scriptable Renderer Features) | Render Graph + `AddRenderPasses` API | 6.2 |
+| `RenderGraphSettings.enableRenderCompatibilityMode` (write) | Read-only in 6.3; convert to Render Graph before upgrading | 6.3 |
+| `RenderPipelineEditorUtility.FetchFirstCompatibleTypeUsingScriptableRenderPipelineExtension` | `GetDerivedTypesSupportedOnCurrentPipeline` | 6.2 |
+| `CustomEditorForRenderPipelineAttribute` | `CustomEditor` | 6.2 |
+| `VolumeComponentMenuForRenderPipelineAttribute` | `VolumeComponentMenu` | 6.2 |
+| `CommandBuffer.DrawMesh()` (in SRP) | RenderGraph API | 6.0 |
+| `OnPreRender()` / `OnPostRender()` | `RenderPipelineManager` callbacks | 6.0 |
+| `Camera.SetReplacementShader()` | Custom render pass | 6.0 |
+
+## Shaders / Textures (6.2+ changes)
+
+| Deprecated | Replacement | Since |
+|------------|-------------|-------|
+| Legacy shader APIs (set deprecated in 6.2) | Check 6.2 release notes for specifics | 6.2 |
+| Old `Texture2D` constructors | `Texture2D` constructors with `MipmapLimitDescriptor` | 6.2 |
+
+## Accessibility (6.3 change)
+
+| Deprecated | Replacement | Since |
+|------------|-------------|-------|
+| `AccessibilityRole` as flags enum (bitwise ops) | `AccessibilityRole` as standard enum (single value) | 6.3 |
 
 ---
 
@@ -25,11 +51,9 @@ Format: **Don't use X** → **Use Y instead**
 
 | Deprecated | Replacement | Notes |
 |------------|-------------|-------|
-| `Canvas` (UGUI) | `UIDocument` (UI Toolkit) | UI Toolkit is now production-ready |
-| `Text` component | `TextMeshPro` or UI Toolkit `Label` | Better rendering, fewer draw calls |
-| `Image` component | UI Toolkit `VisualElement` with background | More flexible styling |
-
-**Migration:** UGUI still works, but UI Toolkit is recommended for new projects.
+| `Canvas` (UGUI) | `UIDocument` (UI Toolkit) | UI Toolkit is production-ready in Unity 6 |
+| `Text` component | `TextMeshPro` or UI Toolkit `Label` | Better rendering |
+| `Image` component | UI Toolkit `VisualElement` with background | More flexible |
 
 ---
 
@@ -37,32 +61,27 @@ Format: **Don't use X** → **Use Y instead**
 
 | Deprecated | Replacement | Notes |
 |------------|-------------|-------|
-| `ComponentSystem` | `ISystem` (unmanaged) | Entities 1.0+ complete rewrite |
+| `ComponentSystem` | `ISystem` (unmanaged) | Entities 1.0+ |
 | `JobComponentSystem` | `ISystem` with `IJobEntity` | Burst-compatible |
 | `GameObjectEntity` | Pure ECS workflow | No GameObject conversion |
-| `EntityManager.CreateEntity()` (old signature) | `EntityManager.CreateEntity(EntityArchetype)` | Explicit archetype |
 | `ComponentDataFromEntity<T>` | `ComponentLookup<T>` | Entities 1.0+ rename |
 
-**Migration:** See Entities package migration guide. Major refactor required.
-
 ---
 
-## Rendering
+## AI / Navigation
 
-| Deprecated | Replacement | Notes |
+| Deprecated | Replacement | Since |
 |------------|-------------|-------|
-| `CommandBuffer.DrawMesh()` | RenderGraph API | URP/HDRP render passes |
-| `OnPreRender()` / `OnPostRender()` | `RenderPipelineManager` callbacks | SRP compatibility |
-| `Camera.SetReplacementShader()` | Custom render pass | Not supported in SRP |
+| `UnityEngine.Experimental.AI` APIs | Most obsolete with no direct replacement; use NavMesh APIs | 6.2+ |
 
----
+## Packages
 
-## Physics
-
-| Deprecated | Replacement | Notes |
+| Deprecated | Replacement | Since |
 |------------|-------------|-------|
-| `Physics.RaycastAll()` | `Physics.RaycastNonAlloc()` | Avoid GC allocations |
-| `Rigidbody.velocity` (direct write) | `Rigidbody.AddForce()` | Better physics stability |
+| Sequences package | Custom timeline workflows | 6.1 |
+| Live-capture package | Third-party alternatives | 6.1 |
+| Python for Unity package | External Python tooling | 6.1 |
+| Social API | Platform Toolkit (6.3+) or platform-specific SDKs | 6.0+ |
 
 ---
 
@@ -70,27 +89,26 @@ Format: **Don't use X** → **Use Y instead**
 
 | Deprecated | Replacement | Notes |
 |------------|-------------|-------|
-| `Resources.Load()` | Addressables | Better memory control, async loading |
+| `Resources.Load()` | Addressables | Better memory control |
 | Synchronous asset loading | `Addressables.LoadAssetAsync()` | Non-blocking |
 
----
+## Physics
+
+| Deprecated | Replacement | Notes |
+|------------|-------------|-------|
+| `Physics.RaycastAll()` | `Physics.RaycastNonAlloc()` | Avoid GC allocations |
 
 ## Animation
 
 | Deprecated | Replacement | Notes |
 |------------|-------------|-------|
 | Legacy Animation component | Animator Controller | Mecanim system |
-| `Animation.Play()` | `Animator.Play()` | State machine control |
-
----
 
 ## Particles
 
 | Deprecated | Replacement | Notes |
 |------------|-------------|-------|
-| Legacy Particle System | Visual Effect Graph | GPU-accelerated, more performant |
-
----
+| Legacy Particle System | Visual Effect Graph | GPU-accelerated |
 
 ## Scripting
 
@@ -101,56 +119,14 @@ Format: **Don't use X** → **Use Y instead**
 
 ---
 
-## Platform-Specific
+## General Rule
 
-### WebGL
-| Deprecated | Replacement | Notes |
-|------------|-------------|-------|
-| WebGL 1.0 | WebGL 2.0 or WebGPU | Unity 6+ defaults to WebGPU |
-
----
-
-## Quick Migration Patterns
-
-### Input Example
-```csharp
-// ❌ Deprecated
-if (Input.GetKeyDown(KeyCode.Space)) {
-    Jump();
-}
-
-// ✅ New Input System
-using UnityEngine.InputSystem;
-if (Keyboard.current.spaceKey.wasPressedThisFrame) {
-    Jump();
-}
-```
-
-### Asset Loading Example
-```csharp
-// ❌ Deprecated
-var prefab = Resources.Load<GameObject>("Enemies/Goblin");
-
-// ✅ Addressables
-var handle = Addressables.LoadAssetAsync<GameObject>("Enemies/Goblin");
-await handle.Task;
-var prefab = handle.Result;
-```
-
-### UI Example
-```csharp
-// ❌ Deprecated (UGUI)
-GetComponent<Text>().text = "Score: 100";
-
-// ✅ TextMeshPro
-GetComponent<TextMeshProUGUI>().text = "Score: 100";
-
-// ✅ UI Toolkit
-rootVisualElement.Q<Label>("score-label").text = "Score: 100";
-```
-
----
+When uncertain about an API's status in Unity 6.3:
+1. Check this file first
+2. Then `breaking-changes.md` for version-specific changes
+3. If still unclear, use WebSearch to verify against official docs
 
 **Sources:**
-- https://docs.unity3d.com/6000.0/Documentation/Manual/deprecated-features.html
-- https://docs.unity3d.com/Packages/com.unity.inputsystem@1.11/manual/Migration.html
+- https://docs.unity3d.com/6000.3/Documentation/Manual/
+- https://docs.unity3d.com/6000.2/Documentation/Manual/UpgradeGuideUnity62.html
+- https://docs.unity3d.com/6000.4/Documentation/Manual/UpgradeGuideUnity63.html

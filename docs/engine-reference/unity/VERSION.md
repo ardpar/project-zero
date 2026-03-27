@@ -2,56 +2,43 @@
 
 | Field | Value |
 |-------|-------|
-| **Engine Version** | Unity 6.3 LTS |
+| **Engine Version** | Unity 6.3 LTS (6000.3.11f1) |
 | **Release Date** | December 2025 |
-| **Project Pinned** | 2026-02-13 |
-| **Last Docs Verified** | 2026-02-13 |
+| **Project Pinned** | 2026-03-27 |
+| **Last Docs Verified** | 2026-03-27 |
 | **LLM Knowledge Cutoff** | May 2025 |
+| **LTS Support Until** | December 2027 |
 
 ## Knowledge Gap Warning
 
-The LLM's training data likely covers Unity up to ~2022 LTS (2022.3). The entire
-Unity 6 release series (formerly Unity 2023 Tech Stream) introduced significant
-changes that the model does NOT know about. Always cross-reference this directory
-before suggesting Unity API calls.
+The LLM's training data likely covers Unity up to ~6.0 LTS / early 6000.0.x.
+Versions 6.1, 6.2, and 6.3 introduced significant changes that the model may
+NOT know about. Always cross-reference this directory before suggesting Unity
+API calls.
 
 ## Post-Cutoff Version Timeline
 
 | Version | Release | Risk Level | Key Theme |
 |---------|---------|------------|-----------|
-| 6.0 | Oct 2024 | HIGH | Unity 6 rebrand, new rendering features, Entities 1.3, DOTS improvements |
-| 6.1 | Nov 2024 | MEDIUM | Bug fixes, stability improvements |
-| 6.2 | Dec 2024 | MEDIUM | Performance optimizations, new input system improvements |
-| 6.3 LTS | Dec 2025 | HIGH | First LTS since 6.0, production-ready DOTS, enhanced graphics features |
+| 6.0 LTS | Apr 2025 | LOW | Unity 6 rebrand, Render Graph default, DOTS production-ready, Input System default |
+| 6.1 | Mid 2025 | MEDIUM | DirectX12 default (Win), Tile Set asset, VRS API, Facebook Instant Games, TLS 1.0/1.1 removed |
+| 6.2 | Late 2025 | HIGH | Shader API deprecations, SetupRenderPasses deprecated, AfterRendering behavior change, Texture2D constructor changes |
+| 6.3 LTS | Dec 2025 | HIGH | Box2D v3 2D physics, Platform Toolkit, Scriptable Audio, USS parser strictness, AccessibilityRole enum change, Render Graph Compatibility Mode read-only |
 
-## Major Changes from 2022 LTS to Unity 6.3 LTS
+## Key Features for This Project (SYNTHBORN — 2D Pixel Art Survivor)
 
-### Breaking Changes
-- **Entities/DOTS**: Major API overhaul in Entities 1.0+, complete redesign of ECS patterns
-- **Input System**: Legacy Input Manager deprecated, new Input System is default
-- **Rendering**: URP/HDRP significant upgrades, SRP Batcher improvements
-- **Addressables**: Asset management workflow changes
-- **Scripting**: C# 9 support, new API patterns
-
-### New Features (Post-Cutoff)
-- **DOTS**: Production-ready Entity Component System (Entities 1.3+)
-- **Graphics**: Enhanced URP/HDRP pipelines, GPU Resident Drawer
-- **Multiplayer**: Netcode for GameObjects improvements
-- **UI Toolkit**: Production-ready for runtime UI (replaces UGUI for new projects)
-- **Async Asset Loading**: Improved Addressables performance
-- **Web**: WebGPU support
-
-### Deprecated Systems
-- **Legacy Input Manager**: Use new Input System package
-- **Legacy Particle System**: Use Visual Effect Graph
-- **UGUI**: Still supported, but UI Toolkit recommended for new projects
-- **Old ECS (GameObjectEntity)**: Replaced by modern DOTS/Entities
+- **2D + 3D Mixed Rendering (6.3)**: 2D URP Renderer supports 3D elements in same scene
+- **Box2D v3 Physics (6.3)**: New low-level 2D physics API — better performance for many-body scenarios
+- **Sprite Atlas Analyzer (6.3)**: Tool to detect sprite atlas performance issues
+- **Legacy Animation 30% faster (6.3)**: Significant for many-entity games
+- **SRP Batcher**: Preferred over dynamic batching for modern Unity 6
 
 ## Verified Sources
 
-- Official docs: https://docs.unity3d.com/6000.0/Documentation/Manual/index.html
-- Unity 6 release: https://unity.com/releases/unity-6
-- Unity 6.3 LTS announcement: https://unity.com/blog/unity-6-3-lts-is-now-available
-- Migration guide: https://docs.unity3d.com/6000.0/Documentation/Manual/upgrade-guides.html
-- Unity 6 support: https://unity.com/releases/unity-6/support
-- C# API reference: https://docs.unity3d.com/6000.0/Documentation/ScriptReference/index.html
+- Official docs: https://docs.unity3d.com/6000.3/Documentation/Manual/
+- 6.0 upgrade guide: https://docs.unity3d.com/6000.3/Documentation/Manual/UpgradeGuideUnity6.html
+- 6.1 upgrade guide: https://docs.unity3d.com/6000.1/Documentation/Manual/UpgradeGuideUnity61.html
+- 6.2 upgrade guide: https://docs.unity3d.com/6000.2/Documentation/Manual/UpgradeGuideUnity62.html
+- 6.3 upgrade guide: https://docs.unity3d.com/6000.4/Documentation/Manual/UpgradeGuideUnity63.html
+- What's new in 6.3: https://docs.unity3d.com/6000.3/Documentation/Manual/WhatsNewUnity63.html
+- Release support: https://unity.com/releases/unity-6/support

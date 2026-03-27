@@ -5,37 +5,42 @@
 
 ## Engine & Language
 
-- **Engine**: [TO BE CONFIGURED — run /setup-engine]
-- **Language**: [TO BE CONFIGURED]
-- **Rendering**: [TO BE CONFIGURED]
-- **Physics**: [TO BE CONFIGURED]
+- **Engine**: Unity 6.3 LTS (6000.3.11f1)
+- **Language**: C#
+- **Rendering**: URP (Universal Render Pipeline) — 2D Renderer
+- **Physics**: Unity 2D Physics (Box2D v3 API available in 6.3)
 
 ## Naming Conventions
 
-- **Classes**: [TO BE CONFIGURED]
-- **Variables**: [TO BE CONFIGURED]
-- **Signals/Events**: [TO BE CONFIGURED]
-- **Files**: [TO BE CONFIGURED]
-- **Scenes/Prefabs**: [TO BE CONFIGURED]
-- **Constants**: [TO BE CONFIGURED]
+- **Classes**: PascalCase (e.g., `PlayerController`)
+- **Public fields/properties**: PascalCase (e.g., `MoveSpeed`)
+- **Private fields**: _camelCase (e.g., `_moveSpeed`)
+- **Methods**: PascalCase (e.g., `TakeDamage()`)
+- **Events/Delegates**: PascalCase with `On` prefix (e.g., `OnHealthChanged`)
+- **Files**: PascalCase matching class (e.g., `PlayerController.cs`)
+- **Scenes/Prefabs**: PascalCase (e.g., `MainMenu.unity`, `EnemyBat.prefab`)
+- **Constants**: PascalCase or UPPER_SNAKE_CASE (e.g., `MaxHealth` or `MAX_HEALTH`)
 
 ## Performance Budgets
 
-- **Target Framerate**: [TO BE CONFIGURED]
-- **Frame Budget**: [TO BE CONFIGURED]
-- **Draw Calls**: [TO BE CONFIGURED]
-- **Memory Ceiling**: [TO BE CONFIGURED]
+- **Target Framerate**: 60 fps
+- **Frame Budget**: 16.6 ms
+- **Draw Calls**: [TO BE CONFIGURED — profile after MVP]
+- **Memory Ceiling**: [TO BE CONFIGURED — profile after MVP]
 
 ## Testing
 
-- **Framework**: [TO BE CONFIGURED]
+- **Framework**: Unity Test Framework (NUnit-based)
 - **Minimum Coverage**: [TO BE CONFIGURED]
-- **Required Tests**: Balance formulas, gameplay systems, networking (if applicable)
+- **Required Tests**: Balance formulas, gameplay systems, enemy spawning
 
 ## Forbidden Patterns
 
 <!-- Add patterns that should never appear in this project's codebase -->
-- [None configured yet — add as architectural decisions are made]
+- Legacy `Input` class — use Input System package
+- `Resources.Load()` — use Addressables
+- Built-in Render Pipeline — use URP
+- `ComponentSystem` (old DOTS) — use `ISystem`
 
 ## Allowed Libraries / Addons
 
