@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Synthborn.Core.Persistence;
 
 namespace Synthborn.Mutations
 {
@@ -90,6 +91,8 @@ namespace Synthborn.Mutations
             foreach (var m in _database.allMutations)
             {
                 if (m == null) continue;
+                // Skip locked mutations
+                if (!UnlockManager.IsUnlocked(m.id)) continue;
                 // Skip already acquired
                 if (_manager.HasMutation(m.id)) continue;
                 // Skip slot mutations for full slots

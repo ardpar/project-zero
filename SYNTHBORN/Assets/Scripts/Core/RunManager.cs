@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Synthborn.Core.Events;
+using Synthborn.Core.Persistence;
 
 namespace Synthborn.Core
 {
@@ -66,10 +67,17 @@ namespace Synthborn.Core
         {
             Time.timeScale = 0f;
             if (panel != null) panel.SetActive(true);
-            UpdateStatsDisplay();
+
+            bool victory = _state == RunState.Victory;
+            int cellsEarned = UnlockManager.CalculateRunReward(
+                _stats.EnemiesKilled, _stats.WavesCleared, victory);
+            UnlockManager.AddCells(cellsEarned);
+            UnlockManager.RecordRun(_stats.SurvivalTime, _stats.WavesCleared);
+
+            UpdateStatsDisplay(cellsEarned);
         }
 
-        private void UpdateStatsDisplay()
+        private void UpdateStatsDisplay(int cellsEarned)
         {
             if (_statsText == null || _stats == null) return;
 
@@ -79,11 +87,11 @@ namespace Synthborn.Core
             _statsText.text =
                 $"Time: {minutes:00}:{seconds:00}\n" +
                 $"Kills: {_stats.EnemiesKilled}\n" +
-                $"XP: {_stats.TotalXPCollected}\n" +
                 $"Level: {_stats.FinalLevel}\n" +
                 $"Mutations: {_stats.MutationsAcquired}\n" +
                 $"Synergies: {_stats.SynergiesTriggered}\n" +
-                $"Waves: {_stats.WavesCleared}";
+                $"Waves: {_stats.WavesCleared}\n\n" +
+                $"<color=yellow>+{cellsEarned} Cells</color>";
         }
 
         public void RestartRun()

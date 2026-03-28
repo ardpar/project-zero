@@ -15958,6 +15958,7 @@ GameObject:
   - component: {fileID: 1553571845}
   - component: {fileID: 1553571846}
   - component: {fileID: 1553571847}
+  - component: {fileID: 1553571848}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -16179,6 +16180,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 099f94f6ad89949f1882e568f61d4dfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Synthborn.Core::Synthborn.Core.RunStats
+--- !u!114 &1553571848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553571834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827a5faa5a67f4b9baba21c932b2cac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Synthborn.Core::Synthborn.Core.BiomeManager
+  _floorTilemap: {fileID: 471902972}
+  _wallTilemap: {fileID: 621972452}
+  _floorTiles:
+  - {fileID: 11400000, guid: 46dbe7fb5758345879be19aca6e6fdda, type: 2}
+  - {fileID: 11400000, guid: 5d78f1960ffbd468fa28db5a5812585a, type: 2}
+  - {fileID: 11400000, guid: 7d5abd2c5181b43f2b6cce0086bc46ef, type: 2}
+  - {fileID: 11400000, guid: 2cef06a21234b4f339eb083f7a5f727e, type: 2}
+  _wallTiles:
+  - {fileID: 11400000, guid: 3ec27f04c78d34d8b8f8fff0cc0867c1, type: 2}
+  - {fileID: 11400000, guid: 14ba7b90cf329476bba94501f2050f03, type: 2}
+  - {fileID: 11400000, guid: 39d3d4bd4b21a47a08afeb547b0e4f27, type: 2}
+  - {fileID: 11400000, guid: e110a5ba6a5a8479a98bcba571805529, type: 2}
 --- !u!1 &1641649873
 GameObject:
   m_ObjectHideFlags: 0
@@ -16242,7 +16267,7 @@ MonoBehaviour:
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 42
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
