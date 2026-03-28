@@ -10,7 +10,6 @@ namespace Synthborn.Enemies
     /// all three use this class; visual and stat differences are entirely
     /// driven by their respective <see cref="EnemyData"/> ScriptableObjects
     /// (different MoveSpeed, BaseHp, HitboxRadius, sprites).
-    ///
     /// State logic:
     ///   Chase  — moves straight at the player each FixedUpdate, applies
     ///            contact-damage timer every 0.5 s when overlapping.
@@ -20,8 +19,6 @@ namespace Synthborn.Enemies
     {
         // ------------------------------------------------------------------ //
         // EnemyBrain overrides
-        // ------------------------------------------------------------------ //
-
         /// <inheritdoc/>
         protected override void EnterState(EnemyState newState)
         {
@@ -30,15 +27,10 @@ namespace Synthborn.Enemies
                 // Nothing special — physics already enabled by OnPoolGet
             }
         }
-
-        /// <inheritdoc/>
         protected override void Tick()
-        {
             // ChaserBrain only has one active state
             if (CurrentState != EnemyState.Chase) return;
-
             ChasePlayer();
             TickContactDamage();
-        }
     }
 }

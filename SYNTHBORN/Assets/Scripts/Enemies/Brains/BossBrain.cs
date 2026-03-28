@@ -13,7 +13,6 @@ namespace Synthborn.Enemies
     ///   - All tuning via <see cref="BossData"/> ScriptableObject.
     ///   - On death raises <see cref="GameEvents.OnBossDefeated"/> in addition
     ///     to the standard OnEnemyDied event.
-    ///
     /// Vertical Slice hook (not implemented here):
     ///   Phase transitions: override EnterState(Chase) to check BossData.Phases
     ///   when HP crosses a threshold.
@@ -22,46 +21,29 @@ namespace Synthborn.Enemies
     {
         // ------------------------------------------------------------------ //
         // Private State
-        // ------------------------------------------------------------------ //
-
         private BossData _bossData;
-
-        // ------------------------------------------------------------------ //
         // EnemyBrain overrides
-        // ------------------------------------------------------------------ //
-
         /// <inheritdoc/>
         public override void Initialize(Transform player, int waveNumber, ObjectPool<EnemyBrain> pool)
         {
             _bossData = data as BossData;
             if (_bossData == null)
                 Debug.LogWarning($"[BossBrain] EnemyData on {name} should be a BossData asset for VS+ features.", this);
-
             base.Initialize(player, waveNumber, pool);
-
             // Cinematic entrance: fire intro VFX event if configured
             if (_bossData?.IntroVfx != null)
                 GameEvents.RaiseVfxRequested(_bossData.IntroVfx, transform.position);
         }
-
-        /// <inheritdoc/>
         protected override void EnterState(EnemyState newState)
-        {
             if (newState == EnemyState.Dead)
             {
                 // Boss-specific: raise global boss-defeated event so WaveSpawner
                 // can transition to Complete state and Run Manager can react.
                 GameEvents.RaiseBossDefeated();
             }
-        }
-
-        /// <inheritdoc/>
         protected override void Tick()
-        {
             if (CurrentState != EnemyState.Chase) return;
-
             ChasePlayer();
             TickContactDamage();
-        }
     }
 }

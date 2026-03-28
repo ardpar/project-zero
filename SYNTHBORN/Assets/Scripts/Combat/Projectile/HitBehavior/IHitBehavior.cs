@@ -1,9 +1,8 @@
 // Implements: ADR-002 — IHitBehavior strategy interface (Tier 4)
 // Design doc: projectile-damage-system.md — on_hit_behavior rules 8-9
 
-using Synthborn.Core.Data;
-
-namespace Synthborn.Combat.Projectile.HitBehavior
+using Synthborn.Core;
+namespace Synthborn.Combat
 {
     /// <summary>
     /// Strategy executed when a <see cref="ProjectileController"/> collides with a valid target.

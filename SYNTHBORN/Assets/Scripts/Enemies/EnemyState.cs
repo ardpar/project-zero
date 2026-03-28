@@ -11,13 +11,10 @@ namespace Synthborn.Enemies
 
         /// <summary>Shooter only: stationary, firing projectiles at the player.</summary>
         Shooting  = 1,
-
         /// <summary>Exploder only: standing still, swelling before detonation.</summary>
         Priming   = 2,
-
         /// <summary>Exploder only: AoE damage applied this frame, then transitions to Dead.</summary>
         Exploding = 3,
-
         /// <summary>Entity is dead: collider disabled, pooled return pending.</summary>
         Dead      = 4,
     }

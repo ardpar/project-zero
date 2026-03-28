@@ -5,9 +5,7 @@
 // projectile. Mutations add new slots by registering new AttackSlotData assets.
 
 using UnityEngine;
-using Synthborn.Combat.Projectile;
-
-namespace Synthborn.Combat.AutoAttack
+namespace Synthborn.Combat
 {
     /// <summary>
     /// Defines the static parameters for one attack slot.
@@ -19,11 +17,9 @@ namespace Synthborn.Combat.AutoAttack
     {
         [Tooltip("Human-readable identifier for debugging / UI display.")]
         public string slotId = "DefaultProjectile";
-
         [Tooltip("Base time between firings in seconds. GDD default: 1.0. Safe range: 0.5-2.0.")]
         [Range(0.1f, 5f)]
         public float baseInterval = 1.0f;
-
         [Tooltip("Projectile data asset fired by this slot.")]
         public ProjectileData projectileData;
     }
