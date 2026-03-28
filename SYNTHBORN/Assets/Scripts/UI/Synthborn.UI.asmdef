@@ -6,7 +6,8 @@
         "Synthborn.Combat",
         "Synthborn.Player",
         "Synthborn.Progression",
-        "Synthborn.Mutations"
+        "Synthborn.Mutations",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

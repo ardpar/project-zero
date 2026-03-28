@@ -36,6 +36,8 @@ MonoBehaviour:
       Weight: 2
     - EnemyData: {fileID: 11400000, guid: a3e16031a3a2e42c9a4b459d13178d23, type: 2}
       Weight: 1
+    - EnemyData: {fileID: 11400000, guid: 326e3e47008f9428eb5c5df50ddb8673, type: 2}
+      Weight: 1
     EliteCount: 1
   - Duration: 120
     SpawnInterval: 1
@@ -45,6 +47,8 @@ MonoBehaviour:
     - EnemyData: {fileID: 11400000, guid: c240c38597b3e46959b89b20ec0a166b, type: 2}
       Weight: 2
     - EnemyData: {fileID: 11400000, guid: a3e16031a3a2e42c9a4b459d13178d23, type: 2}
+      Weight: 2
+    - EnemyData: {fileID: 11400000, guid: 326e3e47008f9428eb5c5df50ddb8673, type: 2}
       Weight: 2
     EliteCount: 2
   - Duration: 120
@@ -56,6 +60,8 @@ MonoBehaviour:
       Weight: 3
     - EnemyData: {fileID: 11400000, guid: a3e16031a3a2e42c9a4b459d13178d23, type: 2}
       Weight: 2
+    - EnemyData: {fileID: 11400000, guid: 326e3e47008f9428eb5c5df50ddb8673, type: 2}
+      Weight: 3
     EliteCount: 3
   - Duration: 150
     SpawnInterval: 0.6
@@ -65,6 +71,8 @@ MonoBehaviour:
     - EnemyData: {fileID: 11400000, guid: c240c38597b3e46959b89b20ec0a166b, type: 2}
       Weight: 3
     - EnemyData: {fileID: 11400000, guid: a3e16031a3a2e42c9a4b459d13178d23, type: 2}
+      Weight: 3
+    - EnemyData: {fileID: 11400000, guid: 326e3e47008f9428eb5c5df50ddb8673, type: 2}
       Weight: 3
     EliteCount: 4
   waveBreakDuration: 3
