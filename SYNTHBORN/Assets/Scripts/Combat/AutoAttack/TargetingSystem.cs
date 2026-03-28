@@ -22,9 +22,8 @@ namespace Synthborn.Combat
             int count = Physics2D.OverlapCircleNonAlloc(origin, range, _hitBuffer, _enemyLayer);
             if (count == 0) return null;
 
-            Transform best = null;
-            float bestScore = float.MaxValue;
-            float cosThreshold = Mathf.Cos(coneAngleDeg * Mathf.Deg2Rad);
+            Transform nearest = null;
+            float nearestDist = float.MaxValue;
 
             for (int i = 0; i < count; i++)
             {
@@ -34,24 +33,15 @@ namespace Synthborn.Combat
                 var damageable = col.GetComponent<IDamageable>();
                 if (damageable != null && damageable.IsDead) continue;
 
-                Vector2 toEnemy = (Vector2)col.transform.position - origin;
-                float dist = toEnemy.magnitude;
-                if (dist < 0.01f) continue;
-
-                float dot = Vector2.Dot(facing, toEnemy / dist);
-                bool inCone = dot > cosThreshold;
-
-                // Cone enemies get half effective distance (2x priority)
-                float score = inCone ? dist * 0.5f : dist;
-
-                if (score < bestScore)
+                float dist = ((Vector2)col.transform.position - origin).sqrMagnitude;
+                if (dist < nearestDist)
                 {
-                    bestScore = score;
-                    best = col.transform;
+                    nearestDist = dist;
+                    nearest = col.transform;
                 }
             }
 
-            return best;
+            return nearest;
         }
     }
 }

@@ -203,17 +203,21 @@ namespace Synthborn.Enemies
         /// </summary>
         protected void TickContactDamage()
         {
-            if (data == null) return;
+            if (data == null || col == null) return;
 
             _contactDamageTimer += Time.fixedDeltaTime;
             if (_contactDamageTimer < ContactDamageInterval) return;
 
             _contactDamageTimer = 0f;
 
-            // Proximity check — only deal damage when overlapping the player
+            // Physical overlap check — only damage when colliders actually touch
             if (playerTransform == null) return;
-            float dist = Vector2.Distance(rb.position, (Vector2)playerTransform.position);
-            if (dist > data.HitboxRadius * 2f) return;
+            var playerCol = playerTransform.GetComponent<Collider2D>();
+            if (playerCol == null) return;
+
+            // Use Distance check for trigger+non-trigger overlap
+            var result = col.Distance(playerCol);
+            if (!result.isOverlapped) return;
 
             var info = new DamageInfo(data.ContactDamage, DamageSource.EnemyContact, false, rb.position);
             GameEvents.RaisePlayerDamageRequested(info);
