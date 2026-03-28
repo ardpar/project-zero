@@ -16,6 +16,12 @@ namespace Synthborn.Core.Persistence
         public float bestSurvivalTime;
         public int bestWavesCleared;
 
+        // Run History (last 10)
+        public List<RunHistoryEntry> runHistory = new();
+
+        // Discovered mutations (for collection screen)
+        public List<string> discoveredMutationIds = new();
+
         // Settings
         public float masterVolume = 1f;
         public float sfxVolume = 1f;

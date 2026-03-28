@@ -72,7 +72,9 @@ namespace Synthborn.Core
             int cellsEarned = UnlockManager.CalculateRunReward(
                 _stats.EnemiesKilled, _stats.WavesCleared, victory);
             UnlockManager.AddCells(cellsEarned);
-            UnlockManager.RecordRun(_stats.SurvivalTime, _stats.WavesCleared);
+            UnlockManager.RecordRun(_stats.SurvivalTime, _stats.WavesCleared,
+                _stats.EnemiesKilled, _stats.FinalLevel, _stats.MutationsAcquired,
+                cellsEarned, victory);
 
             UpdateStatsDisplay(cellsEarned);
         }

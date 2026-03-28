@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Synthborn.Core.Stats;
 using Synthborn.Core.Events;
+using Synthborn.Core.Persistence;
 
 namespace Synthborn.Mutations
 {
@@ -114,6 +115,9 @@ namespace Synthborn.Mutations
 
             _acquiredIds.Add(mutation.id);
             ApplyStats(mutation);
+
+            // Track discovery for collection screen
+            UnlockManager.DiscoverMutation(mutation.id);
 
             // Fire events for other systems
             GameEvents.RaiseMutationApplied(mutation.id, mutation.category == MutationCategory.Slot);

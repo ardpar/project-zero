@@ -39,14 +39,45 @@ namespace Synthborn.Core.Persistence
         }
 
         /// <summary>Record run completion stats.</summary>
-        public static void RecordRun(float survivalTime, int wavesCleared)
+        public static void RecordRun(float survivalTime, int wavesCleared, int kills, int level, int mutations, int cells, bool victory)
         {
             var data = SaveManager.Data;
             data.totalRuns++;
+            data.totalKills += kills;
             if (survivalTime > data.bestSurvivalTime) data.bestSurvivalTime = survivalTime;
             if (wavesCleared > data.bestWavesCleared) data.bestWavesCleared = wavesCleared;
+
+            // Add to history (keep last 10)
+            data.runHistory.Add(new RunHistoryEntry
+            {
+                date = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm"),
+                survivalTime = survivalTime,
+                enemiesKilled = kills,
+                finalLevel = level,
+                wavesCleared = wavesCleared,
+                mutationsAcquired = mutations,
+                cellsEarned = cells,
+                victory = victory
+            });
+            if (data.runHistory.Count > 10)
+                data.runHistory.RemoveAt(0);
+
             SaveManager.Save();
         }
+
+        /// <summary>Mark a mutation as discovered (for collection screen).</summary>
+        public static void DiscoverMutation(string mutationId)
+        {
+            var data = SaveManager.Data;
+            if (!data.discoveredMutationIds.Contains(mutationId))
+            {
+                data.discoveredMutationIds.Add(mutationId);
+                SaveManager.Save();
+            }
+        }
+
+        public static bool IsDiscovered(string mutationId) =>
+            SaveManager.Data.discoveredMutationIds.Contains(mutationId);
 
         /// <summary>Get unlock cost based on rarity index (0=Common, 1=Uncommon, 2=Rare, 3=Legendary).</summary>
         public static int GetUnlockCost(int rarityIndex)
