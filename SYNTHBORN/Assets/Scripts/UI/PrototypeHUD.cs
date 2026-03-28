@@ -21,6 +21,19 @@ namespace Synthborn.UI
         [Header("Wave")]
         [SerializeField] private Text _waveText;
 
+        private float _xpTargetFill;
+        private float _xpCurrentFill;
+
+        private void Update()
+        {
+            // Smooth XP bar fill
+            if (_xpFill != null && Mathf.Abs(_xpCurrentFill - _xpTargetFill) > 0.001f)
+            {
+                _xpCurrentFill = Mathf.MoveTowards(_xpCurrentFill, _xpTargetFill, Time.unscaledDeltaTime * 3f);
+                _xpFill.fillAmount = _xpCurrentFill;
+            }
+        }
+
         private void OnEnable()
         {
             GameEvents.OnPlayerHPChanged += UpdateHP;
@@ -49,8 +62,7 @@ namespace Synthborn.UI
 
         private void UpdateXP(int current, int xpToNext)
         {
-            if (_xpFill != null)
-                _xpFill.fillAmount = xpToNext > 0 ? (float)current / xpToNext : 0f;
+            _xpTargetFill = xpToNext > 0 ? (float)current / xpToNext : 0f;
         }
 
         private void UpdateLevel(int level)
