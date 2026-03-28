@@ -30,4 +30,4 @@ MonoBehaviour:
   - energy
   - blade
   slotSprite: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 708223517, guid: 698a08aa95fc7cc418e985bf1cd01992, type: 3}

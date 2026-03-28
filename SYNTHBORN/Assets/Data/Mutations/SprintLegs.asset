@@ -31,4 +31,4 @@ MonoBehaviour:
   - legs
   - hydraulic
   slotSprite: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 1170164363, guid: 532dd9809846da3468ad1a8694898846, type: 3}

@@ -4,38 +4,42 @@ using Synthborn.Core.Events;
 namespace Synthborn.Core.Audio
 {
     /// <summary>
-    /// Plays procedural placeholder SFX using generated AudioClips.
-    /// Replace with real clips later.
+    /// Plays SFX in response to game events.
+    /// Assign real AudioClips in Inspector; falls back to procedural tones if null.
     /// </summary>
     public class SFXManager : MonoBehaviour
     {
-        private AudioSource _source;
+        [Header("SFX Clips (assign real clips, or leave null for procedural)")]
+        [SerializeField] private AudioClip _shootClip;
+        [SerializeField] private AudioClip _hitClip;
+        [SerializeField] private AudioClip _killClip;
+        [SerializeField] private AudioClip _xpPickupClip;
+        [SerializeField] private AudioClip _levelUpClip;
+        [SerializeField] private AudioClip _dashClip;
+        [SerializeField] private AudioClip _mutationClip;
+        [SerializeField] private AudioClip _synergyClip;
 
-        // Generated placeholder clips
-        private AudioClip _shootClip;
-        private AudioClip _hitClip;
-        private AudioClip _killClip;
-        private AudioClip _xpPickupClip;
-        private AudioClip _levelUpClip;
-        private AudioClip _dashClip;
-        private AudioClip _mutationClip;
-        private AudioClip _synergyClip;
+        private AudioSource _source;
 
         private void Awake()
         {
-            _source = gameObject.AddComponent<AudioSource>();
-            _source.playOnAwake = false;
+            _source = GetComponent<AudioSource>();
+            if (_source == null)
+            {
+                _source = gameObject.AddComponent<AudioSource>();
+                _source.playOnAwake = false;
+            }
             _source.volume = 0.3f;
 
-            // Generate simple placeholder tones
-            _shootClip = GenerateTone(800f, 0.05f, "Shoot");
-            _hitClip = GenerateTone(400f, 0.08f, "Hit");
-            _killClip = GenerateTone(600f, 0.15f, "Kill");
-            _xpPickupClip = GenerateTone(1200f, 0.06f, "XPPickup");
-            _levelUpClip = GenerateChirp(400f, 1200f, 0.3f, "LevelUp");
-            _dashClip = GenerateTone(200f, 0.1f, "Dash");
-            _mutationClip = GenerateChirp(600f, 1000f, 0.2f, "Mutation");
-            _synergyClip = GenerateChirp(800f, 1600f, 0.4f, "Synergy");
+            // Fallback: generate procedural tones for any unassigned clip
+            if (_shootClip == null) _shootClip = GenerateTone(800f, 0.05f);
+            if (_hitClip == null) _hitClip = GenerateTone(400f, 0.08f);
+            if (_killClip == null) _killClip = GenerateTone(600f, 0.15f);
+            if (_xpPickupClip == null) _xpPickupClip = GenerateTone(1200f, 0.06f);
+            if (_levelUpClip == null) _levelUpClip = GenerateChirp(400f, 1200f, 0.3f);
+            if (_dashClip == null) _dashClip = GenerateTone(200f, 0.1f);
+            if (_mutationClip == null) _mutationClip = GenerateChirp(600f, 1000f, 0.2f);
+            if (_synergyClip == null) _synergyClip = GenerateChirp(800f, 1600f, 0.4f);
         }
 
         private void OnEnable()
@@ -74,37 +78,22 @@ namespace Synthborn.Core.Audio
                 _source.PlayOneShot(clip, volume);
         }
 
-        private static AudioClip GenerateTone(float frequency, float duration, string name)
+        private static AudioClip GenerateTone(float freq, float dur)
         {
-            int sampleRate = 44100;
-            int samples = (int)(sampleRate * duration);
-            var clip = AudioClip.Create(name, samples, 1, sampleRate, false);
-            float[] data = new float[samples];
-            for (int i = 0; i < samples; i++)
-            {
-                float t = (float)i / sampleRate;
-                float envelope = 1f - (t / duration); // linear fade out
-                data[i] = Mathf.Sin(2f * Mathf.PI * frequency * t) * envelope * 0.5f;
-            }
-            clip.SetData(data, 0);
-            return clip;
+            int sr = 44100; int s = (int)(sr * dur);
+            var c = AudioClip.Create("tone", s, 1, sr, false);
+            float[] d = new float[s];
+            for (int i = 0; i < s; i++) { float t = (float)i/sr; d[i] = Mathf.Sin(2f*Mathf.PI*freq*t)*(1f-t/dur)*0.5f; }
+            c.SetData(d, 0); return c;
         }
 
-        private static AudioClip GenerateChirp(float freqStart, float freqEnd, float duration, string name)
+        private static AudioClip GenerateChirp(float f1, float f2, float dur)
         {
-            int sampleRate = 44100;
-            int samples = (int)(sampleRate * duration);
-            var clip = AudioClip.Create(name, samples, 1, sampleRate, false);
-            float[] data = new float[samples];
-            for (int i = 0; i < samples; i++)
-            {
-                float t = (float)i / sampleRate;
-                float freq = Mathf.Lerp(freqStart, freqEnd, t / duration);
-                float envelope = 1f - (t / duration);
-                data[i] = Mathf.Sin(2f * Mathf.PI * freq * t) * envelope * 0.5f;
-            }
-            clip.SetData(data, 0);
-            return clip;
+            int sr = 44100; int s = (int)(sr * dur);
+            var c = AudioClip.Create("chirp", s, 1, sr, false);
+            float[] d = new float[s];
+            for (int i = 0; i < s; i++) { float t = (float)i/sr; float f = Mathf.Lerp(f1,f2,t/dur); d[i] = Mathf.Sin(2f*Mathf.PI*f*t)*(1f-t/dur)*0.5f; }
+            c.SetData(d, 0); return c;
         }
     }
 }

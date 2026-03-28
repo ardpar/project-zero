@@ -30,4 +30,4 @@ MonoBehaviour:
   - speed
   - energy
   slotSprite: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: -1209348715, guid: 532dd9809846da3468ad1a8694898846, type: 3}

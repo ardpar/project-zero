@@ -31,4 +31,4 @@ MonoBehaviour:
   - melee
   - speed
   slotSprite: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: -1784251413, guid: 698a08aa95fc7cc418e985bf1cd01992, type: 3}

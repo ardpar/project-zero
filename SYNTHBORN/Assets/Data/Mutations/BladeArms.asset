@@ -31,4 +31,4 @@ MonoBehaviour:
   - arms
   - blade
   slotSprite: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: -624286144, guid: 5a4b1f54b24e51344a445ff8e9111b2d, type: 3}

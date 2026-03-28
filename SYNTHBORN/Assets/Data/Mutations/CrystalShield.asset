@@ -31,4 +31,4 @@ MonoBehaviour:
   - back
   - crystal
   slotSprite: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 428601642, guid: 614899bb558e66340aa4dad268e01181, type: 3}

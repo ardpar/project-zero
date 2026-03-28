@@ -30,4 +30,4 @@ MonoBehaviour:
   - melee
   - blade
   slotSprite: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: -1477803334, guid: 5a4b1f54b24e51344a445ff8e9111b2d, type: 3}

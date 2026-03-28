@@ -67,6 +67,8 @@ namespace Synthborn.Player
         private CircleCollider2D   _collider;
         private PlayerInputHandler _input;
         private CombatStatBlock    _statBlock; // Injected — null = no mutations applied
+        private Animator           _animator;
+        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
 
         // ─────────────────────────────────────────────
         // Public read API (consumed by Auto-Attack, Camera, Enemy AI)
@@ -107,6 +109,7 @@ namespace Synthborn.Player
             _rb       = GetComponent<Rigidbody2D>();
             _collider = GetComponent<CircleCollider2D>();
             _input    = GetComponent<PlayerInputHandler>();
+            _animator = GetComponent<Animator>();
 
             // GDD rule 6: circle collider radius set from config
             if (_config != null)
@@ -214,12 +217,14 @@ namespace Synthborn.Player
                     _statBlock?.ClampedSpeedModifier ?? 0f);
 
                 _rb.linearVelocity = moveInput * speed;
+                if (_animator != null) _animator.SetBool(IsMoving, true);
             }
             else
             {
                 // GDD rule 2: instant stop — no deceleration
                 _state             = PlayerState.Idle;
                 _rb.linearVelocity = Vector2.zero;
+                if (_animator != null) _animator.SetBool(IsMoving, false);
             }
         }
 
