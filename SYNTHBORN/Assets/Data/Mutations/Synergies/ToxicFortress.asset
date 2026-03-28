@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 244cc6d6eed2648dda788b967f54aaef, type: 3}
+  m_Name: ToxicFortress
+  m_EditorClassIdentifier: Synthborn.Mutations::Synthborn.Mutations.SynergyData
+  id: ToxicFortress
+  displayName: Toxic Fortress
+  description: Poisoned walls. +25 armor, +20% HP, +10% dmg.
+  requiredTags:
+  - poison
+  - spike
+  speedModifier: 0
+  dashCooldownModifier: 0
+  hpModifier: 0.2
+  armorFlat: 25
+  damageModifier: 0.1
+  critChance: 0
+  critMultiplierBonus: 0
+  attackSpeedModifier: 0

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0042a8f9b4cfc4bde991d4c9d86afd7e, type: 3}
+  m_Name: Toxicity
+  m_EditorClassIdentifier: Synthborn.Mutations::Synthborn.Mutations.MutationData
+  id: Toxicity
+  displayName: Toxicity
+  description: +15% dmg, +5 armor. Poison everything.
+  category: 1
+  slot: 0
+  rarity: 0
+  speedModifier: 0
+  dashCooldownModifier: 0
+  hpModifier: 0
+  armorFlat: 5
+  damageModifier: 0.15
+  critChance: 0
+  critMultiplierBonus: 0
+  attackSpeedModifier: 0
+  synergyTags:
+  - poison
+  - organic
+  slotSprite: {fileID: 0}
+  icon: {fileID: 0}

@@ -52,6 +52,7 @@ namespace Synthborn.Core
             int projectile = LayerMask.NameToLayer("Projectile"); // 8
             int wall = LayerMask.NameToLayer("Wall");           // 9
             int xpGem = LayerMask.NameToLayer("XPGem");         // 10
+            int enemyProj = LayerMask.NameToLayer("EnemyProjectile"); // 11
 
             Physics2D.IgnoreLayerCollision(player, projectile, true);
             Physics2D.IgnoreLayerCollision(player, player, true);
@@ -62,6 +63,17 @@ namespace Synthborn.Core
             Physics2D.IgnoreLayerCollision(projectile, xpGem, true);
             Physics2D.IgnoreLayerCollision(xpGem, wall, true);
             Physics2D.IgnoreLayerCollision(xpGem, xpGem, true);
+
+            // Enemy projectile: hits Player, ignores Enemy/Projectile/XPGem/Wall
+            if (enemyProj >= 0)
+            {
+                Physics2D.IgnoreLayerCollision(enemyProj, enemy, true);
+                Physics2D.IgnoreLayerCollision(enemyProj, projectile, true);
+                Physics2D.IgnoreLayerCollision(enemyProj, xpGem, true);
+                Physics2D.IgnoreLayerCollision(enemyProj, wall, true);
+                Physics2D.IgnoreLayerCollision(enemyProj, enemyProj, true);
+                // Player <-> EnemyProjectile = COLLIDE (default)
+            }
 
             var stats = new CombatStatBlock();
 
