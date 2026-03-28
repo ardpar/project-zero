@@ -136,5 +136,10 @@ namespace Synthborn.Core
             if (_playerHealth != null)
                 _playerHealth.InitialiseAsPlayer(stats);
         }
+
+        private void OnDestroy()
+        {
+            GameEvents.Cleanup();
+        }
     }
 }

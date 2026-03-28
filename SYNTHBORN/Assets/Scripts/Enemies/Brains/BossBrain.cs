@@ -32,13 +32,13 @@ namespace Synthborn.Enemies
         // ------------------------------------------------------------------ //
 
         /// <inheritdoc/>
-        public override void Initialize(Transform player, int waveNumber, ObjectPool<EnemyBrain> pool)
+        public override void Initialize(Transform player, int waveNumber, ObjectPool<EnemyBrain> pool, EnemyData overrideData = null)
         {
             _bossData = data as BossData;
             if (_bossData == null)
                 Debug.LogWarning($"[BossBrain] EnemyData on {name} should be a BossData asset for VS+ features.", this);
 
-            base.Initialize(player, waveNumber, pool);
+            base.Initialize(player, waveNumber, pool, overrideData);
 
             // Cinematic entrance: fire intro VFX event if configured
             if (_bossData?.IntroVfx != null)

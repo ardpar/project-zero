@@ -123,8 +123,15 @@ namespace Synthborn.Enemies
         /// <param name="player">The player's Transform for targeting.</param>
         /// <param name="waveNumber">Current wave number (1-based).</param>
         /// <param name="pool">Pool to return this object to on death.</param>
-        public virtual void Initialize(Transform player, int waveNumber, ObjectPool<EnemyBrain> pool)
+        /// <summary>
+        /// Called by WaveSpawner after fetching from pool.
+        /// Optional overrideData replaces the prefab's serialized EnemyData.
+        /// </summary>
+        public virtual void Initialize(Transform player, int waveNumber, ObjectPool<EnemyBrain> pool, EnemyData overrideData = null)
         {
+            if (overrideData != null)
+                data = overrideData;
+
             playerTransform = player;
             currentWave     = waveNumber;
             _pool           = pool;
@@ -132,11 +139,12 @@ namespace Synthborn.Enemies
 
             effectiveSpeed = ComputeEffectiveSpeed(waveNumber);
 
-            // Set XP value on EntityHealth so Die() broadcasts the correct amount
+            // Set XP value and init health for this enemy
             if (health != null && data != null && scalingConfig != null)
             {
                 float xpMult = scalingConfig.GetXpMultiplier(data.Tier);
                 health.SetXpValue(Mathf.RoundToInt(data.BaseXp * xpMult));
+                health.InitialiseAsEnemy(waveNumber, scalingConfig.GetHpMultiplier(data.Tier));
             }
 
             SetState(EnemyState.Chase);

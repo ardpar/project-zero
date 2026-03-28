@@ -82,7 +82,7 @@ namespace Synthborn.Combat
                     {
                         FireProjectile(origin, target.position, slotData);
                         float effectiveInterval = Mathf.Max(
-                            slotData.baseInterval * (1f - Mathf.Clamp(_stats.AttackSpeedModifier, 0f, _config.attackSpeedModifierMaxClamp)),
+                            slotData.baseInterval * (1f - _stats.ClampedAttackSpeedModifier),
                             0.1f);
                         state.CooldownRemaining = effectiveInterval;
                     }

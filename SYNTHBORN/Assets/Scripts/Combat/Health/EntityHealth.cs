@@ -88,9 +88,11 @@ namespace Synthborn.Combat.Health
         /// </summary>
         public void InitialiseAsEnemy(int waveNumber, float tierMultiplier)
         {
-            _isPlayer      = false;
-            _statBlock     = null;
-            _waveNumber    = waveNumber;
+            _isPlayer       = false;
+            _statBlock      = null;
+            _isInvulnerable = false;
+            _isDead         = false;
+            _waveNumber     = waveNumber;
             _tierMultiplier = tierMultiplier;
             RecomputeStats();
             _currentHp     = _maxHp;
@@ -201,14 +203,9 @@ namespace Synthborn.Combat.Health
 
             OnDeath?.Invoke(this);
 
+            // Player death is broadcast here; enemy death is broadcast by EnemyBrain.HandleDeath
             if (_isPlayer)
-            {
                 GameEvents.RaisePlayerDied();
-            }
-            else
-            {
-                GameEvents.RaiseEnemyDied(transform.position, gameObject, _xpValue);
-            }
         }
 
         // ─────────────────────────────────────────────

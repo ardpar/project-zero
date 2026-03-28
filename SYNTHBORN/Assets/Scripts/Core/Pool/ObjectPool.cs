@@ -60,9 +60,11 @@ namespace Synthborn.Core.Pool
         /// Returns an instance to the pool and deactivates its GameObject.
         /// <see cref="IPoolable.OnPoolReturn"/> is called before deactivation.
         /// </summary>
+        /// <remarks>Safe against double-return — skips if instance is already inactive.</remarks>
         public void Return(T instance)
         {
             if (instance == null) return;
+            if (!instance.gameObject.activeSelf) return; // already returned
             instance.OnPoolReturn();
             instance.gameObject.SetActive(false);
             _pool.Push(instance);

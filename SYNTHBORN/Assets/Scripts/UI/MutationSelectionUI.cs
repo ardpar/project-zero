@@ -64,16 +64,16 @@ namespace Synthborn.UI
 
         private void Show()
         {
+            // Guard against double-open on rapid level-up
+            if (_panel != null && _panel.activeSelf) return;
+
             _currentCards = _pool.GenerateCards(_playerLevel);
-            if (_currentCards.Count == 0)
-            {
-                // No mutations left — skip selection
-                return;
-            }
+            if (_currentCards.Count == 0) return;
 
             // Pause game
             Time.timeScale = 0f;
-            _panel.SetActive(true);
+            GameEvents.RaiseGamePaused();
+            if (_panel != null) _panel.SetActive(true);
 
             // Populate and animate cards
             for (int i = 0; i < _cardButtons.Length; i++)
@@ -121,6 +121,7 @@ namespace Synthborn.UI
             // Resume game
             Hide();
             Time.timeScale = 1f;
+            GameEvents.RaiseGameResumed();
         }
 
         private IEnumerator SlideInCard(RectTransform rt, float delay)

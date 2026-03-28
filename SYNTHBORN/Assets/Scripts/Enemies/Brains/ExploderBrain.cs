@@ -39,13 +39,13 @@ namespace Synthborn.Enemies
         // ------------------------------------------------------------------ //
 
         /// <inheritdoc/>
-        public override void Initialize(Transform player, int waveNumber, ObjectPool<EnemyBrain> pool)
+        public override void Initialize(Transform player, int waveNumber, ObjectPool<EnemyBrain> pool, EnemyData overrideData = null)
         {
             _exploderData = data as ExploderData;
             if (_exploderData == null)
                 Debug.LogError($"[ExploderBrain] EnemyData on {name} must be an ExploderData asset.", this);
 
-            base.Initialize(player, waveNumber, pool);
+            base.Initialize(player, waveNumber, pool, overrideData);
         }
 
         /// <inheritdoc/>

@@ -193,7 +193,7 @@ namespace Synthborn.Waves
             var brain = _enemyPool.Get();
             brain.transform.position = pos;
 
-            brain.Initialize(_playerTransform, _currentWave + 1, _enemyPool);
+            brain.Initialize(_playerTransform, _currentWave + 1, _enemyPool, data);
             _aliveCount++;
         }
 

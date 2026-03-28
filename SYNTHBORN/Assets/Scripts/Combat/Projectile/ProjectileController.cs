@@ -94,15 +94,15 @@ namespace Synthborn.Combat
             if (_hitIds.Contains(instanceId)) return;
             _hitIds.Add(instanceId);
 
-            // Calculate damage
+            // Calculate damage with crit and decay
             bool isCrit = Random.value < _critChance;
             float critMult = isCrit ? _critMultiplier : 1f;
             float decayMult = 1f - _damageDecayAccumulated;
             int finalDamage = Mathf.Max(Mathf.RoundToInt(_damage * critMult * decayMult), 1);
 
-            var damageInfo = new DamageInfo(_damage, DamageSource.PlayerProjectile, isCrit, transform.position);
-
-            GameEvents.RaiseDamageDealt(transform.position, finalDamage, isCrit);
+            // Pass finalDamage (not raw _damage) so crit+decay affect enemy HP
+            // EntityHealth.TakeDamage will raise RaiseDamageDealt — don't fire it here
+            var damageInfo = new DamageInfo(finalDamage, DamageSource.PlayerProjectile, isCrit, transform.position);
             damageable.TakeDamage(damageInfo);
 
             bool shouldDestroy = _hitBehavior.OnHit(this, damageable, damageInfo);
