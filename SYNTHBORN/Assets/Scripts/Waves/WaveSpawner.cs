@@ -76,6 +76,8 @@ namespace Synthborn.Waves
 
         private void UpdateWaveActive(float dt)
         {
+            if (_waveTable == null || _enemyPool == null) return;
+
             _waveTimer -= dt;
             _spawnTimer -= dt;
 
@@ -168,6 +170,8 @@ namespace Synthborn.Waves
 
         private void SpawnSpecificEnemy(EnemyData data)
         {
+            if (_enemyPool == null || data == null) return;
+
             Vector2 pos = GetSpawnPosition();
             var brain = _enemyPool.Get();
             brain.transform.position = pos;

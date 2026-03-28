@@ -1369,7 +1369,7 @@ GameObject:
   - component: {fileID: 1839279965}
   - component: {fileID: 1839279964}
   - component: {fileID: 1839279963}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1390,7 +1390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Synthborn.Combat::Synthborn.Combat.TargetingSystem
   _enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!114 &1839279964
 MonoBehaviour:
   m_ObjectHideFlags: 0

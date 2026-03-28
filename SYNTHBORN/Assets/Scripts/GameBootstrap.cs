@@ -41,18 +41,15 @@ namespace Synthborn.Core
         {
             var stats = new CombatStatBlock();
 
-            // Create pools
+            // Create pools (no pre-warm — lazy instantiate to avoid layer/state issues)
             var enemyPool = new ObjectPool<EnemyBrain>(
-                () => Instantiate(_enemyPrefab).GetComponent<EnemyBrain>(),
-                _enemyPoolSize);
+                () => Instantiate(_enemyPrefab).GetComponent<EnemyBrain>(), 0);
 
             var projectilePool = new ObjectPool<ProjectileController>(
-                () => Instantiate(_projectilePrefab).GetComponent<ProjectileController>(),
-                _projectilePoolSize);
+                () => Instantiate(_projectilePrefab).GetComponent<ProjectileController>(), 0);
 
             var xpGemPool = new ObjectPool<XPGem>(
-                () => Instantiate(_xpGemPrefab).GetComponent<XPGem>(),
-                _xpGemPoolSize);
+                () => Instantiate(_xpGemPrefab).GetComponent<XPGem>(), 0);
 
             // Wire WaveSpawner
             if (_waveSpawner != null)
@@ -83,6 +80,13 @@ namespace Synthborn.Core
                     orb.SetPool(hpOrbPool);
                     orb.Init(_playerController.transform, _playerHealth);
                 };
+            }
+
+            // Wire player damage event — enemies fire this, EntityHealth consumes it
+            if (_playerHealth != null)
+            {
+                var ph = _playerHealth;
+                GameEvents.OnPlayerDamageRequested += (info) => ph.TakeDamage(info);
             }
 
             // Wire Player

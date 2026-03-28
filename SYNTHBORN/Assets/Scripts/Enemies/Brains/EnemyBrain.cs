@@ -203,6 +203,8 @@ namespace Synthborn.Enemies
         /// </summary>
         protected void TickContactDamage()
         {
+            if (data == null) return;
+
             _contactDamageTimer += Time.fixedDeltaTime;
             if (_contactDamageTimer < ContactDamageInterval) return;
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1544044997529247193}
   - component: {fileID: 3115636548638746653}
   - component: {fileID: 8910192116118363133}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HPOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
