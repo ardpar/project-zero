@@ -1,8 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Synthborn.Core.Events;
 using Synthborn.Mutations;
-using System.Collections.Generic;
 
 namespace Synthborn.UI
 {
@@ -74,13 +75,16 @@ namespace Synthborn.UI
             Time.timeScale = 0f;
             _panel.SetActive(true);
 
-            // Populate cards
+            // Populate and animate cards
             for (int i = 0; i < _cardButtons.Length; i++)
             {
                 if (i < _currentCards.Count)
                 {
                     _cardButtons[i].gameObject.SetActive(true);
                     var card = _currentCards[i];
+
+                    // Slide-in animation (staggered)
+                    StartCoroutine(SlideInCard(_cardButtons[i].GetComponent<RectTransform>(), i * 0.1f));
 
                     if (_cardTitles.Length > i && _cardTitles[i] != null)
                         _cardTitles[i].text = card.displayName;
@@ -117,6 +121,31 @@ namespace Synthborn.UI
             // Resume game
             Hide();
             Time.timeScale = 1f;
+        }
+
+        private IEnumerator SlideInCard(RectTransform rt, float delay)
+        {
+            if (rt == null) yield break;
+
+            Vector2 targetPos = rt.anchoredPosition;
+            Vector2 startPos = targetPos + new Vector2(0, -400f); // Start below
+            rt.anchoredPosition = startPos;
+
+            // Stagger delay (unscaled since timeScale=0)
+            if (delay > 0f)
+                yield return new WaitForSecondsRealtime(delay);
+
+            // Slide up (0.3s ease-out)
+            float duration = 0.3f;
+            float t = 0f;
+            while (t < duration)
+            {
+                t += Time.unscaledDeltaTime;
+                float progress = Mathf.SmoothStep(0f, 1f, t / duration);
+                rt.anchoredPosition = Vector2.Lerp(startPos, targetPos, progress);
+                yield return null;
+            }
+            rt.anchoredPosition = targetPos;
         }
 
         private static Color GetRarityColor(MutationRarity rarity)
