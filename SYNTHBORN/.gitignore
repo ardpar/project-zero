@@ -1,4 +1,3 @@
-# Unity generated
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -6,26 +5,14 @@
 [Bb]uilds/
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
-
-# Visual Studio / Rider
 .vs/
 .idea/
 *.csproj
 *.sln
 *.suo
 *.user
-*.pidb
-*.booproj
-
-# OS
 .DS_Store
 Thumbs.db
-
-# Unity Asset Store
-[Aa]sset[Ss]tore[Tt]ools/
-
-# Builds
 *.apk
 *.aab
 *.unitypackage
-*.app

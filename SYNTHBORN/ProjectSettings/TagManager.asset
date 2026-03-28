@@ -53,7 +53,7 @@ TagManager:
   - name: Projectiles
     uniqueID: 3
     locked: 0
-  - name: UI
+  - name: VFX
     uniqueID: 4
     locked: 0
   m_RenderingLayers:

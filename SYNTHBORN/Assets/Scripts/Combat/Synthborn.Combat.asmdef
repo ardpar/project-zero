@@ -1,16 +1,1 @@
-{
-    "name": "Synthborn.Combat",
-    "rootNamespace": "Synthborn.Combat",
-    "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
-}
+{"name":"Synthborn.Combat","rootNamespace":"Synthborn.Combat","references":["Synthborn.Core"],"includePlatforms":[],"excludePlatforms":[],"allowUnsafeCode":false,"overrideReferences":false,"precompiledReferences":[],"autoReferenced":true,"defineConstraints":[],"versionDefines":[],"noEngineReferences":false}

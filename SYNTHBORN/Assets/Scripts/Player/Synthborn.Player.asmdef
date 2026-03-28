@@ -1,17 +1,1 @@
-{
-    "name": "Synthborn.Player",
-    "rootNamespace": "Synthborn.Player",
-    "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "Unity.InputSystem"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
-}
+{"name":"Synthborn.Player","rootNamespace":"Synthborn.Player","references":["Synthborn.Core","Unity.InputSystem"],"includePlatforms":[],"excludePlatforms":[],"allowUnsafeCode":false,"overrideReferences":false,"precompiledReferences":[],"autoReferenced":true,"defineConstraints":[],"versionDefines":[],"noEngineReferences":false}
