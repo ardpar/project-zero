@@ -14,6 +14,7 @@ namespace Synthborn.Waves
         /// <summary>Enemy type to spawn. Must not be null.</summary>
         [Tooltip("Enemy data asset for this spawn pool entry.")]
         public EnemyData EnemyData;
+
         /// <summary>
         /// Relative weight for weighted-random selection.
         /// Example: Chaser 3, Runner 1 → Chaser spawns 75% of the time.

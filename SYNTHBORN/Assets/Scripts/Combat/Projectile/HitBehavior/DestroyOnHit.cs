@@ -1,4 +1,7 @@
 using UnityEngine;
+using Synthborn.Core.Data;
+using Synthborn.Combat.Projectile.HitBehavior;
+using Synthborn.Combat.Health;
 
 namespace Synthborn.Combat
 {

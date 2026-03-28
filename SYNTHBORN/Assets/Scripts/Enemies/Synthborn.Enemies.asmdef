@@ -1,1 +1,17 @@
-{"name":"Synthborn.Enemies","rootNamespace":"Synthborn.Enemies","references":["Synthborn.Core","Synthborn.Combat"],"includePlatforms":[],"excludePlatforms":[],"allowUnsafeCode":false,"overrideReferences":false,"precompiledReferences":[],"autoReferenced":true,"defineConstraints":[],"versionDefines":[],"noEngineReferences":false}
+{
+    "name": "Synthborn.Enemies",
+    "rootNamespace": "Synthborn.Enemies",
+    "references": [
+        "Synthborn.Core",
+        "Synthborn.Combat"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,6 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Synthborn.Core;
+using Synthborn.Core.Pool;
+using Synthborn.Core.Data;
+using Synthborn.Core.Events;
+using Synthborn.Combat.Projectile;
+using Synthborn.Combat.Projectile.HitBehavior;
+using Synthborn.Combat.Health;
 
 namespace Synthborn.Combat
 {
@@ -11,6 +16,7 @@ namespace Synthborn.Combat
     public class ProjectileController : MonoBehaviour, IPoolable
     {
         [SerializeField] private ProjectileData _defaultData;
+
         private ProjectileData _data;
         private Vector2 _direction;
         private int _damage;
@@ -23,7 +29,9 @@ namespace Synthborn.Combat
         private ObjectPool<ProjectileController> _pool;
         private HashSet<int> _hitIds = new();
         private IHitBehavior _hitBehavior;
+
         public void SetPool(ObjectPool<ProjectileController> pool) => _pool = pool;
+
         /// <summary>Initialize projectile after getting from pool.</summary>
         public void Fire(Vector2 direction, ProjectileData data, int baseDamage,
             float critChance, float critMultiplier)
@@ -37,55 +45,83 @@ namespace Synthborn.Combat
             _distanceTravelled = 0f;
             _damageDecayAccumulated = 0f;
             _hitIds.Clear();
-            _hitBehavior = _data.onHitType switch
+
+            _hitBehavior = _data.onHitBehavior switch
             {
-                OnHitType.Pierce => new PierceOnHit(_data.pierceCount, _data.pierceDecay),
+                OnHitBehaviorType.Pierce => new PierceOnHit(_data.pierceCount, _data.pierceDecay),
                 _ => new DestroyOnHit()
             };
         }
+
         /// <summary>Called by PierceOnHit to reduce damage per pierce.</summary>
         public void ApplyDamageDecay(float decayRate)
+        {
             _damageDecayAccumulated += decayRate;
+        }
+
         private void Update()
+        {
             if (_data == null) return;
+
             float dt = Time.deltaTime;
-            float moveAmount = _data.speed * dt;
+            float moveAmount = _data.projectileSpeed * dt;
+
             transform.Translate(_direction * moveAmount);
             _distanceTravelled += moveAmount;
             _lifetime -= dt;
+
             if (_lifetime <= 0f || _distanceTravelled >= _data.maxRange)
+            {
                 ReturnToPool();
             }
+        }
+
         private void OnTriggerEnter2D(Collider2D other)
+        {
             var damageable = other.GetComponent<IDamageable>();
             if (damageable == null || damageable.IsDead) return;
+
             int instanceId = other.gameObject.GetInstanceID();
             if (_hitIds.Contains(instanceId)) return;
             _hitIds.Add(instanceId);
+
             // Calculate damage
             bool isCrit = Random.value < _critChance;
             float critMult = isCrit ? _critMultiplier : 1f;
             float decayMult = 1f - _damageDecayAccumulated;
             int finalDamage = Mathf.Max(Mathf.RoundToInt(_damage * critMult * decayMult), 1);
-            var damageInfo = new DamageInfo
-                RawDamage = _damage,
-                FinalDamage = finalDamage,
-                Source = DamageSource.PlayerProjectile,
-                IsCrit = isCrit,
-                HitPosition = transform.position
-            GameEvents.DamageDealt(transform.position, finalDamage, isCrit);
+
+            var damageInfo = new DamageInfo(_damage, DamageSource.PlayerProjectile, isCrit, transform.position);
+
+            GameEvents.RaiseDamageDealt(transform.position, finalDamage, isCrit);
             damageable.TakeDamage(damageInfo);
+
             bool shouldDestroy = _hitBehavior.OnHit(this, damageable, damageInfo);
             if (shouldDestroy)
+            {
+                ReturnToPool();
+            }
+        }
+
         private void ReturnToPool()
+        {
             if (_pool != null)
                 _pool.Return(this);
             else
                 gameObject.SetActive(false);
+        }
+
         public void OnPoolGet()
+        {
+            _hitIds.Clear();
+            _damageDecayAccumulated = 0f;
             gameObject.SetActive(true);
+        }
+
         public void OnPoolReturn()
+        {
             _data = null;
             gameObject.SetActive(false);
+        }
     }
 }

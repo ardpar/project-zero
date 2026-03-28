@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49210be083d244240a1c5a8031c1a9cc, type: 3}
+  m_Name: AttackConfig
+  m_EditorClassIdentifier: Synthborn.Combat::Synthborn.Combat.AutoAttack.AttackConfig
+  attackRange: 8
+  targetingConeAngleDeg: 60
+  defaultSlot: {fileID: 11400000, guid: b2fd7a6e944ae43f48ff7e5ea4055b61, type: 2}
+  maxAttackSlots: 6
+  minAttackInterval: 0.1
+  attackSpeedModifierMaxClamp: 0.9

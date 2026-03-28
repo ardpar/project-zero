@@ -1,1 +1,18 @@
-{"name":"Synthborn.Progression","rootNamespace":"Synthborn.Progression","references":["Synthborn.Core","Synthborn.Enemies"],"includePlatforms":[],"excludePlatforms":[],"allowUnsafeCode":false,"overrideReferences":false,"precompiledReferences":[],"autoReferenced":true,"defineConstraints":[],"versionDefines":[],"noEngineReferences":false}
+{
+    "name": "Synthborn.Progression",
+    "rootNamespace": "Synthborn.Progression",
+    "references": [
+        "Synthborn.Core",
+        "Synthborn.Enemies",
+        "Synthborn.Combat"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

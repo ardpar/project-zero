@@ -2,11 +2,12 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 3
+  serializedVersion: 2
   tags:
   - Enemy
-  - XPGem
   - Projectile
+  - XPGem
+  - HPOrb
   layers:
   - Default
   - TransparentFX
@@ -44,17 +45,3 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Background
-    uniqueID: 1
-    locked: 0
-  - name: Entities
-    uniqueID: 2
-    locked: 0
-  - name: Projectiles
-    uniqueID: 3
-    locked: 0
-  - name: VFX
-    uniqueID: 4
-    locked: 0
-  m_RenderingLayers:
-  - Default

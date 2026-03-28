@@ -1,0 +1,19 @@
+{
+    "name": "Synthborn.UI",
+    "rootNamespace": "Synthborn.UI",
+    "references": [
+        "Synthborn.Core",
+        "Synthborn.Combat",
+        "Synthborn.Player",
+        "Synthborn.Progression"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

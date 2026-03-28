@@ -1,1 +1,17 @@
-{"name":"Synthborn.Waves","rootNamespace":"Synthborn.Waves","references":["Synthborn.Core","Synthborn.Combat","Synthborn.Enemies"],"includePlatforms":[],"excludePlatforms":[],"allowUnsafeCode":false,"overrideReferences":false,"precompiledReferences":[],"autoReferenced":true,"defineConstraints":[],"versionDefines":[],"noEngineReferences":false}
+{
+    "name": "Synthborn.Waves",
+    "rootNamespace": "Synthborn.Waves",
+    "references": [
+        "Synthborn.Core",
+        "Synthborn.Enemies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,3 +1,7 @@
+using Synthborn.Core.Data;
+using Synthborn.Combat.Projectile.HitBehavior;
+using Synthborn.Combat.Health;
+
 namespace Synthborn.Combat
 {
     /// <summary>Pierce through multiple enemies with damage decay.</summary>
@@ -11,12 +15,16 @@ namespace Synthborn.Combat
             _remainingPierces = pierceCount;
             _decayPerPierce = decayPerPierce;
         }
+
         public bool OnHit(ProjectileController projectile, IDamageable target, DamageInfo damage)
+        {
             _remainingPierces--;
             if (_remainingPierces <= 0)
                 return true; // no more pierces, return to pool
+
             // Reduce damage for next hit
             projectile.ApplyDamageDecay(_decayPerPierce);
             return false; // keep flying
+        }
     }
 }

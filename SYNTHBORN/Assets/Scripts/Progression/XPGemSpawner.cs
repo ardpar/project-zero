@@ -1,6 +1,6 @@
 using UnityEngine;
-using Synthborn.Core;
-using Synthborn.Enemies;
+using Synthborn.Core.Pool;
+using Synthborn.Core.Events;
 
 namespace Synthborn.Progression
 {
@@ -9,23 +9,31 @@ namespace Synthborn.Progression
     /// </summary>
     public class XPGemSpawner : MonoBehaviour
     {
-        [SerializeField] private ObjectPool<XPGem> _gemPool;
         [SerializeField] private XPManager _xpManager;
         [SerializeField] private Transform _playerTransform;
-        [SerializeField] private CombatStatBlock _stats;
+
+        private ObjectPool<XPGem> _gemPool;
+
+        /// <summary>Inject pool at runtime (called by GameBootstrap).</summary>
+        public void SetPool(ObjectPool<XPGem> pool) => _gemPool = pool;
+
         private void OnEnable()
         {
             GameEvents.OnEnemyDied += HandleEnemyDied;
         }
+
         private void OnDisable()
+        {
             GameEvents.OnEnemyDied -= HandleEnemyDied;
-        private void HandleEnemyDied(Vector2 position, EnemyData data, int xpValue)
-            // Apply XP gain modifier from mutations
-            float modifier = _stats != null ? _stats.XPGainModifier : 0f;
-            int effectiveXP = Mathf.RoundToInt(xpValue * (1f + Mathf.Clamp(modifier, 0f, 1f)));
-            var gem = _gemPool.Get(position);
+        }
+
+        private void HandleEnemyDied(Vector2 position, GameObject enemy, int xpValue)
+        {
+            var gem = _gemPool.Get();
+            gem.transform.position = position;
             gem.SetPool(_gemPool);
             gem.SetXPManager(_xpManager);
-            gem.Init(effectiveXP, _playerTransform);
+            gem.Init(xpValue, _playerTransform);
+        }
     }
 }

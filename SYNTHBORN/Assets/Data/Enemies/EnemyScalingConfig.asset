@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25851e187c26e4c80adecbf15ca79f10, type: 3}
+  m_Name: EnemyScalingConfig
+  m_EditorClassIdentifier: Synthborn.Enemies::Synthborn.Enemies.EnemyScalingConfig
+  <WaveHpScale>k__BackingField: 0.15
+  <NormalHpMultiplier>k__BackingField: 1
+  <EliteHpMultiplier>k__BackingField: 3
+  <BossHpMultiplier>k__BackingField: 10
+  <NormalXpMultiplier>k__BackingField: 1
+  <EliteXpMultiplier>k__BackingField: 5
+  <BossXpMultiplier>k__BackingField: 20
+  <SpeedCapFraction>k__BackingField: 0.9
