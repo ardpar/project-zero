@@ -3,6 +3,7 @@
 // Date: 2026-03-27
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private Vector2 _moveInput;
     private Vector2 _lastDirection = Vector2.down;
+    private Keyboard _kb;
 
     // Dash state
     private bool _isDashing;
@@ -38,6 +40,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _kb = Keyboard.current;
     }
 
     private void OnEnable()
@@ -54,14 +57,19 @@ public class PlayerController : MonoBehaviour
     {
         if (Time.timeScale == 0f) return;
 
-        // Input
-        _moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        // Input (new Input System)
+        _kb = Keyboard.current;
+        if (_kb == null) return;
+
+        float h = (_kb.dKey.isPressed ? 1f : 0f) - (_kb.aKey.isPressed ? 1f : 0f);
+        float v = (_kb.wKey.isPressed ? 1f : 0f) - (_kb.sKey.isPressed ? 1f : 0f);
+        _moveInput = new Vector2(h, v).normalized;
         if (_moveInput.sqrMagnitude > 0.01f)
             _lastDirection = _moveInput;
 
         // Dash input
         _dashCooldownTimer -= Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Space) && _dashCooldownTimer <= 0f && !_isDashing)
+        if (_kb.spaceKey.wasPressedThisFrame && _dashCooldownTimer <= 0f && !_isDashing)
         {
             StartDash();
         }
