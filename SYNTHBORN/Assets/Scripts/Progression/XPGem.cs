@@ -29,8 +29,12 @@ namespace Synthborn.Progression
         {
             _xpValue = xpValue;
             _player = player;
-            _lifetime = _config.gemLifetime;
+            _lifetime = _config != null ? _config.gemLifetime : 30f;
             _magnetized = false;
+
+            // Fallback: find XPManager if not set
+            if (_xpManager == null)
+                _xpManager = Object.FindFirstObjectByType<XPManager>();
         }
 
         private void Update()

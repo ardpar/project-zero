@@ -132,6 +132,17 @@ namespace Synthborn.Enemies
 
             effectiveSpeed = ComputeEffectiveSpeed(waveNumber);
 
+            // Set XP value on EntityHealth so Die() broadcasts the correct amount
+            if (health != null && data != null && scalingConfig != null)
+            {
+                float xpMult = scalingConfig.GetXpMultiplier(data.Tier);
+                health.SetXpValue(Mathf.RoundToInt(data.BaseXp * xpMult));
+            }
+
+            // Initialize health for this enemy
+            if (health != null)
+                health.InitialiseAsEnemy(waveNumber, scalingConfig != null ? scalingConfig.GetHpMultiplier(data.Tier) : 1f);
+
             SetState(EnemyState.Chase);
         }
 
