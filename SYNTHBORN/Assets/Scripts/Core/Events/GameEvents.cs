@@ -155,6 +155,22 @@ namespace Synthborn.Core.Events
             OnLevelUp?.Invoke(newLevel);
 
         // ─────────────────────────────────────────────
+        // Mutations
+        // ─────────────────────────────────────────────
+
+        /// <summary>Raised when a mutation is applied. bool = true if slot mutation.</summary>
+        public static event Action<string, bool> OnMutationApplied;
+
+        public static void RaiseMutationApplied(string mutationId, bool isSlot) =>
+            OnMutationApplied?.Invoke(mutationId, isSlot);
+
+        /// <summary>Raised when a synergy activates. string1=id, string2=displayName.</summary>
+        public static event Action<string, string> OnSynergyActivated;
+
+        public static void RaiseSynergyActivated(string synergyId, string displayName) =>
+            OnSynergyActivated?.Invoke(synergyId, displayName);
+
+        // ─────────────────────────────────────────────
         // HP Orb
         // ─────────────────────────────────────────────
 
@@ -237,6 +253,8 @@ namespace Synthborn.Core.Events
             OnSfxRequested        = null;
             OnPlayerDamageRequested = null;
             OnHPOrbRequested        = null;
+            OnMutationApplied       = null;
+            OnSynergyActivated      = null;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Synthborn.Combat
     /// Projectile movement, collision, hit behavior dispatch, and pool lifecycle.
     /// </summary>
     [RequireComponent(typeof(Collider2D))]
+    [RequireComponent(typeof(Rigidbody2D))]
     public class ProjectileController : MonoBehaviour, IPoolable
     {
         [SerializeField] private ProjectileData _defaultData;
@@ -29,6 +30,14 @@ namespace Synthborn.Combat
         private ObjectPool<ProjectileController> _pool;
         private HashSet<int> _hitIds = new();
         private IHitBehavior _hitBehavior;
+        private Rigidbody2D _rb;
+
+        private void Awake()
+        {
+            _rb = GetComponent<Rigidbody2D>();
+            _rb.bodyType = RigidbodyType2D.Kinematic;
+            _rb.gravityScale = 0f;
+        }
 
         public void SetPool(ObjectPool<ProjectileController> pool) => _pool = pool;
 
@@ -59,14 +68,14 @@ namespace Synthborn.Combat
             _damageDecayAccumulated += decayRate;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (_data == null) return;
 
-            float dt = Time.deltaTime;
+            float dt = Time.fixedDeltaTime;
             float moveAmount = _data.projectileSpeed * dt;
 
-            transform.Translate(_direction * moveAmount);
+            _rb.MovePosition(_rb.position + _direction * moveAmount);
             _distanceTravelled += moveAmount;
             _lifetime -= dt;
 

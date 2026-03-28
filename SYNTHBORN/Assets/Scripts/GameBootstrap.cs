@@ -8,6 +8,8 @@ using Synthborn.Enemies;
 using Synthborn.Player;
 using Synthborn.Progression;
 using Synthborn.Waves;
+using Synthborn.Mutations;
+using Synthborn.UI;
 
 namespace Synthborn.Core
 {
@@ -36,6 +38,11 @@ namespace Synthborn.Core
         [SerializeField] private AutoAttackController _autoAttack;
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private EntityHealth _playerHealth;
+        [SerializeField] private MutationManager _mutationManager;
+        [SerializeField] private MutationSelectionUI _mutationUI;
+        [SerializeField] private MutationDatabase _mutationDatabase;
+        [SerializeField] private SynergyManager _synergyManager;
+        [SerializeField] private SpriteCompositor _spriteCompositor;
 
         private void Awake()
         {
@@ -88,6 +95,22 @@ namespace Synthborn.Core
                 var ph = _playerHealth;
                 GameEvents.OnPlayerDamageRequested += (info) => ph.TakeDamage(info);
             }
+
+            // Wire MutationManager
+            if (_mutationManager != null)
+                _mutationManager.Initialize(stats);
+
+            // Wire SynergyManager
+            if (_synergyManager != null && _mutationManager != null)
+                _synergyManager.Initialize(_mutationManager, stats);
+
+            // Wire SpriteCompositor
+            if (_spriteCompositor != null && _mutationManager != null && _mutationDatabase != null)
+                _spriteCompositor.Initialize(_mutationManager, _mutationDatabase);
+
+            // Wire MutationSelectionUI
+            if (_mutationUI != null && _mutationManager != null && _mutationDatabase != null)
+                _mutationUI.Initialize(_mutationManager, _mutationDatabase);
 
             // Wire Player
             if (_playerController != null)

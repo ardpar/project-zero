@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0042a8f9b4cfc4bde991d4c9d86afd7e, type: 3}
+  m_Name: BladeArms
+  m_EditorClassIdentifier: Synthborn.Mutations::Synthborn.Mutations.MutationData
+  id: BladeArms
+  displayName: Blade Arms
+  description: Arms morph into blades. +30% damage, +15% attack speed.
+  category: 0
+  slot: 1
+  rarity: 1
+  speedModifier: 0
+  dashCooldownModifier: 0
+  hpModifier: 0
+  armorFlat: 0
+  damageModifier: 0.3
+  critChance: 0
+  critMultiplierBonus: 0
+  attackSpeedModifier: 0.15
+  synergyTags:
+  - melee
+  - arms
+  - blade
+  slotSprite: {fileID: 0}
+  icon: {fileID: 0}

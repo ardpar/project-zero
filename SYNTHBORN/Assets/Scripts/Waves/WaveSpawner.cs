@@ -25,11 +25,13 @@ namespace Synthborn.Waves
         private SpawnerState _state;
         private int _currentWave;
         private float _waveTimer;
+        private float _waveDuration; // cached for elite timing
         private float _spawnTimer;
         private float _breakTimer;
         private int _aliveCount;
         private int _spawnSector;
         private float _arenaRadius = 14f;
+        private bool _elitesSpawned;
 
         /// <summary>Current wave number (1-based, for display).</summary>
         public int CurrentWaveDisplay => _currentWave + 1;
@@ -88,6 +90,19 @@ namespace Synthborn.Waves
                 _spawnTimer = wave.SpawnInterval;
             }
 
+            // Elite spawn at 80% of wave duration
+            if (!_elitesSpawned && _waveDuration > 0f)
+            {
+                float elapsed = _waveDuration - _waveTimer;
+                if (elapsed >= _waveDuration * 0.8f)
+                {
+                    _elitesSpawned = true;
+                    var wave = GetCurrentWaveDefinition();
+                    for (int i = 0; i < wave.EliteCount; i++)
+                        SpawnEnemy(); // elites use same pool but wave-scaled HP handles tier
+                }
+            }
+
             if (_waveTimer <= 0f)
             {
                 EndWave();
@@ -115,7 +130,9 @@ namespace Synthborn.Waves
             _currentWave = waveIndex;
             var wave = _waveTable.waves[_currentWave];
             _waveTimer = wave.Duration;
+            _waveDuration = wave.Duration;
             _spawnTimer = 0f;
+            _elitesSpawned = false;
             _state = SpawnerState.WaveActive;
 
             GameEvents.WaveStarted(CurrentWaveDisplay);

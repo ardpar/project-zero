@@ -1,12 +1,8 @@
 {
-    "name": "Synthborn.UI",
-    "rootNamespace": "Synthborn.UI",
+    "name": "Synthborn.Mutations",
+    "rootNamespace": "Synthborn.Mutations",
     "references": [
-        "Synthborn.Core",
-        "Synthborn.Combat",
-        "Synthborn.Player",
-        "Synthborn.Progression",
-        "Synthborn.Mutations"
+        "Synthborn.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

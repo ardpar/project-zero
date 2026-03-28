@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 542dbbca879be49a8969b5c5f37d65f2, type: 3}
+  m_Name: ExploderData
+  m_EditorClassIdentifier: Synthborn.Enemies::Synthborn.Enemies.ExploderData
+  <Id>k__BackingField: exploder
+  <Tier>k__BackingField: 0
+  <BaseHp>k__BackingField: 8
+  <ContactDamage>k__BackingField: 0
+  <MoveSpeed>k__BackingField: 2
+  <SpeedScalePerWave>k__BackingField: 0.03
+  <HitboxRadius>k__BackingField: 0.4
+  <BaseXp>k__BackingField: 5
+  <HpDropChance>k__BackingField: 0.05
+  <DeathVfx>k__BackingField: {fileID: 0}
+  <DeathSfx>k__BackingField: {fileID: 0}
+  <ExplodeRange>k__BackingField: 1.5
+  <PrimeDuration>k__BackingField: 1
+  <ExplodeRadius>k__BackingField: 2
+  <ExplodeDamage>k__BackingField: 20
+  <WarningPrefab>k__BackingField: {fileID: 0}

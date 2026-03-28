@@ -3,7 +3,8 @@
     "rootNamespace": "Synthborn.Player",
     "references": [
         "Synthborn.Core",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "Synthborn.Mutations"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

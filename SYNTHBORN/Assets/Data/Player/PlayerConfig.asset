@@ -23,7 +23,7 @@ MonoBehaviour:
   enemyKnockbackForce: 0.5
   solidCollisionMask:
     serializedVersion: 2
-    m_Bits: 2147483648
+    m_Bits: 0
   enemyLayerMask:
     serializedVersion: 2
-    m_Bits: 2147483648
+    m_Bits: 0
