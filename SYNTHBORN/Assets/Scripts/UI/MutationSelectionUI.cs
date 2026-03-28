@@ -90,10 +90,14 @@ namespace Synthborn.UI
                         _cardTitles[i].text = card.displayName;
 
                     if (_cardDescriptions.Length > i && _cardDescriptions[i] != null)
-                        _cardDescriptions[i].text = card.description;
+                        _cardDescriptions[i].text = card.description + "\n" + BuildStatText(card);
 
                     if (_cardRarities.Length > i && _cardRarities[i] != null)
-                        _cardRarities[i].text = card.rarity.ToString();
+                    {
+                        string slotLabel = card.category == MutationCategory.Slot ? $" [{card.slot}]" : " [Passive]";
+                        string synergyHint = GetSynergyHint(card);
+                        _cardRarities[i].text = card.rarity + slotLabel + synergyHint;
+                    }
 
                     if (_cardBackgrounds.Length > i && _cardBackgrounds[i] != null)
                         _cardBackgrounds[i].color = GetRarityColor(card.rarity);
@@ -147,6 +151,32 @@ namespace Synthborn.UI
                 yield return null;
             }
             rt.anchoredPosition = targetPos;
+        }
+
+        private static string BuildStatText(MutationData m)
+        {
+            var parts = new System.Collections.Generic.List<string>();
+            if (m.damageModifier != 0) parts.Add($"DMG {m.damageModifier:+0%;-0%}");
+            if (m.attackSpeedModifier != 0) parts.Add($"ATK SPD {m.attackSpeedModifier:+0%;-0%}");
+            if (m.speedModifier != 0) parts.Add($"SPD {m.speedModifier:+0%;-0%}");
+            if (m.critChance != 0) parts.Add($"CRIT {m.critChance:+0%;-0%}");
+            if (m.critMultiplierBonus != 0) parts.Add($"CRIT x{m.critMultiplierBonus:+0.0}");
+            if (m.hpModifier != 0) parts.Add($"HP {m.hpModifier:+0%;-0%}");
+            if (m.armorFlat != 0) parts.Add($"ARMOR {m.armorFlat:+0;-0}");
+            if (m.dashCooldownModifier != 0) parts.Add($"DASH CD {m.dashCooldownModifier:+0%;-0%}");
+            return parts.Count > 0 ? string.Join("  ", parts) : "";
+        }
+
+        private string GetSynergyHint(MutationData card)
+        {
+            if (_mutationManager == null || card.synergyTags == null) return "";
+            var activeTags = _mutationManager.GetAllSynergyTags();
+            foreach (var tag in card.synergyTags)
+            {
+                if (activeTags.Contains(tag))
+                    return "\n<color=yellow>Synergy!</color>";
+            }
+            return "";
         }
 
         private static Color GetRarityColor(MutationRarity rarity)

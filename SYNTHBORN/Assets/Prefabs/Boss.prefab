@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4750530714908164600}
   - component: {fileID: 2826057904005235075}
   - component: {fileID: 6996455531028945446}
+  - component: {fileID: 5178108802150751802}
   m_Layer: 7
   m_Name: Boss
   m_TagString: Enemy
@@ -187,3 +188,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Synthborn.Enemies::Synthborn.Enemies.BossBrain
   data: {fileID: 11400000, guid: 703d7fb911d5a4b8b90fe73188a1aa0c, type: 2}
   scalingConfig: {fileID: 11400000, guid: 9ce796348a57c4d88b23079e045d91b7, type: 2}
+--- !u!95 &5178108802150751802
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5587275672573485975}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 04df188c2587d4272831aef59703abb5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

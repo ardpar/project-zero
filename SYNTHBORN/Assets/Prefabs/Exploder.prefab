@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4793431838058325728}
   - component: {fileID: 4656131615095821485}
   - component: {fileID: 1021432050322757770}
+  - component: {fileID: 1644001249139083301}
   m_Layer: 7
   m_Name: Exploder
   m_TagString: Enemy
@@ -187,3 +188,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Synthborn.Enemies::Synthborn.Enemies.ExploderBrain
   data: {fileID: 11400000, guid: a3e16031a3a2e42c9a4b459d13178d23, type: 2}
   scalingConfig: {fileID: 11400000, guid: 9ce796348a57c4d88b23079e045d91b7, type: 2}
+--- !u!95 &1644001249139083301
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3831215182718585012}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4e51e85558def4d2b886c68c3a526dee, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
