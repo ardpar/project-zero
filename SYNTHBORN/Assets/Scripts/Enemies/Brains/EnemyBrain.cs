@@ -139,10 +139,6 @@ namespace Synthborn.Enemies
                 health.SetXpValue(Mathf.RoundToInt(data.BaseXp * xpMult));
             }
 
-            // Initialize health for this enemy
-            if (health != null)
-                health.InitialiseAsEnemy(waveNumber, scalingConfig != null ? scalingConfig.GetHpMultiplier(data.Tier) : 1f);
-
             SetState(EnemyState.Chase);
         }
 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fceff800c057f4c6c9530626dee6d680, type: 3}
   m_Name: EnemyHealthConfig
   m_EditorClassIdentifier: Synthborn.Combat::Synthborn.Combat.Health.EntityHealthConfig
-  baseMaxHp: 100
+  baseMaxHp: 10
   baseArmor: 0
-  useInvulnerability: 1
+  useInvulnerability: 0
   invulnerabilityWindow: 0.5
   waveHpScale: 0.15
