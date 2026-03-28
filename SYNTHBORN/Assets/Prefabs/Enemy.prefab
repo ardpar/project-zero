@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3840354081618063861}
   - component: {fileID: 8635865233683312252}
   - component: {fileID: 3862116349894372932}
+  - component: {fileID: 73403657862071139}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -187,3 +188,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Synthborn.Enemies::Synthborn.Enemies.ChaserBrain
   data: {fileID: 11400000, guid: 15a1741d3e5c14382a1e0961a9a529aa, type: 2}
   scalingConfig: {fileID: 11400000, guid: 9ce796348a57c4d88b23079e045d91b7, type: 2}
+--- !u!114 &73403657862071139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4369888192054240176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd69782e1a3a4b50be590eb95d9d655, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Synthborn.Core::Synthborn.Core.VFX.HitFlash
+  _renderer: {fileID: 0}
+  _flashDuration: 0.05

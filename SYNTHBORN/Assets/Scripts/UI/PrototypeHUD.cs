@@ -54,8 +54,13 @@ namespace Synthborn.UI
 
         private void UpdateHP(int current, int max)
         {
+            float ratio = max > 0 ? (float)current / max : 0f;
             if (_hpFill != null)
-                _hpFill.fillAmount = max > 0 ? (float)current / max : 0f;
+            {
+                _hpFill.fillAmount = ratio;
+                // Green→Yellow→Red gradient
+                _hpFill.color = Color.Lerp(Color.red, Color.green, ratio);
+            }
             if (_hpText != null)
                 _hpText.text = $"{current}/{max}";
         }
