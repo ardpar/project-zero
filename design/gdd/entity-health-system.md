@@ -13,7 +13,7 @@ Entity Health System, hem oyuncu hem düşmanlar için paylaşılan bir can (HP)
 
 Oyuncu her hasar aldığında tehlikeyi hissetmeli — HP değerli ve kıt bir kaynak. Zırh "tampon" hissi vermeli: "Zırhım var, biraz daha agresif oynayabilirim." HP orb'u toplamak rahatlama anı yaratmalı. Ölüm ani ve net olmalı — uzun "can çekişme" yok, "HP bitti = run bitti."
 
-## Detailed Design
+## Detailed Rules
 
 ### Core Rules
 
@@ -55,6 +55,29 @@ Oyuncu her hasar aldığında tehlikeyi hissetmeli — HP değerli ve kıt bir k
 | **Dead** | HP ≤ 0 | Entity despawn / run reset | Ölüm event yayınlanır, entity etkileşilemez |
 
 **Not:** Invulnerable, Alive'ın alt-state'i. Entity hala hareket edebilir. Sadece oyuncu invulnerability kullanır — düşmanlar her zaman hasar alır.
+
+### HP Orb Pickup Object
+
+Düşman öldüğünde şansa bağlı olarak HP orb düşürür. XP gem spesifikasyonuyla (xp-levelup-system.md) paralel tasarlanmıştır.
+
+| Property | Value | Notes |
+|----------|-------|-------|
+| Spawn trigger | Enemy death position | Spawns at exact death location |
+| `hp_drop_chance` | 5% (0.05) | Per enemy kill |
+| `hp_orb_heal_amount` | 10 HP | Flat heal, does not scale |
+| `magnet_pickup_radius` | 1.5 units | Orb starts moving toward player when within this radius |
+| `magnet_speed` | 12 units/sec | Speed of orb moving toward player once magnetized |
+| `collect_distance` | 0.3 units | Distance at which orb is consumed and heal applied |
+| `lifetime` | 15 seconds | Orb despawns after this duration if not collected |
+| Pool size | max 20 | Object pool — oldest orb recycled if pool exhausted |
+
+**Behavior:**
+1. On enemy death: roll `hp_drop_chance`. On success, spawn HP orb at death position from pool.
+2. Orb idles at spawn position until player enters `magnet_pickup_radius`.
+3. Once magnetized: orb moves toward player at `magnet_speed`.
+4. When distance to player < `collect_distance`: orb consumed, `current_hp += hp_orb_heal_amount`, clamped to `max_hp`.
+5. If `lifetime` expires: orb fade-out and return to pool.
+6. If pool exhausted (20 active orbs): oldest orb recycled.
 
 ### Interactions with Other Systems
 
@@ -142,6 +165,8 @@ enemy_hp = base_hp * tier_multiplier * (1 + wave_number * wave_hp_scale)
 | **Düşman AI** | İki yönlü | Hard — düşman temas hasarı + düşman HP verisi |
 | **Mutasyon Sistemi** | Upstream sağlayıcı | Soft — armor ve hp_modifier (yoksa 0) |
 | **Gameplay HUD** | Downstream | Soft — HP/Armor bar görüntüleme |
+| **Camera System** | Downstream | Soft — screen shake on damage events |
+| **VFX / Juice** | Downstream | Soft — hasar flash, ölüm efekti, HP orb toplama efekti |
 | **Dalga/Spawning** | Upstream sağlayıcı | Soft — wave_number (yoksa 1) |
 
 ## Tuning Knobs

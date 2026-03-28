@@ -13,7 +13,7 @@ XP & Level-Up System, düşman ölümlerinden XP gem'leri düşüren, oyuncunun 
 
 Level-up anı run'ın en heyecanlı anı olmalı. XP barı dolarken "neredeyse level atlıyorum!" beklentisi, level-up geldiğinde "hangi mutasyonu seçsem?" heyecanı. Gem toplama fiziksel olarak tatmin edici olmalı — manyetik çekim ile gem'ler oyuncuya akıyor, sayılar yükseliyor. "Bir tane daha öldüreyim, level atlayacağım" = "bir tane daha" hissinin mikro versiyonu.
 
-## Detailed Design
+## Detailed Rules
 
 ### Core Rules
 

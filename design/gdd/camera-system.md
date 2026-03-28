@@ -13,7 +13,7 @@ Camera System, oyuncuyu yumuşak takip eden ve hareket yönünde hafif "look-ahe
 
 Oyuncu kamerayı fark etmemeli — sadece her şeyi rahatça görmeli. "Düşmanlar sağdan geliyor" diye hareket yönüne baktığında ilerisini görebilmeli. Büyük hasar anlarında screen shake "etki hissi" vermeli. Kamera hiçbir zaman oyuncuyu kaybetmemeli veya desorientasyon yaratmamalı.
 
-## Detailed Design
+## Detailed Rules
 
 ### Core Rules
 

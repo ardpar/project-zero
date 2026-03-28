@@ -13,7 +13,7 @@ Synergy Matrisi, mutasyon kombinasyonlarının özel bonus efektler tetiklemesin
 
 "Bıçak kolu + hız bacağı aldım ve... GIRDAP SALDIRISI açıldı!" Synergy keşfi run'ın en tatmin edici anı olmalı. Oyuncu synergy'yi keşfettiğinde sürpriz + güç hissetmeli. Toplulukta paylaşılacak: "Bu ikisini birlikte alırsan şunu açıyor, biliyor muydun?" Gizlilik keşif hissini korur, ama ipuçları (Mutasyon Havuzu'ndaki synergy bias) farkında olmadan yönlendirir.
 
-## Detailed Design
+## Detailed Rules
 
 ### Core Rules
 
@@ -138,6 +138,8 @@ synergy_power = sum(component_mutation_powers) * synergy_multiplier
 | **Mutasyon Havuzu** | Downstream sorgu | Soft — synergy bias sorgusu |
 | **Auto-Attack** | Downstream | Soft — bonus saldırı (yoksa sadece stat synergy'ler) |
 | **Unlock Tracker** | Downstream | Soft — keşif kaydı |
+| **VFX / Juice** | Downstream | Soft — synergy aktivasyon efekti |
+| **Gameplay HUD** | Downstream | Soft — aktif synergy ikon listesi |
 
 ## Tuning Knobs
 
@@ -146,7 +148,8 @@ synergy_power = sum(component_mutation_powers) * synergy_multiplier
 | `synergy_count` (total defined) | 10 (MVP) | 5-30 | Daha fazla keşfedilecek | Az synergy, seyrek tetikleme |
 | `synergy_multiplier_dual` | 0.5 | 0.3-0.8 | Güçlü ikili synergy | Zayıf ikili synergy |
 | `synergy_multiplier_triple` | 0.75 | 0.5-1.0 | Güçlü üçlü | Zayıf üçlü |
-| `synergy_bias_multiplier` | 1.5 | 1.0-2.5 | Synergy kartları daha sık sunulur | Tamamen rastgele |
+
+> **Note:** `synergy_bias_multiplier` owned by mutation-pool.md.
 
 ## Visual/Audio Requirements
 

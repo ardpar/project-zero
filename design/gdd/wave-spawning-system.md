@@ -13,7 +13,7 @@ Dalga/Spawning Sistemi, run boyunca düşman oluşturma zamanlamasını, kompozi
 
 Oyuncu "durdurulamaz bir sel"e karşı koyduğunu hissetmeli. İlk dakikalarda rahat, 5. dakikadan sonra baskı artıyor, son dakikalarda "hayatta kalabilir miyim?" gerilimi. Dalga geçişleri nefes alma anı — kısa mola + "sonraki dalga ne getirecek?" beklentisi. Boss fight run'ın doruk noktası.
 
-## Detailed Design
+## Detailed Rules
 
 ### Core Rules
 

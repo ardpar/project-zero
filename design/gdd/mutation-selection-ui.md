@@ -13,7 +13,7 @@ Mutasyon Seçim UI, level-up'ta oyuncuya 3 mutasyon kartı sunan ve seçim yapma
 
 "3 kart, hangisi?" heyecanı. Kartlar açılırken "ne geldi?" merakı, Legendary kartı gördüğünde "EVET!" çığlığı. Synergy ipucu gördüğünde "bu ikisini birleştirmeliyim" stratejik düşünce. Seçim yapınca anında geri dönen aksiyon. Seçim ekranı oyunu kesmemeli — aksine "bir sonraki mutasyon ne olacak?" beklentisi yaratmalı.
 
-## Detailed Design
+## Detailed Rules
 
 ### Core Rules
 

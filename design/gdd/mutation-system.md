@@ -13,7 +13,7 @@ Modüler Mutasyon Sistemi, SYNTHBORN'un ayırt edici çekirdek mekaniğidir. Oyu
 
 Her level-up'ta "ne olacağım?" sorusu. Kol slotuna bıçak mutasyonu → kollar bıçağa dönüşür, yakın saldırı kazanılır. Sırt slotuna kanat mutasyonu → kanatlar çıkar, hareket hızı artar. Baş slotuna göz mutasyonu → gözler lazer fırlatır. Pasif olarak "vampirism" → her kill HP verir. Run sonunda başlangıç formundan tamamen farklı, benzersiz bir yaratık. "Bu run'da ne oldum, bakın!" — screenshot paylaşılabilir bir kimlik.
 
-## Detailed Design
+## Detailed Rules
 
 ### Core Rules
 
@@ -93,18 +93,45 @@ Her level-up'ta "ne olacağım?" sorusu. Kol slotuna bıçak mutasyonu → kolla
 ## Formulas
 
 ### Stat Modifier Application
+
+**"Higher is better" stats** (speed, damage, HP, crit):
 ```
 effective_stat = base_stat * (1 + sum(additive_modifiers)) * product(multiplicative_modifiers)
 effective_stat = clamp(effective_stat, stat_min, stat_max)
 ```
 
-**Örnek: Attack Speed**
+**"Lower is better" stats** (attack interval, dash cooldown):
+```
+effective_stat = base_stat * (1 - sum(additive_modifiers)) * product(multiplicative_modifiers)
+// modifier represents reduction fraction, clamped to [0.0, max_clamp]
+effective_stat = clamp(effective_stat, stat_min, stat_max)
+```
+
+**Convention per stat:**
+| Stat | Convention | Example modifier +0.2 meaning |
+|------|-----------|-------------------------------|
+| move_speed | Higher is better | +20% faster |
+| damage | Higher is better | +20% more damage |
+| max_hp | Higher is better | +20% more HP |
+| crit_chance | Higher is better | +20% more crit |
+| crit_multiplier | Higher is better | +20% more crit damage |
+| attack_interval | Lower is better | 20% shorter interval (faster attacks) |
+| dash_cooldown | Lower is better | 20% shorter cooldown |
+
+**Örnek: Attack Speed (lower is better)**
 - Base interval: 1.0 sn
 - Kol mutasyonu: +0.2 (additive)
 - Pasif "Haste": +0.15 (additive)
 - Toplam additive: 0.35
 - `effective_interval = 1.0 * (1 - 0.35) = 0.65 sn`
 - Clamp: max(0.65, 0.1) = 0.65 sn ✓
+
+**Örnek: Move Speed (higher is better)**
+- Base speed: 5.0 birim/sn
+- Bacak mutasyonu: +0.3 (additive)
+- Pasif "Swift": +0.2 (additive)
+- Toplam additive: 0.5
+- `effective_speed = 5.0 * (1 + 0.5) = 7.5 birim/sn`
 
 ### Mutasyon Dağılım Hedefi (12 dk run)
 ```
@@ -153,10 +180,8 @@ Hedef ~15 mutasyon/run:
 |-----------|---------|------------|-------------------|-------------------|
 | `slot_count` | 4 | 3-6 | Daha fazla görsel mutasyon | Daha az, her biri daha önemli |
 | `cards_per_levelup` | 3 | 2-4 | Daha fazla seçenek, daha yavaş seçim | Az seçenek, hızlı karar |
-| `common_weight` | 50 | 40-60 | Daha çok sıradan mutasyon | Nadirlere kayma |
-| `uncommon_weight` | 30 | 20-35 | — | — |
-| `rare_weight` | 15 | 10-25 | — | — |
-| `legendary_weight` | 5 | 2-10 | Daha sık efsanevi | Çok nadir efsanevi |
+
+> **Note:** Rarity weights (`common_weight`, `uncommon_weight`, `rare_weight`, `legendary_weight`) owned by mutation-pool.md.
 
 ## Visual/Audio Requirements
 

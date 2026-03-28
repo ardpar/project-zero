@@ -13,7 +13,7 @@ VFX/Juice System, oyundaki tüm görsel geri bildirimleri (screen shake, partik�
 
 Oyun "canlı" hissetmeli. Düşman öldüğünde patlama, hasar aldığında ekran titreyişi, level-up'ta flash, boss yenildiğinde slow-mo + confetti. Her eylem oyuncuya "bir şey oldu ve önemliydi" mesajı vermeli. Kaos güzel ve kontrollü görünmeli — görsel gürültü değil, koreografili bir dans.
 
-## Detailed Design
+## Detailed Rules
 
 ### Core Rules
 

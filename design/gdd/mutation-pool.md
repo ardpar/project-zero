@@ -13,7 +13,7 @@ Mutasyon Havuzu, her level-up'ta oyuncuya sunulacak 3 mutasyon kartının seçim
 
 Oyuncu 3 kart gördüğünde "hepsi ilginç, hangisini seçsem?" hissetmeli. Asla "hiçbiri işe yaramaz" olmamalı. Nadir bir mutasyon gördüğünde "şanslıyım!" heyecanı. Synergy ile uyumlu bir kart gördüğünde "evet, beklediğim buydu!" tatmini.
 
-## Detailed Design
+## Detailed Rules
 
 ### Core Rules
 

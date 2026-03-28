@@ -13,7 +13,7 @@ Sprite Compositing System, oyuncunun sentetik varlığını modüler sprite katm
 
 Oyuncu her mutasyonda karakterinin fiziksel olarak değiştiğini görmeli. İlk run'da sade bir varlık, 4 slot dolduktan sonra tamamen farklı bir yaratık. "Bakın bu run'da ne oldum!" hissi — screenshot'a değer bir görsel kimlik. Dönüşüm yumuşak ve "büyüme" hissi vermeli, frankenstein etkisi yaratmamalı (renk paleti tutarlılığı kritik).
 
-## Detailed Design
+## Detailed Rules
 
 ### Core Rules
 

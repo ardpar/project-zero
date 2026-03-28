@@ -13,7 +13,7 @@ Gameplay HUD, run sırasında oyuncuya kritik bilgiyi gösteren arayüz katmanı
 
 HUD "görünmez" hissetmeli — oyuncu bilgiye ihtiyacı olduğunda orada, yoksa fark etmiyor. "HP'im düşük!" fark etmesi <0.1 sn, "XP'im ne kadar?" bakışı <0.3 sn. Kaotik savaş sırasında bile net okunabilir.
 
-## Detailed Design
+## Detailed Rules
 
 ### Core Rules
 
@@ -85,6 +85,7 @@ bar_color = Lerp(RED, GREEN, hp_ratio)
 
 ### Damage Number Scale
 ```
+reference_damage = 20  // default projectile base damage (10) × 2
 font_size = base_size * (1 + damage / reference_damage * 0.5)
 // Crit: font_size * 1.5 + bounce animation
 ```
@@ -114,6 +115,7 @@ font_size = base_size * (1 + damage / reference_damage * 0.5)
 | `low_hp_threshold` | 0.25 | 0.15-0.35 | Kırmızı uyarı eşiği |
 | `damage_number_duration` | 0.8 | 0.5-1.5 | Rakam ekranda kalma süresi |
 | `max_damage_numbers` | 20 | 10-30 | Aynı anda ekrandaki rakam limiti |
+| `reference_damage` | 20 | 10-40 | Damage number font scaling baseline (default projectile base damage x 2) |
 | `hud_opacity` | 0.9 | 0.6-1.0 | HUD şeffaflığı |
 
 ## Visual/Audio Requirements

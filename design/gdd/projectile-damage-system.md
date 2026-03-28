@@ -13,7 +13,7 @@ Projectile/Damage System, Auto-Attack System'in çıktısı olan mermileri oluş
 
 Oyuncu ekranı dolduran mermileri gördükçe "güçlüyüm" hissetmeli. İlk run'da tek projectile, son dakikalarda ekranı kaplayan lazer + girdap + mermi yağmuru — güç spirali burada somutlaşır. Her yeni mutasyon saldırıyı görsel olarak daha büyük ve kaotik yapmalı.
 
-## Detailed Design
+## Detailed Rules
 
 ### Core Rules
 
@@ -129,6 +129,7 @@ aoe_damage = base_damage * (1 - (distance_from_center / aoe_radius) * aoe_fallof
 | **Entity Health** | Downstream | Hard — hasar verme |
 | **Mutasyon Sistemi** | Upstream sağlayıcı | Soft — damage/crit modifier, projectile türü (yoksa varsayılan) |
 | **VFX / Juice** | Downstream | Soft — trail, impact, patlama efektleri |
+| **Gameplay HUD** | Downstream | Soft — damage number popup events |
 
 ## Tuning Knobs
 

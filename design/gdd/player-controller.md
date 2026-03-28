@@ -13,7 +13,7 @@ Player Controller, oyuncunun sentetik varlığını arenada kontrol ettiği teme
 
 Oyuncu kendini "kaosu yöneten bir varlık" olarak hissetmeli. Ekran düşmanlarla doluyken dar aralıklardan sıyrılmak, tam zamanında dash ile ölümden kaçmak, ve sürüleri arkasından çekerek pozisyon avantajı yaratmak — bunlar "güç fantezisi"nin hareket boyutu. Kontrol anında ve kesin hissettirmeli: oyuncu "yetersiz kontrol yüzünden öldüm" dememeli, "yanlış pozisyon aldım" demeli. Referans his: Vampire Survivors'ın basit ama tatmin edici hareketi + Hades'in responsive dash'i, ama daha düşük hassasiyet beklentisiyle.
 
-## Detailed Design
+## Detailed Rules
 
 ### Core Rules
 
@@ -136,6 +136,7 @@ effective_dash_cd = base_dash_cooldown * (1 - dash_cd_modifier)
 | **Mutasyon Sistemi** | Upstream (sağlayıcı) | Soft — speed_modifier ve dash_cd_modifier sağlar. Mutasyon yoksa varsayılan değerler kullanılır |
 | **Gameplay HUD** | Downstream (bağımlı) | Soft — dash cooldown göstergesi okur |
 | **VFX / Juice** | Downstream (bağımlı) | Soft — dash event'leri dinler |
+| **Sprite Compositing** | Downstream (bağımlı) | Soft — sprite yönü ve animasyon state'i okur |
 
 ## Tuning Knobs
 
