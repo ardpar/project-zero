@@ -46,6 +46,23 @@ namespace Synthborn.Core
 
         private void Awake()
         {
+            // Force collision matrix — Library rebuild can reset these
+            int player = LayerMask.NameToLayer("Player");       // 6
+            int enemy = LayerMask.NameToLayer("Enemy");         // 7
+            int projectile = LayerMask.NameToLayer("Projectile"); // 8
+            int wall = LayerMask.NameToLayer("Wall");           // 9
+            int xpGem = LayerMask.NameToLayer("XPGem");         // 10
+
+            Physics2D.IgnoreLayerCollision(player, projectile, true);
+            Physics2D.IgnoreLayerCollision(player, player, true);
+            Physics2D.IgnoreLayerCollision(enemy, enemy, true);
+            Physics2D.IgnoreLayerCollision(enemy, xpGem, true);
+            Physics2D.IgnoreLayerCollision(projectile, projectile, true);
+            Physics2D.IgnoreLayerCollision(projectile, wall, true);
+            Physics2D.IgnoreLayerCollision(projectile, xpGem, true);
+            Physics2D.IgnoreLayerCollision(xpGem, wall, true);
+            Physics2D.IgnoreLayerCollision(xpGem, xpGem, true);
+
             var stats = new CombatStatBlock();
 
             // Create pools (no pre-warm — lazy instantiate to avoid layer/state issues)
