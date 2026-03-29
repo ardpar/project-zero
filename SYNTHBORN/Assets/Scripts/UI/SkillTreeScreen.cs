@@ -36,12 +36,9 @@ namespace Synthborn.UI
         {
             if (_panel == null) return;
 
-            // Fallback: load tree data from assets if not serialized
+            // Fallback: load tree data from Resources
             if (_treeData == null)
-            {
-                var allTrees = Resources.FindObjectsOfTypeAll<SkillTreeData>();
-                if (allTrees.Length > 0) _treeData = allTrees[0];
-            }
+                _treeData = Resources.Load<SkillTreeData>("SkillTreeData");
             if (_treeData == null) { Debug.LogError("[SkillTreeScreen] No SkillTreeData found!"); return; }
 
             // Fallback font

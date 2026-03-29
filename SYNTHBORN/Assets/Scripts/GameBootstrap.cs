@@ -110,13 +110,13 @@ namespace Synthborn.Core
                 );
 
                 // Apply equipped item stats
-                var itemDB = Resources.FindObjectsOfTypeAll<ItemDatabase>();
-                if (itemDB.Length > 0) InventoryManager.SetDatabase(itemDB[0]);
+                var itemDB = Resources.Load<ItemDatabase>("ItemDatabase");
+                if (itemDB != null) InventoryManager.SetDatabase(itemDB);
                 InventoryManager.ApplyEquipmentToStats(stats);
 
                 // Apply skill tree bonuses
-                var skillTrees = Resources.FindObjectsOfTypeAll<SkillTreeData>();
-                if (skillTrees.Length > 0) SkillTreeManager.SetTreeData(skillTrees[0]);
+                var skillTree = Resources.Load<SkillTreeData>("SkillTreeData");
+                if (skillTree != null) SkillTreeManager.SetTreeData(skillTree);
                 SkillTreeManager.ApplyToStats(stats);
             }
             else
