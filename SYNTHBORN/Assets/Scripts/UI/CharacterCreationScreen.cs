@@ -56,7 +56,7 @@ namespace Synthborn.UI
             string charName = _nameInput != null ? _nameInput.text.Trim() : "";
             if (string.IsNullOrEmpty(charName))
             {
-                if (_errorText != null) _errorText.text = "Enter a name!";
+                if (_errorText != null) _errorText.text = "Designasyon girin!";
                 return;
             }
 
@@ -154,7 +154,7 @@ namespace Synthborn.UI
                 selRect.offsetMin = Vector2.zero;
                 selRect.offsetMax = Vector2.zero;
                 var selText = selGO.GetComponent<Text>();
-                selText.text = "SELECTED";
+                selText.text = "SE\u00c7\u0130LD\u0130";
                 selText.fontSize = 10;
                 selText.color = Color.green;
                 selText.alignment = TextAnchor.MiddleCenter;

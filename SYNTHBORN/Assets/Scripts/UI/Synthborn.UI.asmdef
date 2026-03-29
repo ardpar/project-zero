@@ -8,6 +8,7 @@
         "Synthborn.Progression",
         "Synthborn.Mutations",
         "Synthborn.Waves",
+        "Synthborn.Enemies",
         "Unity.InputSystem"
     ],
     "includePlatforms": [],

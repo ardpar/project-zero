@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1560bf30d60a498496cbb59c8be3003, type: 3}
   m_Name: SentinelClass
   m_EditorClassIdentifier: Synthborn.Core::Synthborn.Core.ClassData
-  <ClassName>k__BackingField: Sentinel
-  <Description>k__BackingField: Balanced. Modest bonuses to everything.
+  <ClassName>k__BackingField: Balanced Frame
+  <Description>k__BackingField: "Standart Substrate kalibrasyonu. Arena'n\u0131n
+    varsay\u0131lan ba\u015Flang\u0131\xE7 konfig\xFCrasyonu."
   <HpModifier>k__BackingField: 0.1
   <DamageModifier>k__BackingField: 0.1
   <SpeedModifier>k__BackingField: 0.1

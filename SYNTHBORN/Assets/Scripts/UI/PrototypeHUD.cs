@@ -18,8 +18,9 @@ namespace Synthborn.UI
         [SerializeField] private Image _xpFill;
         [SerializeField] private Text _levelText;
 
-        [Header("Wave")]
+        [Header("Wave / Chamber")]
         [SerializeField] private Text _waveText;
+        [SerializeField] private Text _chamberText;
 
         [Header("Dash Cooldown")]
         [SerializeField] private Image _dashCDFill;
@@ -61,6 +62,8 @@ namespace Synthborn.UI
             GameEvents.OnWaveStarted += UpdateWave;
             GameEvents.OnWaveCleared += ShowWaveCleared;
             GameEvents.OnMutationApplied += OnMutationApplied;
+            GameEvents.OnChamberStarted += UpdateChamber;
+            UpdateChamberFromTrialManager();
         }
 
         private void OnDisable()
@@ -71,6 +74,7 @@ namespace Synthborn.UI
             GameEvents.OnWaveStarted -= UpdateWave;
             GameEvents.OnWaveCleared -= ShowWaveCleared;
             GameEvents.OnMutationApplied -= OnMutationApplied;
+            GameEvents.OnChamberStarted -= UpdateChamber;
         }
 
         private void UpdateHP(int current, int max)
@@ -107,6 +111,23 @@ namespace Synthborn.UI
         {
             if (_waveText != null)
                 _waveText.text = "Dalga Temizlendi!";
+        }
+
+        private void UpdateChamber(int chamberNumber)
+        {
+            if (_chamberText == null) return;
+            var tm = FindAnyObjectByType<Synthborn.Waves.TrialManager>();
+            if (tm?.CurrentChamber != null && tm.CurrentBiomeConfig != null)
+                _chamberText.text = $"Deneme Odas\u0131 {chamberNumber} \u2014 {tm.CurrentBiomeConfig.displayName}";
+            else if (tm?.CurrentChamber != null)
+                _chamberText.text = $"Deneme Odas\u0131 {chamberNumber}";
+        }
+
+        private void UpdateChamberFromTrialManager()
+        {
+            var tm = FindAnyObjectByType<Synthborn.Waves.TrialManager>();
+            if (tm != null && tm.IsTrialActive && tm.CurrentChamber != null)
+                UpdateChamber(tm.CurrentChamber.chamberNumber);
         }
 
         private void OnMutationApplied(string mutationId, bool isSlot)

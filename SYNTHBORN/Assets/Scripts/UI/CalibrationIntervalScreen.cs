@@ -21,8 +21,11 @@ namespace Synthborn.UI
         [SerializeField] private Text _lootListText;
         [SerializeField] private Transform _nextChamberContainer;
         [SerializeField] private Button _returnButton;
+        [SerializeField] private Button _inventoryButton;
 
         [SerializeField] private Font _font;
+
+        private CharacterScreen _characterScreen;
 
         private void OnEnable()
         {
@@ -37,6 +40,9 @@ namespace Synthborn.UI
         private void Start()
         {
             if (_panel != null) _panel.SetActive(false);
+            _characterScreen = FindAnyObjectByType<CharacterScreen>(FindObjectsInactive.Include);
+            if (_inventoryButton != null)
+                _inventoryButton.onClick.AddListener(OnInventoryClicked);
         }
 
         private void Show()
@@ -132,6 +138,12 @@ namespace Synthborn.UI
         {
             if (_panel != null) _panel.SetActive(false);
             _trialManager?.ReturnToArenaMap();
+        }
+
+        private void OnInventoryClicked()
+        {
+            if (_characterScreen != null)
+                _characterScreen.Show();
         }
     }
 }

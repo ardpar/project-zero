@@ -236,6 +236,10 @@ namespace Synthborn.Core.Events
         public static event Action<float> OnPlayerHealRequested;
         public static void RaisePlayerHealRequested(float fraction) => OnPlayerHealRequested?.Invoke(fraction);
 
+        // ─── Materials ───
+        public static event Action<string, Vector2> OnMaterialAwarded; // materialName, worldPos
+        public static void MaterialAwarded(string name, Vector2 pos) => OnMaterialAwarded?.Invoke(name, pos);
+
         // ─── Substrate Fragments ───
         public static event Action<int> OnFragmentChanged;
         public static void FragmentChanged(int total) => OnFragmentChanged?.Invoke(total);
@@ -292,6 +296,7 @@ namespace Synthborn.Core.Events
             OnLootDropped           = null;
             OnPlayerHealRequested   = null;
             OnFragmentChanged       = null;
+            OnMaterialAwarded       = null;
             OnLevelStarted          = null;
             OnLevelCleared          = null;
             OnChamberStarted        = null;

@@ -88,7 +88,7 @@ namespace Synthborn.Core
                 foreach (var c in classAssets)
                 {
                     // Match by index convention (classType 0-3)
-                    string[] classNames = { "Warrior", "Rogue", "Mage", "Sentinel" };
+                    string[] classNames = { "Dense Lattice", "Severed Thread", "Null Cascade", "Balanced Frame" };
                     if (character.classType >= 0 && character.classType < classNames.Length
                         && c.ClassName == classNames[character.classType])
                     {
@@ -208,8 +208,21 @@ namespace Synthborn.Core
                     int fragments = FragmentManager.RollFragmentDrop(tierIndex, pressure);
                     FragmentManager.AddFragments(fragments);
 
-                    // Award crafting materials (pressure-scaled)
+                    // Award crafting materials (pressure-scaled) with floating text
+                    var chSave = SaveManager.Character;
+                    int prevScrap = chSave?.scrapMetal ?? 0;
+                    int prevCrystal = chSave?.darkCrystals ?? 0;
+                    int prevEssence = chSave?.bossEssences ?? 0;
                     CraftingManager.AwardMaterials(tierIndex, pressure);
+                    if (chSave != null)
+                    {
+                        if (chSave.scrapMetal > prevScrap)
+                            GameEvents.MaterialAwarded("Residual Compound", pos);
+                        if (chSave.darkCrystals > prevCrystal)
+                            GameEvents.MaterialAwarded("Mutation Residue", pos);
+                        if (chSave.bossEssences > prevEssence)
+                            GameEvents.MaterialAwarded("Stabilized Core", pos);
+                    }
                 }
             };
 

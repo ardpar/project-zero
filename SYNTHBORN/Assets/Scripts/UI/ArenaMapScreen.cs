@@ -181,8 +181,28 @@ namespace Synthborn.UI
                 string biomeName = biomeConfig != null ? biomeConfig.displayName : biome.ToString();
                 string stars = new string('\u2605', pressure);
                 string status = completed ? "Tamamland\u0131" : "Hen\u00fcz tamamlanmad\u0131";
+                string lore = biomeConfig != null ? biomeConfig.loreDescription : "";
+                int waves = chamber != null ? chamber.waveCount : 5;
+                int estMinutes = Mathf.CeilToInt(waves * 1.5f);
 
-                _roomInfoDetails.text = $"Biome: {biomeName}\nBas\u0131n\u00e7: {stars}\nDurum: {status}";
+                // Enemy type summary
+                string enemies = "";
+                if (chamber?.spawnPool != null && chamber.spawnPool.Length > 0)
+                {
+                    var names = new System.Collections.Generic.List<string>();
+                    foreach (var entry in chamber.spawnPool)
+                    {
+                        if (entry.EnemyData != null && !names.Contains(entry.EnemyData.name))
+                            names.Add(entry.EnemyData.name.Replace("Data", ""));
+                    }
+                    enemies = string.Join(", ", names);
+                }
+
+                _roomInfoDetails.text =
+                    $"Biome: {biomeName}\n<size=11><color=#888>{lore}</color></size>\n" +
+                    $"Bas\u0131n\u00e7: {stars}  |  Dalga: {waves}  |  ~{estMinutes} dk\n" +
+                    $"D\u00fc\u015fmanlar: {enemies}\n" +
+                    $"Durum: {status}";
             }
 
             if (_roomInfoStartButton != null)

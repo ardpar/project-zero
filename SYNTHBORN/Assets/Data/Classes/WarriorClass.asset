@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1560bf30d60a498496cbb59c8be3003, type: 3}
   m_Name: WarriorClass
   m_EditorClassIdentifier: Synthborn.Core::Synthborn.Core.ClassData
-  <ClassName>k__BackingField: Warrior
-  <Description>k__BackingField: Tank fighter. High HP and armor, slower movement.
+  <ClassName>k__BackingField: Dense Lattice
+  <Description>k__BackingField: "Y\xFCksek k\xFCtle, y\xFCksek dayan\u0131kl\u0131l\u0131k.
+    Substrate'in en kal\u0131n dokuma formu."
   <HpModifier>k__BackingField: 0.2
   <DamageModifier>k__BackingField: 0
   <SpeedModifier>k__BackingField: -0.1

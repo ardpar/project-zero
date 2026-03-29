@@ -105,7 +105,55 @@ namespace Synthborn.Waves
             if (!_waitingForContinue) return;
             _waitingForContinue = false;
             Time.timeScale = 1f;
+
+            // Fade transition if changing biomes
+            var nextChamber = FindChamber(nextChamberNumber);
+            if (nextChamber != null && CurrentChamber != null
+                && nextChamber.biomeLayer != CurrentChamber.biomeLayer)
+            {
+                StartCoroutine(BiomeTransition(nextChamberNumber));
+                return;
+            }
+
             StartChamber(nextChamberNumber);
+        }
+
+        private System.Collections.IEnumerator BiomeTransition(int nextChamberNumber)
+        {
+            // Simple fade using CanvasGroup on a black overlay
+            var fadeObj = new GameObject("BiomeFade", typeof(RectTransform),
+                typeof(Canvas), typeof(UnityEngine.UI.Image));
+            var canvas = fadeObj.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.sortingOrder = 999;
+            var img = fadeObj.GetComponent<UnityEngine.UI.Image>();
+            img.color = Color.clear;
+            var rect = fadeObj.GetComponent<RectTransform>();
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.one;
+
+            // Fade to black
+            float t = 0f;
+            while (t < 0.3f)
+            {
+                t += Time.unscaledDeltaTime;
+                img.color = new Color(0, 0, 0, Mathf.Clamp01(t / 0.3f));
+                yield return null;
+            }
+
+            StartChamber(nextChamberNumber);
+            yield return null; // wait one frame
+
+            // Fade from black
+            t = 0f;
+            while (t < 0.3f)
+            {
+                t += Time.unscaledDeltaTime;
+                img.color = new Color(0, 0, 0, 1f - Mathf.Clamp01(t / 0.3f));
+                yield return null;
+            }
+
+            Destroy(fadeObj);
         }
 
         /// <summary>Called by CalibrationIntervalScreen to return to Arena Map.</summary>
