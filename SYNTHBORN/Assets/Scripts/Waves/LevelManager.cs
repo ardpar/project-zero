@@ -30,6 +30,9 @@ namespace Synthborn.Waves
         /// <summary>Current level's display name.</summary>
         public string CurrentLevelName { get; private set; } = "";
 
+        /// <summary>Active modifier for current level.</summary>
+        public LevelModifier CurrentModifier { get; private set; }
+
         private bool _waitingForContinue;
 
         private void OnEnable()
@@ -59,8 +62,10 @@ namespace Synthborn.Waves
                 int xpReward = 50 + CurrentLevel * 10;
                 int levelUps = ch.AddXP(xpReward);
 
-                // Award gold bonus
+                // Award gold bonus (with milestone multiplier)
                 int goldBonus = 20 + CurrentLevel * 5;
+                if (IsMilestoneLevel(CurrentLevel))
+                    goldBonus *= 3; // 3x gold on milestone levels
                 Synthborn.Core.Persistence.GoldManager.AddGold(goldBonus);
                 ch.gold = Synthborn.Core.Persistence.GoldManager.RunGold;
 
@@ -85,13 +90,14 @@ namespace Synthborn.Waves
         {
             CurrentLevel = levelNumber;
             var levelData = GetLevelData(levelNumber);
+            CurrentModifier = LevelModifier.RandomForLevel(levelNumber);
 
             CurrentLevelName = levelData.levelName;
 
             // Swap biome visuals
             SwapBiome(levelData);
 
-            // Configure WaveSpawner for this level
+            // Configure WaveSpawner for this level (with modifier)
             ConfigureWaves(levelData, levelNumber);
 
             // Fire event
@@ -117,11 +123,35 @@ namespace Synthborn.Waves
             // Build dynamic WaveTableData for this level
             float difficulty = level.difficultyMultiplier;
 
-            // For infinite levels beyond defined data, scale difficulty
+            // S-curve difficulty: gentle early, steep mid, asymptotic late
             if (levelNumber > _levels.Length)
             {
-                float extraScale = 1f + (levelNumber - _levels.Length) * _scalingPerLevel;
+                float n = levelNumber - _levels.Length;
+                // Learning (1-15): +15%/level, Mastery (16-55): +25%/level, Endgame (56+): logarithmic
+                float extraScale;
+                if (n <= 15)
+                    extraScale = 1f + n * 0.15f;
+                else if (n <= 55)
+                    extraScale = 1f + 15 * 0.15f + (n - 15) * 0.25f;
+                else
+                    extraScale = 1f + 15 * 0.15f + 40 * 0.25f + Mathf.Log(n - 54) * 2f;
                 difficulty *= extraScale;
+            }
+
+            // Apply modifier effects
+            float spawnRateMultiplier = 1f;
+            float eliteMultiplier = 1f;
+            if (CurrentModifier != null)
+            {
+                switch (CurrentModifier.type)
+                {
+                    case ModifierType.Enraged: difficulty *= 0.75f; spawnRateMultiplier = 0.8f; break; // less HP but faster
+                    case ModifierType.ArmoredTide: difficulty *= 1.5f; spawnRateMultiplier = 1.3f; break; // tankier, slower spawns
+                    case ModifierType.EliteSurge: eliteMultiplier = 2f; break;
+                    case ModifierType.Swarm: spawnRateMultiplier = 0.5f; difficulty *= 0.6f; break; // many weak enemies
+                    case ModifierType.GoldFever: difficulty *= 1.3f; break;
+                    case ModifierType.FogOfWar: spawnRateMultiplier = 0.9f; break;
+                }
             }
 
             // Create wave definitions for this level
@@ -129,10 +159,12 @@ namespace Synthborn.Waves
             for (int i = 0; i < level.waveCount; i++)
             {
                 float interval = Mathf.Max(
-                    level.baseSpawnInterval - i * level.intervalDecreasePerWave,
-                    0.4f);
+                    (level.baseSpawnInterval - i * level.intervalDecreasePerWave) * spawnRateMultiplier,
+                    0.3f);
 
-                int elites = Mathf.Min(level.baseElites + i, level.maxElites);
+                int elites = Mathf.Min(
+                    Mathf.RoundToInt((level.baseElites + i) * eliteMultiplier),
+                    level.maxElites * 2);
 
                 waves[i] = new WaveDefinition
                 {
@@ -169,6 +201,11 @@ namespace Synthborn.Waves
             Debug.LogError("[LevelManager] No levels configured!");
             return ScriptableObject.CreateInstance<LevelData>();
         }
+
+        /// <summary>Check if a level is a milestone (bonus rewards).</summary>
+        public static bool IsMilestoneLevel(int level) =>
+            level == 10 || level == 25 || level == 50 || level == 75 || level == 100
+            || (level > 0 && level % 20 == 0);
 
         private static void SwapTiles(Tilemap tilemap, TileBase newTile)
         {

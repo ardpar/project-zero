@@ -38,18 +38,24 @@ namespace Synthborn.Core.Items
 
             int slotIdx = (int)item.SlotType;
 
-            // Unequip current item in that slot (put back in inventory)
+            // Unequip current item — preserve original ItemSaveEntry data
             string currentId = ch.equippedItemIds[slotIdx];
             if (!string.IsNullOrEmpty(currentId))
             {
-                ch.inventoryItems.Add(new ItemSaveEntry { itemId = currentId });
+                // Find the item's original save entry to preserve rarity/stats
+                var originalEntry = ch.inventoryItems.Find(e => e.itemId == currentId);
+                if (originalEntry != null)
+                    ch.inventoryItems.Add(originalEntry);
+                else
+                    ch.inventoryItems.Add(new ItemSaveEntry { itemId = currentId });
             }
+
+            // Remove the item being equipped from inventory
+            int removeIdx = ch.inventoryItems.FindIndex(e => e.itemId == item.Id);
+            if (removeIdx >= 0) ch.inventoryItems.RemoveAt(removeIdx);
 
             // Equip new item
             ch.equippedItemIds[slotIdx] = item.Id;
-
-            // Remove from inventory
-            ch.inventoryItems.RemoveAll(e => e.itemId == item.Id);
 
             SaveManager.SaveSlot();
         }
@@ -93,6 +99,48 @@ namespace Synthborn.Core.Items
                 if (item != null) result.Add(item);
             }
             return result;
+        }
+
+        /// <summary>Sell an item from inventory for gold.</summary>
+        public static bool SellItem(string itemId)
+        {
+            var ch = SaveManager.Character;
+            if (ch == null || _database == null) return false;
+
+            int idx = ch.inventoryItems.FindIndex(e => e.itemId == itemId);
+            if (idx < 0) return false;
+
+            var item = _database.GetById(itemId);
+            int sellPrice = item != null ? GetSellPrice(item.Rarity) : 5;
+
+            ch.inventoryItems.RemoveAt(idx);
+            ch.gold += sellPrice;
+            SaveManager.SaveSlot();
+            return true;
+        }
+
+        /// <summary>Gold value for selling an item by rarity.</summary>
+        public static int GetSellPrice(ItemRarity rarity) => rarity switch
+        {
+            ItemRarity.Common => 10,
+            ItemRarity.Uncommon => 25,
+            ItemRarity.Rare => 75,
+            ItemRarity.Epic => 200,
+            ItemRarity.Legendary => 500,
+            _ => 5
+        };
+
+        /// <summary>Get inventory items sorted by slot type then rarity (descending).</summary>
+        public static List<ItemData> GetInventoryItemsSorted()
+        {
+            var items = GetInventoryItems();
+            items.Sort((a, b) =>
+            {
+                int slotCmp = ((int)a.SlotType).CompareTo((int)b.SlotType);
+                if (slotCmp != 0) return slotCmp;
+                return ((int)b.Rarity).CompareTo((int)a.Rarity); // higher rarity first
+            });
+            return items;
         }
 
         /// <summary>Get total stat summary from all equipped items.</summary>

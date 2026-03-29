@@ -190,7 +190,7 @@ namespace Synthborn.UI
             if (_inventoryContainer == null) return;
             foreach (Transform child in _inventoryContainer) Destroy(child.gameObject);
 
-            var items = InventoryManager.GetInventoryItems();
+            var items = InventoryManager.GetInventoryItemsSorted();
             if (_inventoryTitle != null)
                 _inventoryTitle.text = $"BAG ({items.Count})";
 

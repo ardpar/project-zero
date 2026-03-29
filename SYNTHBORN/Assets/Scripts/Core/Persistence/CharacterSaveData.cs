@@ -38,6 +38,14 @@ namespace Synthborn.Core.Persistence
         // Economy
         public int gold;
 
+        // Crafting Materials
+        public int scrapMetal;
+        public int darkCrystals;
+        public int bossEssences;
+
+        // Star Ratings (best star count per level, index = level-1)
+        public List<int> levelStars = new();
+
         // Meta
         public string lastPlayedDate = "";
         public float totalPlayTime;
