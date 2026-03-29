@@ -92,8 +92,12 @@ namespace Synthborn.UI
             tRect.anchorMax = Vector2.one;
             tRect.sizeDelta = Vector2.zero;
             var text = textGO.GetComponent<Text>();
-            text.text = completed ? $"{levelNumber}\n<size=10>\u2713</size>" : levelNumber.ToString();
-            text.fontSize = 18;
+            // S12-12: Difficulty stars based on level number
+            int stars = Mathf.Clamp((levelNumber - 1) / 20 + 1, 1, 5);
+            string starStr = new string('\u2605', stars);
+            string checkmark = completed ? "\n<size=10>\u2713</size>" : "";
+            text.text = $"{levelNumber}\n<size=8>{starStr}</size>{checkmark}";
+            text.fontSize = 16;
             text.color = unlocked ? Color.white : Color.gray;
             text.alignment = TextAnchor.MiddleCenter;
             text.font = _font;

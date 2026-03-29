@@ -50,10 +50,14 @@ namespace Synthborn.UI
             if (_titleText != null)
                 _titleText.text = $"LEVEL {level} COMPLETE";
 
-            if (_infoText != null)
-                _infoText.text = $"Gold: {GoldManager.RunGold}\nHP restored +30%";
+            var ch = SaveManager.Character;
+            string charInfo = ch != null
+                ? $"Character Lv.{ch.characterLevel}  |  XP: {ch.characterXP}/{ch.XPToNextLevel}"
+                : "";
 
-            // Heal player 30%
+            if (_infoText != null)
+                _infoText.text = $"Gold: {GoldManager.RunGold}\n{charInfo}\n\nHP restored +30%";
+
             GameEvents.RaisePlayerHealRequested(0.3f);
         }
 

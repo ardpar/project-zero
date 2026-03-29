@@ -150,6 +150,10 @@ namespace Synthborn.UI
                 selText.raycastTarget = false;
             }
 
+            // S12-11: Hover animation on class cards
+            if (cardGO.GetComponent<ButtonHoverEffect>() == null)
+                cardGO.AddComponent<ButtonHoverEffect>();
+
             int captured = index;
             cardGO.GetComponent<Button>().onClick.AddListener(() => {
                 _selectedClass = captured;

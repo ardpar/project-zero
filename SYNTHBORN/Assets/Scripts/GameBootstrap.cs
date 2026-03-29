@@ -75,14 +75,46 @@ namespace Synthborn.Core
 
             var stats = new CombatStatBlock();
 
-            // S10-07: Apply persistent upgrades at run start
+            // Apply persistent upgrades at run start
             UpgradeManager.ApplyToStats(stats);
 
-            // Apply starter form stats
-            var forms = Resources.FindObjectsOfTypeAll<StarterFormData>();
-            int formIndex = SaveManager.Data.selectedStarterForm;
-            if (forms != null && formIndex >= 0 && formIndex < forms.Length)
-                forms[formIndex].ApplyToStats(stats);
+            // Apply character class stats
+            var character = SaveManager.Character;
+            if (character != null)
+            {
+                var classAssets = Resources.FindObjectsOfTypeAll<ClassData>();
+                foreach (var c in classAssets)
+                {
+                    // Match by index convention (classType 0-3)
+                    string[] classNames = { "Warrior", "Rogue", "Mage", "Sentinel" };
+                    if (character.classType >= 0 && character.classType < classNames.Length
+                        && c.ClassName == classNames[character.classType])
+                    {
+                        c.ApplyToStats(stats);
+                        break;
+                    }
+                }
+
+                // Apply stat points (STR=DMG, VIT=HP, AGI=Speed, LCK=Crit, WIS=XP via UpgradeManager)
+                float strBonus = character.statPoints[0] * 0.02f; // +2% DMG per point
+                float vitBonus = character.statPoints[1] * 0.03f; // +3% HP per point
+                float agiBonus = character.statPoints[2] * 0.02f; // +2% Speed per point
+                float lckBonus = character.statPoints[3] * 0.01f; // +1% Crit per point
+                stats.ApplyMutation(
+                    damageModifier: strBonus,
+                    hpModifier: vitBonus,
+                    speedModifier: agiBonus,
+                    critChance: lckBonus
+                );
+            }
+            else
+            {
+                // Fallback: apply starter form (old system) if no character loaded
+                var forms = Resources.FindObjectsOfTypeAll<StarterFormData>();
+                int formIndex = SaveManager.Data.selectedStarterForm;
+                if (forms != null && formIndex >= 0 && formIndex < forms.Length)
+                    forms[formIndex].ApplyToStats(stats);
+            }
 
             // Create pools (no pre-warm — lazy instantiate to avoid layer/state issues)
             var enemyPool = new ObjectPool<EnemyBrain>(

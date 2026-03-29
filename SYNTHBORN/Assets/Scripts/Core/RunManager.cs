@@ -97,10 +97,15 @@ namespace Synthborn.Core
                 ? $"\n<color=#FFD700>+{newAchievements} Achievement{(newAchievements > 1 ? "s" : "")}!</color>"
                 : "";
 
+            // Get current map level from PlayerPrefs (set by WorldMapScreen)
+            int mapLevel = PlayerPrefs.GetInt("SelectedLevel", 0);
+            string levelInfo = mapLevel > 0 ? $"Map Level: {mapLevel}\n" : "";
+
             _statsText.text =
+                $"{levelInfo}" +
                 $"Time: {minutes:00}:{seconds:00}\n" +
                 $"Kills: {_stats.EnemiesKilled}\n" +
-                $"Level: {_stats.FinalLevel}\n" +
+                $"Player Lv: {_stats.FinalLevel}\n" +
                 $"Mutations: {_stats.MutationsAcquired}\n" +
                 $"Synergies: {_stats.SynergiesTriggered}\n" +
                 $"Waves: {_stats.WavesCleared}\n\n" +
@@ -119,7 +124,11 @@ namespace Synthborn.Core
         {
             Time.timeScale = 1f;
             GameEvents.Cleanup();
-            SceneManager.LoadScene("MainMenu");
+            // Return to WorldMap if character is loaded, otherwise MainMenu
+            if (Persistence.SaveManager.Character != null)
+                SceneManager.LoadScene("WorldMap");
+            else
+                SceneManager.LoadScene("MainMenu");
         }
     }
 }

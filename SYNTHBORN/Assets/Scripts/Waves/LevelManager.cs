@@ -50,11 +50,20 @@ namespace Synthborn.Waves
 
         private void OnBossDefeated()
         {
-            // Mark level as completed in save data
             var ch = Synthborn.Core.Persistence.SaveManager.Character;
             if (ch != null)
             {
                 ch.CompleteLevel(CurrentLevel);
+
+                // Award XP based on level difficulty
+                int xpReward = 50 + CurrentLevel * 10;
+                int levelUps = ch.AddXP(xpReward);
+
+                // Award gold bonus
+                int goldBonus = 20 + CurrentLevel * 5;
+                Synthborn.Core.Persistence.GoldManager.AddGold(goldBonus);
+                ch.gold = Synthborn.Core.Persistence.GoldManager.RunGold;
+
                 Synthborn.Core.Persistence.SaveManager.SaveSlot();
             }
 
