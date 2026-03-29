@@ -10,6 +10,7 @@ using Synthborn.Progression;
 using Synthborn.Waves;
 using Synthborn.Mutations;
 using Synthborn.Core.Persistence;
+using Synthborn.Core.Items;
 using Synthborn.UI;
 
 namespace Synthborn.Core
@@ -106,6 +107,11 @@ namespace Synthborn.Core
                     speedModifier: agiBonus,
                     critChance: lckBonus
                 );
+
+                // Apply equipped item stats
+                var itemDB = Resources.FindObjectsOfTypeAll<ItemDatabase>();
+                if (itemDB.Length > 0) InventoryManager.SetDatabase(itemDB[0]);
+                InventoryManager.ApplyEquipmentToStats(stats);
             }
             else
             {
