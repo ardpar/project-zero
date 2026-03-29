@@ -31,9 +31,13 @@ namespace Synthborn.Core.Persistence
         // Skill Tree
         public List<string> unlockedSkillNodes = new();
 
-        // World Map
+        // World Map (legacy level-based)
         public List<int> completedLevels = new();
         public int highestLevelUnlocked = 1;
+
+        // Arena Map (Trial Chambers)
+        public List<int> completedChambers = new();
+        public List<int> unlockedChambers = new() { 1 }; // Chamber 1 always unlocked
 
         // Economy
         public int gold;
@@ -63,6 +67,30 @@ namespace Synthborn.Core.Persistence
                 completedLevels.Add(levelNumber);
             if (levelNumber >= highestLevelUnlocked)
                 highestLevelUnlocked = levelNumber + 1;
+        }
+
+        // ─── Trial Chamber helpers ───
+
+        /// <summary>Check if a chamber is unlocked.</summary>
+        public bool IsChamberUnlocked(int chamberNumber) => unlockedChambers.Contains(chamberNumber);
+
+        /// <summary>Check if a chamber is completed.</summary>
+        public bool IsChamberCompleted(int chamberNumber) => completedChambers.Contains(chamberNumber);
+
+        /// <summary>Mark a chamber as completed and unlock adjacent chambers.</summary>
+        public void CompleteChamber(int chamberNumber, int[] adjacentChambers)
+        {
+            if (!completedChambers.Contains(chamberNumber))
+                completedChambers.Add(chamberNumber);
+
+            if (adjacentChambers != null)
+            {
+                foreach (int adj in adjacentChambers)
+                {
+                    if (!unlockedChambers.Contains(adj))
+                        unlockedChambers.Add(adj);
+                }
+            }
         }
 
         /// <summary>XP needed for next level. Exponential curve with soft cap.</summary>

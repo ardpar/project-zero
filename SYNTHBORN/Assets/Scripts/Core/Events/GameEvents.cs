@@ -247,6 +247,17 @@ namespace Synthborn.Core.Events
         public static event Action<int> OnLevelCleared;
         public static void LevelCleared(int level) => OnLevelCleared?.Invoke(level);
 
+        // ─── Trial Chambers ───
+        public static event Action<int> OnChamberStarted; // chamberNumber
+        public static event Action<int> OnChamberCleared; // chamberNumber
+        public static event Action OnCalibrationIntervalStarted;
+        public static event Action OnReturnToArenaMap;
+
+        public static void ChamberStarted(int chamber) => OnChamberStarted?.Invoke(chamber);
+        public static void ChamberCleared(int chamber) => OnChamberCleared?.Invoke(chamber);
+        public static void CalibrationIntervalStarted() => OnCalibrationIntervalStarted?.Invoke();
+        public static void ReturnToArenaMap() => OnReturnToArenaMap?.Invoke();
+
         /// Clears ALL event subscriptions. Call on run reset or scene unload
         /// to prevent stale subscribers from leaking across runs.
         /// </summary>
@@ -280,6 +291,10 @@ namespace Synthborn.Core.Events
             OnGoldChanged           = null;
             OnLevelStarted          = null;
             OnLevelCleared          = null;
+            OnChamberStarted        = null;
+            OnChamberCleared        = null;
+            OnCalibrationIntervalStarted = null;
+            OnReturnToArenaMap      = null;
         }
     }
 }
