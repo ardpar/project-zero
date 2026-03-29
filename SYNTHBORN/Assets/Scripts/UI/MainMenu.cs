@@ -20,16 +20,16 @@ namespace Synthborn.UI
                 EventSystem.current?.SetSelectedGameObject(_newGameButton.gameObject);
         }
 
-        /// <summary>New Game: show load screen to pick empty slot, then character creation.</summary>
+        /// <summary>New Game: show slot picker in new-game mode.</summary>
         public void OnNewGameClicked()
         {
-            _loadGameScreen?.Show();
+            _loadGameScreen?.Show(isNewGame: true);
         }
 
-        /// <summary>Load Game: show load screen to pick existing save.</summary>
+        /// <summary>Load Game: show slot picker in load mode (only filled slots).</summary>
         public void OnLoadGameClicked()
         {
-            _loadGameScreen?.Show();
+            _loadGameScreen?.Show(isNewGame: false);
         }
 
         public void OnQuitClicked()
