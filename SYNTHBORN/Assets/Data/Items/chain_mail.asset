@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef4b10c5fea3436eacf664b05dafc92, type: 3}
+  m_Name: chain_mail
+  m_EditorClassIdentifier: Synthborn.Core::Synthborn.Core.Items.ItemData
+  <Id>k__BackingField: chain_mail
+  <DisplayName>k__BackingField: Chain Mail
+  <Description>k__BackingField: Uncommon Armor
+  <SlotType>k__BackingField: 1
+  <Rarity>k__BackingField: 1
+  <HpModifier>k__BackingField: 0.05
+  <DamageModifier>k__BackingField: 0
+  <SpeedModifier>k__BackingField: 0
+  <CritChance>k__BackingField: 0
+  <AttackSpeedModifier>k__BackingField: 0
+  <ArmorFlat>k__BackingField: 8
+  <DashCooldownModifier>k__BackingField: 0

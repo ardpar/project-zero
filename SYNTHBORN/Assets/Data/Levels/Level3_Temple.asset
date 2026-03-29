@@ -31,7 +31,7 @@ MonoBehaviour:
   baseSpawnInterval: 1.5
   intervalDecreasePerWave: 0.15
   baseWaveDuration: 90
-  bossData: {fileID: 11400000, guid: 5b69a6b68542e416688245fd55d9489d, type: 2}
+  bossData: {fileID: 11400000, guid: f701a6e99e35b433c982f7a92746d674, type: 2}
   bossChaserData: {fileID: 11400000, guid: c240c38597b3e46959b89b20ec0a166b, type: 2}
   difficultyMultiplier: 1.6
   baseElites: 2

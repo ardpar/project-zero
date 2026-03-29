@@ -202,6 +202,9 @@ namespace Synthborn.Core
                     int tierIndex = (int)brain.Data.Tier;
                     int gold = GoldManager.RollGoldDrop(tierIndex);
                     GoldManager.AddGold(gold);
+
+                    // Award crafting materials
+                    CraftingManager.AwardMaterials(tierIndex);
                 }
             };
 
