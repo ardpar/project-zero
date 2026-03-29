@@ -102,8 +102,8 @@ namespace Synthborn.UI
             // S12-12: Difficulty stars based on level number
             int stars = Mathf.Clamp((levelNumber - 1) / 20 + 1, 1, 5);
             string starStr = new string('\u2605', stars);
-            string checkmark = completed ? "\n<size=10>\u2713</size>" : "";
-            text.text = $"{levelNumber}\n<size=8>{starStr}</size>{checkmark}";
+            string statusIcon = completed ? "\n<size=10>\u2713</size>" : (!unlocked ? "\n<size=10>\uD83D\uDD12</size>" : "");
+            text.text = $"{levelNumber}\n<size=8>{starStr}</size>{statusIcon}";
             text.fontSize = 16;
             text.color = unlocked ? Color.white : Color.gray;
             text.alignment = TextAnchor.MiddleCenter;

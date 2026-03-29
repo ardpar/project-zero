@@ -16,6 +16,10 @@ namespace Synthborn.UI
         private GameObject _activePanel;
         private System.Action _closeCallback;
 
+        /// <summary>True when a popup is registered and active (PauseMenu should skip ESC).</summary>
+        public static bool IsActive => _instance != null && _instance._activePanel != null
+            && _instance._activePanel.activeSelf;
+
         private void Awake()
         {
             _instance = this;

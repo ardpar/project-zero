@@ -55,19 +55,17 @@ namespace Synthborn.UI
 
         private IEnumerator TutorialSequence()
         {
-            // Step 1: Movement (show immediately)
-            yield return new WaitForSecondsRealtime(1f);
-            yield return ShowHint("WASD to move");
+            bool gamepad = UnityEngine.InputSystem.Gamepad.current != null;
 
-            // Step 2: Auto-attack
+            yield return new WaitForSecondsRealtime(1f);
+            yield return ShowHint(gamepad ? "Left Stick to move" : "WASD to move");
+
             yield return new WaitForSecondsRealtime(1f);
             yield return ShowHint("You attack automatically — get close to enemies");
 
-            // Step 3: Dash
             yield return new WaitForSecondsRealtime(2f);
-            yield return ShowHint("SPACE to dash — dodge attacks");
+            yield return ShowHint(gamepad ? "South Button to dash — dodge attacks" : "SPACE to dash — dodge attacks");
 
-            // Step 4: XP gems
             yield return new WaitForSecondsRealtime(2f);
             yield return ShowHint("Collect gems to level up and gain mutations");
 

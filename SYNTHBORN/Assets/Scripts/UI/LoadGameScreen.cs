@@ -82,7 +82,7 @@ namespace Synthborn.UI
             {
                 string className = GetClassName(data.classType);
                 label = $"Slot {slotIndex + 1}: {data.characterName}\n" +
-                        $"Lv.{data.characterLevel}  |  {className}  |  Level {data.highestLevelUnlocked - 1} cleared  |  {data.lastPlayedDate}";
+                        $"Lv.{data.characterLevel}  |  {className}  |  {data.completedLevels.Count} levels cleared  |  {data.lastPlayedDate}";
             }
             else
             {
@@ -116,9 +116,20 @@ namespace Synthborn.UI
         {
             if (_isNewGame)
             {
-                // New Game mode: empty → create, filled → overwrite (delete + create)
                 if (hasData)
-                    SaveManager.DeleteSlot(slot);
+                {
+                    // Confirm before overwriting existing save
+                    var peekData = SaveManager.PeekSlot(slot);
+                    string name = peekData?.characterName ?? "?";
+                    ConfirmationModal.Show(
+                        $"Overwrite {name} Lv.{peekData?.characterLevel}?\nThis cannot be undone!",
+                        () => {
+                            SaveManager.DeleteSlot(slot);
+                            Hide();
+                            _creationScreen?.Show(slot);
+                        });
+                    return;
+                }
                 Hide();
                 _creationScreen?.Show(slot);
             }

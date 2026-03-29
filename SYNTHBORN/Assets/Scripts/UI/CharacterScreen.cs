@@ -106,7 +106,7 @@ namespace Synthborn.UI
                 $"<color=#66FF66>VIT</color>  {ch.statPoints[1]}  (+{totalHP * 100:F0}% HP)\n" +
                 $"<color=#6666FF>AGI</color>  {ch.statPoints[2]}  (+{totalSPD * 100:F0}% SPD)\n" +
                 $"<color=#FFFF66>LCK</color>  {ch.statPoints[3]}  (+{totalCRIT * 100:F0}% CRIT)\n" +
-                $"<color=#66FFFF>WIS</color>  {ch.statPoints[4]}\n\n" +
+                $"<color=#66FFFF>WIS</color>  {ch.statPoints[4]}  (+{ch.statPoints[4] * 3:F0}% XP)\n\n" +
                 $"Armor: {totalARM}\n" +
                 $"Gold: {ch.gold}\n" +
                 $"XP: {ch.characterXP}/{ch.XPToNextLevel}\n" +

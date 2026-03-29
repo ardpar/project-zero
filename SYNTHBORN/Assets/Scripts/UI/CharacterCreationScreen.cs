@@ -105,6 +105,18 @@ namespace Synthborn.UI
             nText.font = _font;
             nText.raycastTarget = false;
 
+            // Description
+            string desc = !string.IsNullOrEmpty(classData.Description) ? classData.Description : "";
+            var descGO = new GameObject("Desc", typeof(RectTransform), typeof(Text));
+            descGO.transform.SetParent(cardGO.transform, false);
+            var dRect = descGO.GetComponent<RectTransform>();
+            dRect.anchorMin = new Vector2(0, 0.55f);
+            dRect.anchorMax = new Vector2(1, 0.75f);
+            dRect.sizeDelta = Vector2.zero; dRect.offsetMin = Vector2.zero; dRect.offsetMax = Vector2.zero;
+            var dText = descGO.GetComponent<Text>();
+            dText.text = desc; dText.fontSize = 9; dText.color = new Color(0.7f, 0.7f, 0.7f);
+            dText.alignment = TextAnchor.MiddleCenter; dText.font = _font; dText.raycastTarget = false;
+
             // Stats
             string stats = "";
             if (classData.HpModifier != 0) stats += $"HP: {classData.HpModifier:+0%;-0%}\n";
@@ -118,7 +130,7 @@ namespace Synthborn.UI
             statsGO.transform.SetParent(cardGO.transform, false);
             var sRect = statsGO.GetComponent<RectTransform>();
             sRect.anchorMin = new Vector2(0, 0.15f);
-            sRect.anchorMax = new Vector2(1, 0.75f);
+            sRect.anchorMax = new Vector2(1, 0.55f);
             sRect.sizeDelta = Vector2.zero;
             sRect.offsetMin = Vector2.zero;
             sRect.offsetMax = Vector2.zero;

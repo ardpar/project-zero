@@ -14,6 +14,13 @@ namespace Synthborn.UI
     {
         [SerializeField] private GameObject _pausePanel;
         [SerializeField] private Button _resumeButton;
+        [SerializeField] private SettingsScreen _settingsScreen;
+
+        /// <summary>Open settings from pause menu.</summary>
+        public void OpenSettings()
+        {
+            _settingsScreen?.Show();
+        }
 
         private bool _isPaused;
 
@@ -32,6 +39,9 @@ namespace Synthborn.UI
 
             if (escPressed || startPressed)
             {
+                // Don't toggle pause if a popup is being closed by the same ESC press
+                if (PopupEscHandler.IsActive) return;
+
                 if (_isPaused) Resume();
                 else Pause();
             }

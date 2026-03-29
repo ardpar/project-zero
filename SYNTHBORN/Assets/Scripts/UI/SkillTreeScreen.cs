@@ -225,7 +225,15 @@ namespace Synthborn.UI
             if (node.goldGainBonus != 0) stats += $"Gold {node.goldGainBonus:+0%;-0%}  ";
             if (node.dropRateBonus != 0) stats += $"Drop {node.dropRateBonus:+0%;-0%}  ";
 
-            return $"<b>{node.displayName}</b>\n{node.description}\n{stats}\n{status}";
+            string prereq = "";
+            if (!unlocked && !string.IsNullOrEmpty(node.prerequisiteNodeId))
+            {
+                bool prereqMet = SkillTreeManager.IsUnlocked(node.prerequisiteNodeId);
+                if (!prereqMet)
+                    prereq = $"\n<color=red>Requires: {node.prerequisiteNodeId}</color>";
+            }
+
+            return $"<b>{node.displayName}</b>\n{node.description}\n{stats}\n{status}{prereq}";
         }
 
         private IEnumerator UnlockPulse()
@@ -245,8 +253,12 @@ namespace Synthborn.UI
 
         private void OnReset()
         {
-            if (SkillTreeManager.TryReset(_resetCost))
-                Refresh();
+            ConfirmationModal.Show(
+                $"Reset all skills for {_resetCost} gold?\nAll points will be refunded.",
+                () => {
+                    if (SkillTreeManager.TryReset(_resetCost))
+                        Refresh();
+                });
         }
     }
 }
