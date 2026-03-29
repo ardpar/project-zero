@@ -44,23 +44,32 @@ namespace Synthborn.Waves
 
         private void Start()
         {
-            StartLevel(1);
+            int selectedLevel = PlayerPrefs.GetInt("SelectedLevel", 1);
+            StartLevel(selectedLevel);
         }
 
         private void OnBossDefeated()
         {
+            // Mark level as completed in save data
+            var ch = Synthborn.Core.Persistence.SaveManager.Character;
+            if (ch != null)
+            {
+                ch.CompleteLevel(CurrentLevel);
+                Synthborn.Core.Persistence.SaveManager.SaveSlot();
+            }
+
             GameEvents.LevelCleared(CurrentLevel);
             _waitingForContinue = true;
-
-            // Show level transition UI (LevelTransitionScreen listens to OnLevelCleared)
         }
 
-        /// <summary>Called by LevelTransitionScreen's Continue button.</summary>
-        public void ContinueToNextLevel()
+        /// <summary>Called by LevelTransitionScreen to return to world map.</summary>
+        public void ReturnToWorldMap()
         {
             if (!_waitingForContinue) return;
             _waitingForContinue = false;
-            StartLevel(CurrentLevel + 1);
+            Time.timeScale = 1f;
+            GameEvents.Cleanup();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("WorldMap");
         }
 
         private void StartLevel(int levelNumber)

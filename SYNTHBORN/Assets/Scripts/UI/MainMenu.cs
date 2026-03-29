@@ -5,23 +5,31 @@ using UnityEngine.EventSystems;
 namespace Synthborn.UI
 {
     /// <summary>
-    /// Main Menu controller. Loads gameplay scene on Play, quits on Quit.
-    /// Sets default selected button for gamepad navigation.
+    /// Main Menu: New Game, Load Game, Settings, Quit.
     /// </summary>
     public class MainMenu : MonoBehaviour
     {
-        [SerializeField] private Button _playButton;
+        [SerializeField] private Button _newGameButton;
+        [SerializeField] private Button _loadGameButton;
+        [SerializeField] private LoadGameScreen _loadGameScreen;
+        [SerializeField] private CharacterCreationScreen _creationScreen;
 
         private void Start()
         {
-            // Select play button for gamepad navigation
-            if (_playButton != null)
-                EventSystem.current?.SetSelectedGameObject(_playButton.gameObject);
+            if (_newGameButton != null)
+                EventSystem.current?.SetSelectedGameObject(_newGameButton.gameObject);
         }
 
-        public void OnPlayClicked()
+        /// <summary>New Game: show load screen to pick empty slot, then character creation.</summary>
+        public void OnNewGameClicked()
         {
-            SceneFader.LoadScene("SampleScene");
+            _loadGameScreen?.Show();
+        }
+
+        /// <summary>Load Game: show load screen to pick existing save.</summary>
+        public void OnLoadGameClicked()
+        {
+            _loadGameScreen?.Show();
         }
 
         public void OnQuitClicked()

@@ -60,10 +60,9 @@ namespace Synthborn.UI
         private void OnContinue()
         {
             if (_panel != null) _panel.SetActive(false);
-            Time.timeScale = 1f;
 
             if (_levelManager != null)
-                _levelManager.ContinueToNextLevel();
+                _levelManager.ReturnToWorldMap();
         }
     }
 }
