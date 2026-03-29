@@ -18,8 +18,9 @@ namespace Synthborn.Progression
         /// <summary>Get XP required for a specific level (1-based).</summary>
         public int GetXPForLevel(int level)
         {
+            if (level < 1) level = 1;
             int idx = level - 1;
-            if (idx >= 0 && idx < xpTable.Length)
+            if (idx < xpTable.Length)
                 return xpTable[idx];
 
             // Fallback: exponential growth beyond table

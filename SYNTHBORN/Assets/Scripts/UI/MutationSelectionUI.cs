@@ -49,11 +49,13 @@ namespace Synthborn.UI
         private void OnEnable()
         {
             GameEvents.OnLevelUp += OnLevelUp;
+            GameEvents.OnPlayerDied += OnPlayerDied;
         }
 
         private void OnDisable()
         {
             GameEvents.OnLevelUp -= OnLevelUp;
+            GameEvents.OnPlayerDied -= OnPlayerDied;
         }
 
         private void OnLevelUp(int newLevel)
@@ -113,6 +115,18 @@ namespace Synthborn.UI
         {
             if (_panel != null)
                 _panel.SetActive(false);
+        }
+
+        private void OnPlayerDied()
+        {
+            // If mutation selection is open when the player dies,
+            // close it so the game-over screen can take over.
+            if (_panel != null && _panel.activeSelf)
+            {
+                StopAllCoroutines();
+                Hide();
+                // Don't restore timeScale — RunManager handles it for game-over
+            }
         }
 
         private void OnCardSelected(int index)

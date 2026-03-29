@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 445571c0eb1ac4726b2f6e686db891dc, type: 3}
+  m_Name: AdaptiveMusicConfig
+  m_EditorClassIdentifier: Synthborn.Core.Audio::Synthborn.Core.Audio.AdaptiveMusicConfig
+  calmStem: {fileID: 8300000, guid: bc9c265e0622d4a4d9c6297ca09bab65, type: 3}
+  lowStem: {fileID: 8300000, guid: 95b11cd6d1a7a4397a2a7ba34619eac6, type: 3}
+  mediumStem: {fileID: 8300000, guid: ee796264f9a9544c4be48820d278e501, type: 3}
+  highStem: {fileID: 8300000, guid: 2e837e2ff179a4f60a6c0227aa4e91c7, type: 3}
+  masterVolume: 0.4
+  crossfadeDuration: 1.5
+  lowToMediumWave: 4
+  mediumToHighWave: 7

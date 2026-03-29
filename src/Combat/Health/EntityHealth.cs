@@ -186,8 +186,12 @@ namespace Synthborn.Combat.Health
 
         private void Die()
         {
-            _isDead    = true;
-            _currentHp = 0;
+            _isDead         = true;
+            _isInvulnerable = false;
+            _currentHp      = 0;
+
+            // Stop invulnerability coroutine if running (prevents stale state on pool reuse)
+            StopAllCoroutines();
 
             if (_isPlayer)
             {

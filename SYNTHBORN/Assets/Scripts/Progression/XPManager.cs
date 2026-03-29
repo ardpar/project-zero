@@ -11,6 +11,8 @@ namespace Synthborn.Progression
     {
         [SerializeField] private XPLevelTable _levelTable;
 
+        private const int MaxLevel = 99;
+
         private int _currentXP;
         private int _level = 1;
 
@@ -32,13 +34,17 @@ namespace Synthborn.Progression
             _currentXP += amount;
             GameEvents.XPChanged(_currentXP, XPToNext);
 
-            // Chain level-up: while loop handles overflow
-            while (_currentXP >= XPToNext)
+            // Chain level-up: while loop handles overflow, capped at MaxLevel
+            while (_currentXP >= XPToNext && _level < MaxLevel)
             {
                 _currentXP -= XPToNext;
                 _level++;
                 GameEvents.LevelUp(_level);
             }
+
+            // At max level, discard overflow XP
+            if (_level >= MaxLevel)
+                _currentXP = 0;
 
             GameEvents.XPChanged(_currentXP, XPToNext);
         }
