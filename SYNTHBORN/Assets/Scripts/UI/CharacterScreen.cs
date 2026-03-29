@@ -31,6 +31,20 @@ namespace Synthborn.UI
 
         private const int GridColumns = 5;
         private const float CellSize = 64f;
+        private const float EquipSlotSize = 72f;
+
+        // Equipment slot positions (normalized within equipment container)
+        // Layout like the reference image: head top-center, chest center,
+        // arms left, hands right, legs bottom-center, weapon bottom-left, etc.
+        private static readonly (ItemSlotType slot, Vector2 pos, string icon)[] EquipLayout = new[]
+        {
+            (ItemSlotType.Helmet,    new Vector2(0.50f, 0.82f), "\u26D1"),  // ⛑ Head — top center
+            (ItemSlotType.Armor,     new Vector2(0.50f, 0.55f), "\u26E8"),  // ⛨ Chest — center
+            (ItemSlotType.Weapon,    new Vector2(0.15f, 0.55f), "\u2694"),  // ⚔ Weapon — left
+            (ItemSlotType.Gloves,    new Vector2(0.85f, 0.55f), "\u270B"),  // ✋ Hands — right
+            (ItemSlotType.Boots,     new Vector2(0.50f, 0.22f), "\u2B25"),  // ⬥ Feet — bottom center
+            (ItemSlotType.Accessory, new Vector2(0.85f, 0.22f), "\u2B50"),  // ⭐ Accessory — bottom right
+        };
 
         public void Show()
         {
@@ -106,20 +120,40 @@ namespace Synthborn.UI
             if (_equipmentContainer == null) return;
             foreach (Transform child in _equipmentContainer) Destroy(child.gameObject);
 
-            for (int i = 0; i < 6; i++)
-                CreateEquipSlot((ItemSlotType)i, InventoryManager.GetEquipped((ItemSlotType)i));
+            foreach (var (slotType, pos, icon) in EquipLayout)
+                CreateEquipSlot(slotType, InventoryManager.GetEquipped(slotType), pos, icon);
         }
 
-        private void CreateEquipSlot(ItemSlotType slotType, ItemData equipped)
+        private void CreateEquipSlot(ItemSlotType slotType, ItemData equipped, Vector2 normalizedPos, string icon)
         {
             string slotName = ItemData.SlotName(slotType);
 
+            // Square slot at fixed position
             var slotGO = new GameObject($"ESlot_{slotType}", typeof(RectTransform), typeof(Image));
             slotGO.transform.SetParent(_equipmentContainer, false);
-            slotGO.GetComponent<RectTransform>().sizeDelta = new Vector2(280, 50);
-            slotGO.GetComponent<Image>().color = equipped != null
-                ? new Color(0.20f, 0.18f, 0.28f)
-                : new Color(0.10f, 0.10f, 0.14f);
+            var rect = slotGO.GetComponent<RectTransform>();
+            rect.anchorMin = normalizedPos;
+            rect.anchorMax = normalizedPos;
+            rect.sizeDelta = new Vector2(EquipSlotSize, EquipSlotSize);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+
+            var bg = slotGO.GetComponent<Image>();
+            bg.color = equipped != null
+                ? new Color(0.18f, 0.16f, 0.25f)
+                : new Color(0.08f, 0.08f, 0.12f);
+
+            // Rarity border glow if equipped
+            if (equipped != null)
+            {
+                var borderGO = new GameObject("Border", typeof(RectTransform), typeof(Image));
+                borderGO.transform.SetParent(slotGO.transform, false);
+                var bRect = borderGO.GetComponent<RectTransform>();
+                bRect.anchorMin = Vector2.zero; bRect.anchorMax = Vector2.one;
+                bRect.sizeDelta = Vector2.zero; bRect.offsetMin = Vector2.zero; bRect.offsetMax = Vector2.zero;
+                var bImg = borderGO.GetComponent<Image>();
+                bImg.color = new Color(equipped.RarityColor.r, equipped.RarityColor.g, equipped.RarityColor.b, 0.3f);
+                bImg.raycastTarget = false;
+            }
 
             // Drop target
             var drop = slotGO.AddComponent<DropSlot>();
@@ -127,25 +161,26 @@ namespace Synthborn.UI
             drop.EquipSlotType = slotType;
             drop.OnItemDropped = OnItemDropped;
 
-            // Slot label
-            MakeText(slotGO.transform, slotName, 10, new Color(0.6f, 0.6f, 0.7f), TextAnchor.UpperLeft,
-                new Vector2(0.02f, 0.6f), new Vector2(0.4f, 1f));
-
             if (equipped != null)
             {
-                // Draggable equipped item
-                CreateDraggableItem(slotGO.transform, equipped, true, (int)slotType,
-                    new Vector2(0.25f, 0.05f), new Vector2(0.98f, 0.95f));
+                // Item name (center)
+                MakeText(slotGO.transform, equipped.DisplayName, 9, equipped.RarityColor,
+                    TextAnchor.MiddleCenter, new Vector2(0.05f, 0.25f), new Vector2(0.95f, 0.75f));
 
-                // Stat line
-                MakeText(slotGO.transform, BuildStatLine(equipped), 9, new Color(0.6f, 0.6f, 0.6f),
-                    TextAnchor.LowerLeft, new Vector2(0.02f, 0f), new Vector2(0.98f, 0.4f));
+                // Draggable overlay
+                CreateDraggableItem(slotGO.transform, equipped, true, (int)slotType,
+                    new Vector2(0.05f, 0.05f), new Vector2(0.95f, 0.95f));
             }
             else
             {
-                MakeText(slotGO.transform, "drag item here", 11, new Color(0.3f, 0.3f, 0.35f),
-                    TextAnchor.MiddleCenter, new Vector2(0.25f, 0f), new Vector2(0.98f, 1f));
+                // Empty slot icon
+                MakeText(slotGO.transform, icon, 22, new Color(0.25f, 0.25f, 0.3f),
+                    TextAnchor.MiddleCenter, new Vector2(0f, 0.2f), new Vector2(1f, 0.85f));
             }
+
+            // Slot label below
+            MakeText(slotGO.transform, slotName, 8, new Color(0.5f, 0.5f, 0.55f),
+                TextAnchor.LowerCenter, new Vector2(0f, -0.15f), new Vector2(1f, 0.15f));
         }
 
         // ─── Inventory Grid ───
