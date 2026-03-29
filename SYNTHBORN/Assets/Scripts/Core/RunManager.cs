@@ -83,6 +83,18 @@ namespace Synthborn.Core
                 _stats.TotalXPCollected, victory);
             int newAchievements = AchievementManager.UnlockedCount - achBefore;
 
+            // Auto-save character progress (XP, gold, etc.)
+            var ch = SaveManager.Character;
+            if (ch != null)
+            {
+                int xpReward = _stats.EnemiesKilled + _stats.WavesCleared * 10;
+                ch.AddXP(xpReward);
+                ch.gold = Persistence.GoldManager.RunGold;
+                ch.totalPlayTime += _stats.SurvivalTime;
+                SaveManager.SaveSlot();
+                SaveManager.Save();
+            }
+
             UpdateStatsDisplay(cellsEarned, newAchievements);
         }
 

@@ -15,8 +15,12 @@ namespace Synthborn.Core.Persistence
         private static readonly int[] TierGoldMin = { 1, 5, 50 };  // Normal, Elite, Boss
         private static readonly int[] TierGoldMax = { 3, 10, 100 };
 
-        /// <summary>Reset gold for a new run.</summary>
-        public static void ResetRun() => RunGold = 0;
+        /// <summary>Reset gold for a new level. Loads from character save if available.</summary>
+        public static void ResetRun()
+        {
+            var ch = SaveManager.Character;
+            RunGold = ch != null ? ch.gold : 0;
+        }
 
         /// <summary>Add gold from a kill.</summary>
         public static void AddGold(int amount)

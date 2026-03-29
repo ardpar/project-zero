@@ -25,6 +25,13 @@ namespace Synthborn.UI
 
         private void Start()
         {
+            // Auto-save when entering WorldMap (progress from last level/death)
+            if (SaveManager.Character != null)
+            {
+                SaveManager.SaveSlot();
+                SaveManager.Save();
+            }
+
             RefreshCharacterInfo();
             RefreshLevelGrid();
 
