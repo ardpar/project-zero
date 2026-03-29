@@ -19,6 +19,16 @@ namespace Synthborn.Waves
         [Tooltip("Minimum spawn distance from player (units).")]
         public float minSpawnDistance = 12f;
 
+        [Header("Mini-Boss")]
+        [Tooltip("Mini-boss enemy data (spawns mid-wave, stronger than elite).")]
+        public EnemyData miniBossData;
+
+        [Tooltip("First wave where mini-bosses can appear (1-based).")]
+        public int miniBossStartWave = 4;
+
+        [Tooltip("Chance (0-1) per wave for a mini-boss to spawn at 50% duration.")]
+        [Range(0f, 1f)] public float miniBossChance = 0.5f;
+
         [Header("Boss Phase")]
         [Tooltip("Boss enemy data.")]
         public EnemyData bossData;

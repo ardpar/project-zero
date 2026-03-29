@@ -33,6 +33,7 @@ namespace Synthborn.Waves
         private int _spawnSector;
         private float _arenaRadius = 14f;
         private bool _elitesSpawned;
+        private bool _miniBossSpawned;
 
         /// <summary>Current wave number (1-based, for display).</summary>
         public int CurrentWaveDisplay => _currentWave + 1;
@@ -92,6 +93,21 @@ namespace Synthborn.Waves
                 _spawnTimer = wave.SpawnInterval;
             }
 
+            // Mini-boss spawn at 50% of wave duration (wave 4+, random chance)
+            if (!_miniBossSpawned && _waveDuration > 0f && _waveTable.miniBossData != null)
+            {
+                float elapsed = _waveDuration - _waveTimer;
+                if (elapsed >= _waveDuration * 0.5f && CurrentWaveDisplay >= _waveTable.miniBossStartWave)
+                {
+                    _miniBossSpawned = true;
+                    if (Random.value < _waveTable.miniBossChance)
+                    {
+                        SpawnSpecificEnemy(_waveTable.miniBossData);
+                        GameEvents.WaveStarted(CurrentWaveDisplay); // re-trigger wave UI for alert
+                    }
+                }
+            }
+
             // Elite spawn at 80% of wave duration
             if (!_elitesSpawned && _waveDuration > 0f)
             {
@@ -135,6 +151,7 @@ namespace Synthborn.Waves
             _waveDuration = wave.Duration;
             _spawnTimer = 0f;
             _elitesSpawned = false;
+            _miniBossSpawned = false;
             _state = SpawnerState.WaveActive;
 
             GameEvents.WaveStarted(CurrentWaveDisplay);

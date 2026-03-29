@@ -94,6 +94,9 @@ MonoBehaviour:
   waveBreakDuration: 3
   maxAliveEnemies: 200
   minSpawnDistance: 12
+  miniBossData: {fileID: 11400000, guid: 150d2d5e67c7d4ae98078856619f7f4f, type: 2}
+  miniBossStartWave: 4
+  miniBossChance: 0.5
   bossData: {fileID: 11400000, guid: 5b69a6b68542e416688245fd55d9489d, type: 2}
   bossChaserData: {fileID: 11400000, guid: 15a1741d3e5c14382a1e0961a9a529aa, type: 2}
   bossChaserSpawnInterval: 3

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Synthborn.Core.Persistence;
@@ -119,7 +120,30 @@ namespace Synthborn.UI
         private void OnBuy(UpgradeManager.UpgradeType type)
         {
             if (UpgradeManager.TryUpgrade(type))
+            {
+                StartCoroutine(BuyFeedback());
                 Refresh();
+            }
+        }
+
+        private IEnumerator BuyFeedback()
+        {
+            // Quick scale punch on the list container for tactile feel
+            if (_listContainer == null) yield break;
+            var t = _listContainer;
+            var original = t.localScale;
+            float elapsed = 0f;
+            float dur = 0.15f;
+
+            // Scale up
+            while (elapsed < dur)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float s = 1f + 0.05f * Mathf.Sin(Mathf.PI * elapsed / dur);
+                t.localScale = original * s;
+                yield return null;
+            }
+            t.localScale = original;
         }
 
         private void CreateText(Transform parent, string text, int fontSize, Color color, float width)
