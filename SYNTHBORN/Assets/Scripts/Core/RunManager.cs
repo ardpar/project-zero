@@ -94,7 +94,7 @@ namespace Synthborn.Core
                 ch.AddXP(xpReward);
                 // On death: keep only 20% of run gold. On victory (level complete): LevelManager saves full gold.
                 bool isDeath = _state == RunState.GameOver;
-                ch.gold = isDeath ? Persistence.GoldManager.ConvertToMeta() : Persistence.GoldManager.RunGold;
+                ch.gold = isDeath ? Persistence.FragmentManager.ConvertToMeta() : Persistence.FragmentManager.RunFragments;
                 ch.totalPlayTime += _stats.SurvivalTime;
                 SaveManager.SaveSlot();
                 SaveManager.Save();

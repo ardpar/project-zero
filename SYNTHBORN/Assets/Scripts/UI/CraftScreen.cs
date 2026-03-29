@@ -6,7 +6,7 @@ using Synthborn.Core.Items;
 namespace Synthborn.UI
 {
     /// <summary>
-    /// Crafting screen: shows materials, 3 craft recipes, craft buttons.
+    /// Synthesis Lab: shows materials, 3 synthesis recipes, synthesis buttons.
     /// </summary>
     public class CraftScreen : MonoBehaviour
     {
@@ -40,7 +40,7 @@ namespace Synthborn.UI
             if (ch == null) return;
 
             if (_materialsText != null)
-                _materialsText.text = $"Scrap Metal: {ch.scrapMetal}  |  Dark Crystal: {ch.darkCrystals}  |  Boss Essence: {ch.bossEssences}";
+                _materialsText.text = $"Residual Compound: {ch.scrapMetal}  |  Mutation Residue: {ch.darkCrystals}  |  Stabilized Core: {ch.bossEssences}";
 
             if (_resultText != null)
                 _resultText.text = "";
@@ -48,32 +48,32 @@ namespace Synthborn.UI
             if (_recipeContainer == null) return;
             foreach (Transform child in _recipeContainer) Destroy(child.gameObject);
 
-            // Recipe 1: 3 Scrap → Common Item
-            CreateRecipe("Common Forge", "3x Scrap Metal → Random Common Item",
+            // Recipe 1: 3 Compound → Common Component
+            CreateRecipe("Temel Sentez", "3x Residual Compound \u2192 Rastgele Common Komponent",
                 ch.scrapMetal >= 3, () => {
                     if (CraftingManager.CraftCommon(_db))
                     {
-                        if (_resultText != null) _resultText.text = "<color=white>Crafted a Common item!</color>";
+                        if (_resultText != null) _resultText.text = "<color=white>Common komponent sentezlendi!</color>";
                         Refresh();
                     }
                 });
 
-            // Recipe 2: 2 Crystal + 1 Scrap → Rare Item
-            CreateRecipe("Rare Synthesis", "2x Dark Crystal + 1x Scrap → Random Rare Item",
+            // Recipe 2: 2 Residue + 1 Compound → Rare Component
+            CreateRecipe("Nadir Sentez", "2x Mutation Residue + 1x Compound \u2192 Rastgele Rare Komponent",
                 ch.darkCrystals >= 2 && ch.scrapMetal >= 1, () => {
                     if (CraftingManager.CraftRare(_db))
                     {
-                        if (_resultText != null) _resultText.text = "<color=#3355FF>Crafted a Rare item!</color>";
+                        if (_resultText != null) _resultText.text = "<color=#3355FF>Rare komponent sentezlendi!</color>";
                         Refresh();
                     }
                 });
 
-            // Recipe 3: 1 Essence + 3 Crystal → Legendary Item
-            CreateRecipe("Legendary Transmutation", "1x Boss Essence + 3x Dark Crystal → Legendary Item",
+            // Recipe 3: 1 Core + 3 Residue → Legendary Component
+            CreateRecipe("Efsanevi Sentez", "1x Stabilized Core + 3x Mutation Residue \u2192 Legendary Komponent",
                 ch.bossEssences >= 1 && ch.darkCrystals >= 3, () => {
                     if (CraftingManager.CraftLegendary(_db))
                     {
-                        if (_resultText != null) _resultText.text = "<color=#FFD700>Crafted a Legendary item!</color>";
+                        if (_resultText != null) _resultText.text = "<color=#FFD700>Legendary komponent sentezlendi!</color>";
                         Refresh();
                     }
                 });
@@ -88,7 +88,6 @@ namespace Synthborn.UI
                 ? new Color(0.18f, 0.16f, 0.25f)
                 : new Color(0.10f, 0.10f, 0.12f);
 
-            // Recipe text
             var textGO = new GameObject("Text", typeof(RectTransform), typeof(Text));
             textGO.transform.SetParent(go.transform, false);
             var tRect = textGO.GetComponent<RectTransform>();
@@ -100,7 +99,6 @@ namespace Synthborn.UI
             text.alignment = TextAnchor.MiddleLeft; text.font = _font;
             text.supportRichText = true; text.raycastTarget = false;
 
-            // Craft button
             var btnGO = new GameObject("CraftBtn", typeof(RectTransform), typeof(Image), typeof(Button));
             btnGO.transform.SetParent(go.transform, false);
             var bRect = btnGO.GetComponent<RectTransform>();
@@ -115,7 +113,7 @@ namespace Synthborn.UI
             var btRect = btGO.GetComponent<RectTransform>();
             btRect.anchorMin = Vector2.zero; btRect.anchorMax = Vector2.one; btRect.sizeDelta = Vector2.zero;
             var bt = btGO.GetComponent<Text>();
-            bt.text = "CRAFT"; bt.fontSize = 14; bt.color = canCraft ? Color.white : Color.gray;
+            bt.text = "SENTEZLE"; bt.fontSize = 14; bt.color = canCraft ? Color.white : Color.gray;
             bt.alignment = TextAnchor.MiddleCenter; bt.font = _font; bt.raycastTarget = false;
 
             if (canCraft) btnGO.GetComponent<Button>().onClick.AddListener(() => onCraft());

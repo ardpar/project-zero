@@ -100,13 +100,13 @@ namespace Synthborn.UI
         private void UpdateWave(int waveNumber)
         {
             if (_waveText != null)
-                _waveText.text = $"Wave {waveNumber}";
+                _waveText.text = $"Dalga {waveNumber}";
         }
 
         private void ShowWaveCleared()
         {
             if (_waveText != null)
-                _waveText.text = "Wave Clear!";
+                _waveText.text = "Dalga Temizlendi!";
         }
 
         private void OnMutationApplied(string mutationId, bool isSlot)

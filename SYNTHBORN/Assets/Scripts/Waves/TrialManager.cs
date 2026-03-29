@@ -79,8 +79,8 @@ namespace Synthborn.Waves
 
                 // Award gold/fragments based on pressure
                 int goldBonus = 20 + CurrentChamber.pressureRating * 15;
-                GoldManager.AddGold(goldBonus);
-                ch.gold = GoldManager.RunGold;
+                FragmentManager.AddFragments(goldBonus);
+                ch.gold = FragmentManager.RunFragments;
 
                 SaveManager.SaveSlot();
             }

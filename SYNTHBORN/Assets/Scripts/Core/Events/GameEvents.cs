@@ -236,9 +236,12 @@ namespace Synthborn.Core.Events
         public static event Action<float> OnPlayerHealRequested;
         public static void RaisePlayerHealRequested(float fraction) => OnPlayerHealRequested?.Invoke(fraction);
 
-        // ─── Gold ───
-        public static event Action<int> OnGoldChanged;
-        public static void GoldChanged(int total) => OnGoldChanged?.Invoke(total);
+        // ─── Substrate Fragments ───
+        public static event Action<int> OnFragmentChanged;
+        public static void FragmentChanged(int total) => OnFragmentChanged?.Invoke(total);
+        // Legacy aliases
+        public static event Action<int> OnGoldChanged { add => OnFragmentChanged += value; remove => OnFragmentChanged -= value; }
+        public static void GoldChanged(int total) => FragmentChanged(total);
 
         // ─── Level/Stage ───
         public static event Action<int, string> OnLevelStarted;
@@ -288,7 +291,7 @@ namespace Synthborn.Core.Events
             OnSynergyActivated      = null;
             OnLootDropped           = null;
             OnPlayerHealRequested   = null;
-            OnGoldChanged           = null;
+            OnFragmentChanged       = null;
             OnLevelStarted          = null;
             OnLevelCleared          = null;
             OnChamberStarted        = null;

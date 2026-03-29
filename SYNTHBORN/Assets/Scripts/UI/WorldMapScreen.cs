@@ -52,10 +52,10 @@ namespace Synthborn.UI
 
             string className = ch.classType switch
             {
-                0 => "Warrior", 1 => "Rogue", 2 => "Mage", 3 => "Sentinel", _ => "?"
+                0 => "Dense Lattice", 1 => "Severed Thread", 2 => "Null Cascade", 3 => "Balanced Frame", _ => "?"
             };
 
-            _charInfoText.text = $"{ch.characterName}  |  {className}  |  Lv.{ch.characterLevel}  |  Gold: {ch.gold}";
+            _charInfoText.text = $"{ch.characterName}  |  {className}  |  Lv.{ch.characterLevel}  |  Fragment: {ch.gold}";
         }
 
         private void RefreshLevelGrid()

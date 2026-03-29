@@ -78,7 +78,7 @@ namespace Synthborn.UI
 
             string className = ch.classType switch
             {
-                0 => "Warrior", 1 => "Rogue", 2 => "Mage", 3 => "Sentinel", _ => "?"
+                0 => "Dense Lattice", 1 => "Severed Thread", 2 => "Null Cascade", 3 => "Balanced Frame", _ => "?"
             };
 
             if (_charNameText != null)
@@ -110,7 +110,7 @@ namespace Synthborn.UI
                 $"<color=#FFFF66>LCK</color>  {ch.statPoints[3]}  (+{totalCRIT * 100:F0}% CRIT)\n" +
                 $"<color=#66FFFF>WIS</color>  {ch.statPoints[4]}  (+{ch.statPoints[4] * 3:F0}% XP)\n\n" +
                 $"Armor: {totalARM}\n" +
-                $"Gold: {ch.gold}\n" +
+                $"Fragment: {ch.gold}\n" +
                 $"XP: {ch.characterXP}/{ch.XPToNextLevel}\n" +
                 $"Unspent Points: {ch.unspentStatPoints}";
         }
@@ -233,7 +233,7 @@ namespace Synthborn.UI
             stRect.anchorMin = Vector2.zero; stRect.anchorMax = Vector2.one; stRect.sizeDelta = Vector2.zero;
             var st = sellText.GetComponent<Text>();
             int price = InventoryManager.GetSellPrice(item.Rarity);
-            st.text = $"{price}g"; st.fontSize = 7; st.color = new Color(1f, 0.85f, 0.3f);
+            st.text = $"{price}f"; st.fontSize = 7; st.color = new Color(1f, 0.85f, 0.3f);
             st.alignment = TextAnchor.MiddleCenter; st.font = _font; st.raycastTarget = false;
             var capturedId = item.Id;
             sellGO.GetComponent<Button>().onClick.AddListener(() => {
@@ -396,7 +396,7 @@ namespace Synthborn.UI
 
             return $"<b><color=#{ColorUtility.ToHtmlStringRGB(item.RarityColor)}>{item.DisplayName}</color></b>\n" +
                    $"[{item.Rarity}] {ItemData.SlotName(item.SlotType)}\n" +
-                   $"{stats}\nSell: {sellPrice}g{comparison}";
+                   $"{stats}\nSat: {sellPrice}f{comparison}";
         }
     }
 }

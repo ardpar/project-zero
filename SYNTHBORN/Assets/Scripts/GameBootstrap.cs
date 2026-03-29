@@ -193,18 +193,23 @@ namespace Synthborn.Core
                 _mutationUI.Initialize(_mutationManager, _mutationDatabase);
 
             // Wire gold drop on enemy death
-            GoldManager.ResetRun();
+            FragmentManager.ResetRun();
             GameEvents.OnEnemyDied += (pos, enemy, xp) =>
             {
                 var brain = enemy != null ? enemy.GetComponent<Synthborn.Enemies.EnemyBrain>() : null;
                 if (brain?.Data != null)
                 {
                     int tierIndex = (int)brain.Data.Tier;
-                    int gold = GoldManager.RollGoldDrop(tierIndex);
-                    GoldManager.AddGold(gold);
+                    // Pressure-scaled fragment drops
+                    float pressure = 1f;
+                    var trialMgr = FindAnyObjectByType<Synthborn.Waves.TrialManager>();
+                    if (trialMgr != null && trialMgr.IsTrialActive)
+                        pressure = trialMgr.CurrentChamber.EffectivePressureMultiplier;
+                    int fragments = FragmentManager.RollFragmentDrop(tierIndex, pressure);
+                    FragmentManager.AddFragments(fragments);
 
-                    // Award crafting materials
-                    CraftingManager.AwardMaterials(tierIndex);
+                    // Award crafting materials (pressure-scaled)
+                    CraftingManager.AwardMaterials(tierIndex, pressure);
                 }
             };
 

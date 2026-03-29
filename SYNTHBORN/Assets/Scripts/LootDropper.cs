@@ -3,10 +3,11 @@ using Synthborn.Core.Events;
 using Synthborn.Core.Items;
 using Synthborn.Core.Persistence;
 using Synthborn.Enemies;
+using Synthborn.Waves;
 
 /// <summary>
 /// Handles item drops from enemies. Listens to OnEnemyDied,
-/// rolls loot based on enemy tier and current level.
+/// rolls loot based on enemy tier, current chamber pressure, and biome.
 /// Attach to GameManager in SampleScene.
 /// </summary>
 public class LootDropper : MonoBehaviour
@@ -14,6 +15,7 @@ public class LootDropper : MonoBehaviour
     [SerializeField] private ItemDatabase _itemDatabase;
 
     private readonly System.Collections.Generic.List<string> _runLoot = new();
+    private TrialManager _trialManager;
 
     public System.Collections.Generic.IReadOnlyList<string> RunLoot => _runLoot;
 
@@ -31,6 +33,7 @@ public class LootDropper : MonoBehaviour
     {
         _runLoot.Clear();
         if (_itemDatabase != null) InventoryManager.SetDatabase(_itemDatabase);
+        _trialManager = FindAnyObjectByType<TrialManager>();
     }
 
     private void OnEnemyDied(Vector2 pos, GameObject enemy, int xp)
@@ -43,20 +46,26 @@ public class LootDropper : MonoBehaviour
         int tierIndex = (int)brain.Data.Tier;
         int currentLevel = PlayerPrefs.GetInt("SelectedLevel", 1);
 
+        // Get pressure from TrialManager for rarity scaling
+        float pressureBoost = 0f;
+        if (_trialManager != null && _trialManager.IsTrialActive && _trialManager.CurrentChamber != null)
+            pressureBoost = _trialManager.CurrentChamber.pressureRating * 0.15f;
+
         ItemData droppedItem = null;
 
         switch (tierIndex)
         {
-            case 0: // Normal — 5% chance Common
-                if (Random.value < 0.05f)
+            case 0: // Normal — base 5% chance, pressure-boosted
+                if (Random.value < 0.05f * (1f + pressureBoost))
                     droppedItem = GetRandomItemOfMinRarity(ItemRarity.Common);
                 break;
-            case 1: // Elite — 30% chance Uncommon/Rare
-                if (Random.value < 0.30f)
-                    droppedItem = GetRandomItemOfMinRarity(ItemRarity.Uncommon);
+            case 1: // Elite — base 30%, pressure-boosted
+                if (Random.value < 0.30f * (1f + pressureBoost))
+                    droppedItem = GetRandomItemOfMinRarity(
+                        pressureBoost >= 0.3f ? ItemRarity.Rare : ItemRarity.Uncommon);
                 break;
-            case 2: // Boss — guaranteed Rare+
-                droppedItem = GetBossLoot(currentLevel);
+            case 2: // Stabilized (Boss) — guaranteed, rarity scales with pressure
+                droppedItem = GetStabilizedLoot(currentLevel, pressureBoost);
                 break;
         }
 
@@ -68,14 +77,18 @@ public class LootDropper : MonoBehaviour
         }
     }
 
-    private ItemData GetBossLoot(int level)
+    private ItemData GetStabilizedLoot(int level, float pressureBoost)
     {
         ItemRarity minRarity;
         float roll = Random.value;
 
-        if (level >= 8 && roll < 0.10f)
+        // Pressure boost shifts rarity thresholds
+        float legendaryThreshold = 0.10f + pressureBoost * 0.5f; // 10% → 25% at pressure 2
+        float epicThreshold = 0.30f + pressureBoost * 0.3f;      // 30% → 39% at pressure 2
+
+        if (level >= 8 && roll < legendaryThreshold)
             minRarity = ItemRarity.Legendary;
-        else if (level >= 4 && roll < 0.30f)
+        else if (level >= 4 && roll < epicThreshold)
             minRarity = ItemRarity.Epic;
         else
             minRarity = ItemRarity.Rare;

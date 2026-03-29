@@ -4,12 +4,15 @@ using Synthborn.Core.Persistence;
 namespace Synthborn.Core.Items
 {
     /// <summary>
-    /// Manages crafting: combine materials into items.
-    /// Materials: Scrap Metal (common), Dark Crystal (rare), Boss Essence (boss).
+    /// Manages synthesis: combine materials into components.
+    /// Materials (Arena terminology):
+    ///   Residual Compound (scrapMetal) — common synthesis base
+    ///   Mutation Residue (darkCrystals) — rare catalytic material
+    ///   Stabilized Core (bossEssences) — boss-tier foundation
     /// </summary>
     public static class CraftingManager
     {
-        /// <summary>Craft a random Common item from scrap metal.</summary>
+        /// <summary>Synthesize a random Common component from Residual Compound.</summary>
         public static bool CraftCommon(ItemDatabase db)
         {
             var ch = SaveManager.Character;
@@ -23,7 +26,7 @@ namespace Synthborn.Core.Items
             return true;
         }
 
-        /// <summary>Craft a random Rare item from dark crystals + scrap.</summary>
+        /// <summary>Synthesize a random Rare component from Mutation Residue + Residual Compound.</summary>
         public static bool CraftRare(ItemDatabase db)
         {
             var ch = SaveManager.Character;
@@ -38,7 +41,7 @@ namespace Synthborn.Core.Items
             return true;
         }
 
-        /// <summary>Craft a Legendary item from boss essence + dark crystals.</summary>
+        /// <summary>Synthesize a Legendary component from Stabilized Core + Mutation Residue.</summary>
         public static bool CraftLegendary(ItemDatabase db)
         {
             var ch = SaveManager.Character;
@@ -54,24 +57,30 @@ namespace Synthborn.Core.Items
             return true;
         }
 
-        /// <summary>Award materials from enemy kill based on tier.</summary>
-        public static void AwardMaterials(int enemyTier)
+        /// <summary>Award materials from enemy kill based on tier. Pressure scales drop rates.</summary>
+        public static void AwardMaterials(int enemyTier, float pressureMultiplier = 1f)
         {
             var ch = SaveManager.Character;
             if (ch == null) return;
 
+            // Base rates, boosted by pressure
+            float compoundChance = 0.20f * pressureMultiplier;
+            float residueChance = 0.15f * pressureMultiplier;
+
             switch (enemyTier)
             {
-                case 0: // Normal — 20% chance for 1 scrap
-                    if (Random.value < 0.20f) ch.scrapMetal++;
+                case 0: // Normal — chance for Residual Compound
+                    if (Random.value < compoundChance) ch.scrapMetal++;
                     break;
-                case 1: // Elite — guaranteed 1 scrap + 15% dark crystal
+                case 1: // Elite — guaranteed Compound + chance for Residue
                     ch.scrapMetal++;
-                    if (Random.value < 0.15f) ch.darkCrystals++;
+                    if (pressureMultiplier >= 1.3f) ch.scrapMetal++; // Bonus at high pressure
+                    if (Random.value < residueChance) ch.darkCrystals++;
                     break;
-                case 2: // Boss — guaranteed 1 dark crystal + 1 boss essence
+                case 2: // Stabilized (Boss) — guaranteed Residue + Core
                     ch.darkCrystals++;
                     ch.bossEssences++;
+                    if (pressureMultiplier >= 1.5f) ch.darkCrystals++; // Bonus at high pressure
                     break;
             }
         }

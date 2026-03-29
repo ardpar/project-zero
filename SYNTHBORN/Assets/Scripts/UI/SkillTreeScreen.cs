@@ -222,7 +222,7 @@ namespace Synthborn.UI
             if (node.armorFlat != 0) stats += $"Armor +{node.armorFlat}  ";
             if (node.dashCooldownModifier != 0) stats += $"DashCD {node.dashCooldownModifier:+0%;-0%}  ";
             if (node.xpGainBonus != 0) stats += $"XP {node.xpGainBonus:+0%;-0%}  ";
-            if (node.goldGainBonus != 0) stats += $"Gold {node.goldGainBonus:+0%;-0%}  ";
+            if (node.goldGainBonus != 0) stats += $"Fragment {node.goldGainBonus:+0%;-0%}  ";
             if (node.dropRateBonus != 0) stats += $"Drop {node.dropRateBonus:+0%;-0%}  ";
 
             string prereq = "";
@@ -254,7 +254,7 @@ namespace Synthborn.UI
         private void OnReset()
         {
             ConfirmationModal.Show(
-                $"Reset all skills for {_resetCost} gold?\nAll points will be refunded.",
+                $"T\u00fcm yetenekler {_resetCost} fragment kar\u015f\u0131l\u0131\u011f\u0131nda s\u0131f\u0131rlans\u0131n m\u0131?\nT\u00fcm puanlar iade edilecek.",
                 () => {
                     if (SkillTreeManager.TryReset(_resetCost))
                         Refresh();

@@ -68,7 +68,7 @@ namespace Synthborn.UI
             if (_panel != null) _panel.SetActive(true);
 
             if (_titleText != null)
-                _titleText.text = $"LEVEL {level} COMPLETE";
+                _titleText.text = $"DENEME ODASI {level} TAMAMLANDI";
 
             var ch = SaveManager.Character;
             string charInfo = ch != null
@@ -86,7 +86,7 @@ namespace Synthborn.UI
 
             if (_infoText != null)
             {
-                _infoText.text = $"Gold: {GoldManager.RunGold}\n{charInfo}\n\nHP restored +30%{lootInfo}";
+                _infoText.text = $"Fragment: {FragmentManager.RunFragments}\n{charInfo}\n\nHP restored +30%{lootInfo}";
                 _infoText.supportRichText = true;
             }
 

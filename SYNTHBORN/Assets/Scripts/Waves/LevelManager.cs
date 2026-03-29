@@ -74,8 +74,8 @@ namespace Synthborn.Waves
                 int goldBonus = 20 + CurrentLevel * 5;
                 if (IsMilestoneLevel(CurrentLevel))
                     goldBonus *= 3; // 3x gold on milestone levels
-                Synthborn.Core.Persistence.GoldManager.AddGold(goldBonus);
-                ch.gold = Synthborn.Core.Persistence.GoldManager.RunGold;
+                Synthborn.Core.Persistence.FragmentManager.AddFragments(goldBonus);
+                ch.gold = Synthborn.Core.Persistence.FragmentManager.RunFragments;
 
                 Synthborn.Core.Persistence.SaveManager.SaveSlot();
             }

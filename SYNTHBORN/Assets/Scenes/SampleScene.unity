@@ -17917,6 +17917,23 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6c0566dc412a746b68b03295a1f0824d, type: 2}
   - {fileID: 11400000, guid: 9ee009599128941a3a3fd88aa3b5b1f0, type: 2}
   - {fileID: 11400000, guid: 18f620bcf4bf847d491d72ca6b7fec29, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _biomeConfigs:
   - {fileID: 11400000, guid: 5846c3780da6843429964c1794bfd0bd, type: 2}
   - {fileID: 11400000, guid: e808036330e014b25b18e7969360f907, type: 2}

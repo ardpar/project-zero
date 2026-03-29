@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e330668ce8eec4b619823c6d4cfe4e34, type: 3}
+  m_Name: Chamber_029_Sub-AssayWest
+  m_EditorClassIdentifier: Synthborn.Waves::Synthborn.Waves.TrialChamberData
+  levelName: Sub-Assay West
+  floorTile: {fileID: 11400000, guid: 7d5abd2c5181b43f2b6cce0086bc46ef, type: 2}
+  wallTile: {fileID: 11400000, guid: 39d3d4bd4b21a47a08afeb547b0e4f27, type: 2}
+  biomeTint: {r: 0.05, g: 0.1, b: 0.05, a: 1}
+  spawnPool:
+  - EnemyData: {fileID: 11400000, guid: 1c3ad4833ce8b435d8120b3baf163fa5, type: 2}
+    Weight: 2
+  - EnemyData: {fileID: 11400000, guid: d0488aeb4b31c41f884b4cb7a29536de, type: 2}
+    Weight: 2
+  - EnemyData: {fileID: 11400000, guid: f4ade2ae76cd74790b349a6a4b79bc89, type: 2}
+    Weight: 2
+  - EnemyData: {fileID: 11400000, guid: a3e16031a3a2e42c9a4b459d13178d23, type: 2}
+    Weight: 1
+  - EnemyData: {fileID: 11400000, guid: 326e3e47008f9428eb5c5df50ddb8673, type: 2}
+    Weight: 1
+  waveCount: 6
+  baseSpawnInterval: 0.96000004
+  intervalDecreasePerWave: 0.12
+  baseWaveDuration: 160
+  bossData: {fileID: 11400000, guid: 99dd0625ca5aa412ca255b20b75977ec, type: 2}
+  bossChaserData: {fileID: 11400000, guid: 15a1741d3e5c14382a1e0961a9a529aa, type: 2}
+  difficultyMultiplier: 2.46
+  baseElites: 4
+  maxElites: 7
+  chamberNumber: 29
+  biomeLayer: 1
+  pressureRating: 2
+  adjacentChambers: 190000001e000000
+  pressureMultiplierOverride: 0
