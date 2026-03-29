@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Synthborn.Core.Persistence;
@@ -6,8 +7,11 @@ using Synthborn.Core.Items;
 namespace Synthborn.UI
 {
     /// <summary>
-    /// Character screen: stats, equipment slots, inventory bag.
-    /// Accessible from WorldMap.
+    /// Character screen with grid-based drag & drop inventory.
+    /// Left: Stats + Equipment slots (drop targets).
+    /// Right: Inventory grid (draggable items).
+    /// Drag item from bag → equipment slot to equip.
+    /// Drag item from equipment → bag to unequip.
     /// </summary>
     public class CharacterScreen : MonoBehaviour
     {
@@ -24,6 +28,9 @@ namespace Synthborn.UI
         [Header("Inventory")]
         [SerializeField] private Transform _inventoryContainer;
         [SerializeField] private Text _inventoryTitle;
+
+        private const int GridColumns = 5;
+        private const float CellSize = 64f;
 
         public void Show()
         {
@@ -46,6 +53,8 @@ namespace Synthborn.UI
             RefreshInventory();
         }
 
+        // ─── Stats ───
+
         private void RefreshStats()
         {
             var ch = SaveManager.Character;
@@ -61,14 +70,12 @@ namespace Synthborn.UI
 
             if (_statsText == null) return;
 
-            // Calculate total stats from base + equipment
-            float totalHP = ch.statPoints[1] * 0.03f;   // VIT
-            float totalDMG = ch.statPoints[0] * 0.02f;  // STR
-            float totalSPD = ch.statPoints[2] * 0.02f;  // AGI
-            float totalCRIT = ch.statPoints[3] * 0.01f;  // LCK
+            float totalHP = ch.statPoints[1] * 0.03f;
+            float totalDMG = ch.statPoints[0] * 0.02f;
+            float totalSPD = ch.statPoints[2] * 0.02f;
+            float totalCRIT = ch.statPoints[3] * 0.01f;
             int totalARM = 0;
 
-            // Add equipment stats
             for (int i = 0; i < 6; i++)
             {
                 var item = InventoryManager.GetEquipped((ItemSlotType)i);
@@ -92,77 +99,56 @@ namespace Synthborn.UI
                 $"Unspent Points: {ch.unspentStatPoints}";
         }
 
+        // ─── Equipment Slots (Drop Targets) ───
+
         private void RefreshEquipment()
         {
             if (_equipmentContainer == null) return;
             foreach (Transform child in _equipmentContainer) Destroy(child.gameObject);
 
             for (int i = 0; i < 6; i++)
-            {
-                var slotType = (ItemSlotType)i;
-                var equipped = InventoryManager.GetEquipped(slotType);
-                CreateEquipSlot(slotType, equipped);
-            }
+                CreateEquipSlot((ItemSlotType)i, InventoryManager.GetEquipped((ItemSlotType)i));
         }
 
         private void CreateEquipSlot(ItemSlotType slotType, ItemData equipped)
         {
-            var slotGO = new GameObject($"Slot_{slotType}", typeof(RectTransform), typeof(Image));
+            string slotName = ItemData.SlotName(slotType);
+
+            var slotGO = new GameObject($"ESlot_{slotType}", typeof(RectTransform), typeof(Image));
             slotGO.transform.SetParent(_equipmentContainer, false);
-            var rect = slotGO.GetComponent<RectTransform>();
-            rect.sizeDelta = new Vector2(280, 40);
-            var img = slotGO.GetComponent<Image>();
-            img.color = equipped != null
-                ? new Color(0.2f, 0.18f, 0.28f)
-                : new Color(0.12f, 0.12f, 0.15f);
-            img.raycastTarget = false;
+            slotGO.GetComponent<RectTransform>().sizeDelta = new Vector2(280, 50);
+            slotGO.GetComponent<Image>().color = equipped != null
+                ? new Color(0.20f, 0.18f, 0.28f)
+                : new Color(0.10f, 0.10f, 0.14f);
+
+            // Drop target
+            var drop = slotGO.AddComponent<DropSlot>();
+            drop.Mode = DropSlot.SlotMode.Equipment;
+            drop.EquipSlotType = slotType;
+            drop.OnItemDropped = OnItemDropped;
 
             // Slot label
-            string slotName = ItemData.SlotName(slotType);
-            string itemName = equipped != null ? equipped.DisplayName : "— Empty —";
-            Color textColor = equipped != null ? equipped.RarityColor : Color.gray;
+            MakeText(slotGO.transform, slotName, 10, new Color(0.6f, 0.6f, 0.7f), TextAnchor.UpperLeft,
+                new Vector2(0.02f, 0.6f), new Vector2(0.4f, 1f));
 
-            var textGO = new GameObject("Text", typeof(RectTransform), typeof(Text));
-            textGO.transform.SetParent(slotGO.transform, false);
-            var tRect = textGO.GetComponent<RectTransform>();
-            tRect.anchorMin = Vector2.zero; tRect.anchorMax = Vector2.one;
-            tRect.sizeDelta = Vector2.zero;
-            tRect.offsetMin = new Vector2(8, 0); tRect.offsetMax = new Vector2(-8, 0);
-            var text = textGO.GetComponent<Text>();
-            text.text = $"<color=white>{slotName}:</color> {itemName}";
-            text.fontSize = 13;
-            text.color = textColor;
-            text.alignment = TextAnchor.MiddleLeft;
-            text.font = _font;
-            text.supportRichText = true;
-            text.raycastTarget = false;
-
-            // Unequip button (if equipped)
             if (equipped != null)
             {
-                var unequipGO = new GameObject("Unequip", typeof(RectTransform), typeof(Image), typeof(Button));
-                unequipGO.transform.SetParent(slotGO.transform, false);
-                var uRect = unequipGO.GetComponent<RectTransform>();
-                uRect.anchorMin = new Vector2(1, 0); uRect.anchorMax = new Vector2(1, 1);
-                uRect.pivot = new Vector2(1, 0.5f);
-                uRect.sizeDelta = new Vector2(30, 0);
-                uRect.anchoredPosition = Vector2.zero;
-                unequipGO.GetComponent<Image>().color = new Color(0.5f, 0.2f, 0.2f);
-                var uText = new GameObject("X", typeof(RectTransform), typeof(Text));
-                uText.transform.SetParent(unequipGO.transform, false);
-                var uxRect = uText.GetComponent<RectTransform>();
-                uxRect.anchorMin = Vector2.zero; uxRect.anchorMax = Vector2.one; uxRect.sizeDelta = Vector2.zero;
-                var ux = uText.GetComponent<Text>();
-                ux.text = "X"; ux.fontSize = 14; ux.color = Color.white;
-                ux.alignment = TextAnchor.MiddleCenter; ux.font = _font; ux.raycastTarget = false;
+                // Draggable equipped item
+                CreateDraggableItem(slotGO.transform, equipped, true, (int)slotType,
+                    new Vector2(0.25f, 0.05f), new Vector2(0.98f, 0.95f));
 
-                var capturedSlot = slotType;
-                unequipGO.GetComponent<Button>().onClick.AddListener(() => {
-                    InventoryManager.Unequip(capturedSlot);
-                    Refresh();
-                });
+                // Stat line
+                MakeText(slotGO.transform, BuildStatLine(equipped), 9, new Color(0.6f, 0.6f, 0.6f),
+                    TextAnchor.LowerLeft, new Vector2(0.02f, 0f), new Vector2(0.98f, 0.4f));
+            }
+            else
+            {
+                MakeText(slotGO.transform, "drag item here", 11, new Color(0.3f, 0.3f, 0.35f),
+                    TextAnchor.MiddleCenter, new Vector2(0.25f, 0f), new Vector2(0.98f, 1f));
             }
         }
+
+        // ─── Inventory Grid ───
 
         private void RefreshInventory()
         {
@@ -170,86 +156,139 @@ namespace Synthborn.UI
             foreach (Transform child in _inventoryContainer) Destroy(child.gameObject);
 
             var items = InventoryManager.GetInventoryItems();
-
             if (_inventoryTitle != null)
-                _inventoryTitle.text = $"INVENTORY ({items.Count})";
+                _inventoryTitle.text = $"BAG ({items.Count})";
 
-            if (items.Count == 0)
-            {
-                CreateText(_inventoryContainer, "No items yet. Complete levels to earn loot!", Color.gray);
-                return;
-            }
+            for (int i = 0; i < items.Count; i++)
+                CreateGridCell(items[i], i);
 
-            foreach (var item in items)
-                CreateInventoryItem(item);
+            int totalCells = Mathf.Max(20, ((items.Count / GridColumns) + 2) * GridColumns);
+            for (int i = items.Count; i < totalCells; i++)
+                CreateEmptyGridCell(i);
         }
 
-        private void CreateInventoryItem(ItemData item)
+        private void CreateGridCell(ItemData item, int index)
         {
-            var go = new GameObject(item.Id, typeof(RectTransform), typeof(Image), typeof(Button));
-            go.transform.SetParent(_inventoryContainer, false);
+            var cellGO = new GameObject($"Cell_{index}", typeof(RectTransform), typeof(Image));
+            cellGO.transform.SetParent(_inventoryContainer, false);
+            cellGO.GetComponent<RectTransform>().sizeDelta = new Vector2(CellSize, CellSize);
+            cellGO.GetComponent<Image>().color = new Color(0.14f, 0.13f, 0.18f);
+
+            var drop = cellGO.AddComponent<DropSlot>();
+            drop.Mode = DropSlot.SlotMode.Inventory;
+            drop.GridIndex = index;
+            drop.OnItemDropped = OnItemDropped;
+
+            CreateDraggableItem(cellGO.transform, item, false, index,
+                new Vector2(0.05f, 0.05f), new Vector2(0.95f, 0.95f));
+        }
+
+        private void CreateEmptyGridCell(int index)
+        {
+            var cellGO = new GameObject($"Cell_{index}", typeof(RectTransform), typeof(Image));
+            cellGO.transform.SetParent(_inventoryContainer, false);
+            cellGO.GetComponent<RectTransform>().sizeDelta = new Vector2(CellSize, CellSize);
+            cellGO.GetComponent<Image>().color = new Color(0.08f, 0.08f, 0.10f);
+
+            var drop = cellGO.AddComponent<DropSlot>();
+            drop.Mode = DropSlot.SlotMode.Inventory;
+            drop.GridIndex = index;
+            drop.OnItemDropped = OnItemDropped;
+        }
+
+        private void CreateDraggableItem(Transform parent, ItemData item, bool isEquipped, int slotIndex,
+            Vector2 anchorMin, Vector2 anchorMax)
+        {
+            var go = new GameObject("Item", typeof(RectTransform), typeof(Image),
+                typeof(CanvasGroup), typeof(DragDropItem));
+            go.transform.SetParent(parent, false);
+
             var rect = go.GetComponent<RectTransform>();
-            rect.sizeDelta = new Vector2(280, 50);
-            go.GetComponent<Image>().color = new Color(0.15f, 0.14f, 0.2f);
+            rect.anchorMin = anchorMin;
+            rect.anchorMax = anchorMax;
+            rect.sizeDelta = Vector2.zero;
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
 
-            // Item info
-            string slotLabel = ItemData.SlotName(item.SlotType);
-            string stats = "";
-            if (item.HpModifier != 0) stats += $"HP{item.HpModifier:+0%;-0%} ";
-            if (item.DamageModifier != 0) stats += $"DMG{item.DamageModifier:+0%;-0%} ";
-            if (item.SpeedModifier != 0) stats += $"SPD{item.SpeedModifier:+0%;-0%} ";
-            if (item.CritChance != 0) stats += $"CRT{item.CritChance:+0%;-0%} ";
-            if (item.ArmorFlat != 0) stats += $"ARM+{item.ArmorFlat} ";
-            if (item.AttackSpeedModifier != 0) stats += $"ASPD{item.AttackSpeedModifier:+0%;-0%} ";
+            go.GetComponent<Image>().color = DarkenColor(item.RarityColor, 0.5f);
 
-            var textGO = new GameObject("Text", typeof(RectTransform), typeof(Text));
+            var textGO = new GameObject("Name", typeof(RectTransform), typeof(Text));
             textGO.transform.SetParent(go.transform, false);
             var tRect = textGO.GetComponent<RectTransform>();
             tRect.anchorMin = Vector2.zero; tRect.anchorMax = Vector2.one;
             tRect.sizeDelta = Vector2.zero;
-            tRect.offsetMin = new Vector2(8, 2); tRect.offsetMax = new Vector2(-60, -2);
+            tRect.offsetMin = new Vector2(2, 1); tRect.offsetMax = new Vector2(-2, -1);
             var text = textGO.GetComponent<Text>();
-            text.text = $"{item.DisplayName} <size=10>[{slotLabel}]</size>\n<size=10>{stats}</size>";
-            text.fontSize = 13;
+            text.text = isEquipped
+                ? item.DisplayName
+                : $"{item.DisplayName}\n<size=7>[{ItemData.SlotName(item.SlotType)}]</size>";
+            text.fontSize = isEquipped ? 12 : 9;
             text.color = item.RarityColor;
-            text.alignment = TextAnchor.MiddleLeft;
+            text.alignment = TextAnchor.MiddleCenter;
             text.font = _font;
             text.supportRichText = true;
             text.raycastTarget = false;
 
-            // Equip button
-            var equipGO = new GameObject("Equip", typeof(RectTransform), typeof(Image), typeof(Button));
-            equipGO.transform.SetParent(go.transform, false);
-            var eRect = equipGO.GetComponent<RectTransform>();
-            eRect.anchorMin = new Vector2(1, 0); eRect.anchorMax = new Vector2(1, 1);
-            eRect.pivot = new Vector2(1, 0.5f);
-            eRect.sizeDelta = new Vector2(55, 0);
-            eRect.anchoredPosition = Vector2.zero;
-            equipGO.GetComponent<Image>().color = new Color(0.2f, 0.35f, 0.2f);
-            var eTextGO = new GameObject("T", typeof(RectTransform), typeof(Text));
-            eTextGO.transform.SetParent(equipGO.transform, false);
-            var etRect = eTextGO.GetComponent<RectTransform>();
-            etRect.anchorMin = Vector2.zero; etRect.anchorMax = Vector2.one; etRect.sizeDelta = Vector2.zero;
-            var et = eTextGO.GetComponent<Text>();
-            et.text = "EQUIP"; et.fontSize = 11; et.color = Color.white;
-            et.alignment = TextAnchor.MiddleCenter; et.font = _font; et.raycastTarget = false;
-
-            var capturedItem = item;
-            equipGO.GetComponent<Button>().onClick.AddListener(() => {
-                InventoryManager.Equip(capturedItem);
-                Refresh();
-            });
+            var drag = go.GetComponent<DragDropItem>();
+            drag.ItemId = item.Id;
+            drag.IsEquipped = isEquipped;
+            drag.SourceSlotIndex = slotIndex;
         }
 
-        private void CreateText(Transform parent, string text, Color color)
+        // ─── Drop Handling ───
+
+        private void OnItemDropped(DragDropItem dragItem, DropSlot targetSlot)
         {
-            var go = new GameObject("Info", typeof(RectTransform), typeof(Text));
+            if (dragItem == null || targetSlot == null) return;
+
+            var itemDB = Resources.FindObjectsOfTypeAll<ItemDatabase>();
+            if (itemDB.Length > 0) InventoryManager.SetDatabase(itemDB[0]);
+
+            var item = itemDB.Length > 0 ? itemDB[0].GetById(dragItem.ItemId) : null;
+            if (item == null) return;
+
+            if (dragItem.IsEquipped && targetSlot.Mode == DropSlot.SlotMode.Inventory)
+            {
+                InventoryManager.Unequip((ItemSlotType)dragItem.SourceSlotIndex);
+            }
+            else if (!dragItem.IsEquipped && targetSlot.Mode == DropSlot.SlotMode.Equipment)
+            {
+                if (item.SlotType == targetSlot.EquipSlotType)
+                    InventoryManager.Equip(item);
+            }
+
+            Refresh();
+        }
+
+        // ─── Helpers ───
+
+        private GameObject MakeText(Transform parent, string text, int size, Color color,
+            TextAnchor align, Vector2 anchorMin, Vector2 anchorMax)
+        {
+            var go = new GameObject("Txt", typeof(RectTransform), typeof(Text));
             go.transform.SetParent(parent, false);
             var rect = go.GetComponent<RectTransform>();
-            rect.sizeDelta = new Vector2(280, 30);
+            rect.anchorMin = anchorMin; rect.anchorMax = anchorMax;
+            rect.sizeDelta = Vector2.zero; rect.offsetMin = Vector2.zero; rect.offsetMax = Vector2.zero;
             var t = go.GetComponent<Text>();
-            t.text = text; t.fontSize = 12; t.color = color;
-            t.alignment = TextAnchor.MiddleCenter; t.font = _font; t.raycastTarget = false;
+            t.text = text; t.fontSize = size; t.color = color;
+            t.alignment = align; t.font = _font; t.raycastTarget = false;
+            return go;
         }
+
+        private static string BuildStatLine(ItemData item)
+        {
+            var parts = new List<string>();
+            if (item.HpModifier != 0) parts.Add($"HP{item.HpModifier:+0%;-0%}");
+            if (item.DamageModifier != 0) parts.Add($"DMG{item.DamageModifier:+0%;-0%}");
+            if (item.SpeedModifier != 0) parts.Add($"SPD{item.SpeedModifier:+0%;-0%}");
+            if (item.CritChance != 0) parts.Add($"CRT{item.CritChance:+0%;-0%}");
+            if (item.ArmorFlat != 0) parts.Add($"ARM+{item.ArmorFlat}");
+            if (item.AttackSpeedModifier != 0) parts.Add($"ASPD{item.AttackSpeedModifier:+0%;-0%}");
+            return string.Join(" ", parts);
+        }
+
+        private static Color DarkenColor(Color c, float factor) =>
+            new Color(c.r * factor, c.g * factor, c.b * factor, 0.9f);
     }
 }
