@@ -20,13 +20,32 @@ namespace Synthborn.UI
                 EventSystem.current?.SetSelectedGameObject(_newGameButton.gameObject);
         }
 
-        /// <summary>New Game: show slot picker in new-game mode.</summary>
+        /// <summary>New Game: go directly to character creation (auto-picks first empty slot).</summary>
         public void OnNewGameClicked()
         {
-            _loadGameScreen?.Show(isNewGame: true);
+            // Find first empty slot
+            int emptySlot = -1;
+            for (int i = 0; i < 3; i++)
+            {
+                if (!Synthborn.Core.Persistence.SaveManager.SlotExists(i))
+                {
+                    emptySlot = i;
+                    break;
+                }
+            }
+
+            if (emptySlot >= 0)
+            {
+                _creationScreen?.Show(emptySlot);
+            }
+            else
+            {
+                // All slots full — show slot picker to overwrite one
+                _loadGameScreen?.Show(isNewGame: true);
+            }
         }
 
-        /// <summary>Load Game: show slot picker in load mode (only filled slots).</summary>
+        /// <summary>Load Game: show saved games list.</summary>
         public void OnLoadGameClicked()
         {
             _loadGameScreen?.Show(isNewGame: false);

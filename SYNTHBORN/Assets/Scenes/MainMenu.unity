@@ -7643,7 +7643,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 539065743}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 632508176}
+        m_TargetAssemblyTypeName: Synthborn.UI.MainMenu, Synthborn.UI
+        m_MethodName: OnNewGameClicked
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &539065743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8129,7 +8141,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 591937765}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 632508176}
+        m_TargetAssemblyTypeName: Synthborn.UI.MainMenu, Synthborn.UI
+        m_MethodName: OnQuitClicked
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &591937765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12406,7 +12430,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1408134060}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 632508176}
+        m_TargetAssemblyTypeName: Synthborn.UI.MainMenu, Synthborn.UI
+        m_MethodName: OnLoadGameClicked
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1408134060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14932,7 +14968,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2132324530}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1723137800}
+        m_TargetAssemblyTypeName: Synthborn.UI.SettingsScreen, Synthborn.UI
+        m_MethodName: Show
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2132324530
 MonoBehaviour:
   m_ObjectHideFlags: 0
