@@ -47,6 +47,9 @@ namespace Synthborn.Core.Persistence
         public int darkCrystals;
         public int bossEssences;
 
+        // Discovered Synthesis Recipes (recipe IDs)
+        public List<string> discoveredRecipes = new();
+
         // Star Ratings (best star count per level, index = level-1)
         public List<int> levelStars = new();
 

@@ -14,6 +14,9 @@ namespace Synthborn.Core.Items
     /// </summary>
     public static class CraftingManager
     {
+        /// <summary>Fired when a recipe is used for the first time. string = recipe ID.</summary>
+        public static event System.Action<string> OnRecipeDiscovered;
+
         /// <summary>Synthesize a random Baseline component. Cost: 3 Residual Compound.</summary>
         public static bool SynthesizeBaseline(ItemDatabase db)
         {
@@ -24,6 +27,7 @@ namespace Synthborn.Core.Items
             ch.scrapMetal -= 3;
             var item = GetRandomItemOfRarity(db, ItemRarity.Baseline);
             if (item != null) InventoryManager.AddToInventory(item.Id);
+            TrackRecipe("baseline");
             SaveManager.SaveSlot();
             return true;
         }
@@ -39,6 +43,7 @@ namespace Synthborn.Core.Items
             var item = GetRandomItemOfRarity(db, ItemRarity.Calibrated);
             if (item == null) item = GetRandomItemOfRarity(db, ItemRarity.Baseline);
             if (item != null) InventoryManager.AddToInventory(item.Id);
+            TrackRecipe("calibrated");
             SaveManager.SaveSlot();
             return true;
         }
@@ -54,6 +59,7 @@ namespace Synthborn.Core.Items
             ch.scrapMetal -= 1;
             var item = GetRandomItemOfRarity(db, ItemRarity.Reinforced);
             if (item != null) InventoryManager.AddToInventory(item.Id);
+            TrackRecipe("reinforced");
             SaveManager.SaveSlot();
             return true;
         }
@@ -70,6 +76,7 @@ namespace Synthborn.Core.Items
             var item = GetRandomItemOfRarity(db, ItemRarity.ArchitectGrade);
             if (item == null) item = GetRandomItemOfRarity(db, ItemRarity.Anomalous);
             if (item != null) InventoryManager.AddToInventory(item.Id);
+            TrackRecipe("architect_grade");
             SaveManager.SaveSlot();
             return true;
         }
@@ -98,6 +105,7 @@ namespace Synthborn.Core.Items
             if (result == null) result = GetRandomItemOfRarity(db, item1.Rarity); // Fallback
             if (result != null) InventoryManager.AddToInventory(result.Id);
 
+            TrackRecipe("merge_" + targetRarity.ToString().ToLower());
             SaveManager.SaveSlot();
             return result?.Id;
         }
@@ -148,6 +156,24 @@ namespace Synthborn.Core.Items
                 foreach (var item in db.allItems)
                     if (item != null) candidates.Add(item);
             return candidates.Count > 0 ? candidates[Random.Range(0, candidates.Count)] : null;
+        }
+
+        private static void TrackRecipe(string recipeId)
+        {
+            var ch = SaveManager.Character;
+            if (ch == null) return;
+            if (!ch.discoveredRecipes.Contains(recipeId))
+            {
+                ch.discoveredRecipes.Add(recipeId);
+                OnRecipeDiscovered?.Invoke(recipeId);
+            }
+        }
+
+        /// <summary>Check if a recipe has been discovered.</summary>
+        public static bool IsRecipeDiscovered(string recipeId)
+        {
+            var ch = SaveManager.Character;
+            return ch != null && ch.discoveredRecipes.Contains(recipeId);
         }
     }
 }

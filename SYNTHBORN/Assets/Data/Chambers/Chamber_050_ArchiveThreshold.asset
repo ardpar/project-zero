@@ -39,5 +39,5 @@ MonoBehaviour:
   chamberNumber: 50
   biomeLayer: 2
   pressureRating: 4
-  adjacentChambers: 2f00000030000000
+  adjacentChambers: 2f0000003000000033000000
   pressureMultiplierOverride: 0

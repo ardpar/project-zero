@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e330668ce8eec4b619823c6d4cfe4e34, type: 3}
+  m_Name: Chamber_079_CorruptionRing
+  m_EditorClassIdentifier: Synthborn.Waves::Synthborn.Waves.TrialChamberData
+  levelName: Corruption Ring
+  floorTile: {fileID: 11400000, guid: 46dbe7fb5758345879be19aca6e6fdda, type: 2}
+  wallTile: {fileID: 11400000, guid: 3ec27f04c78d34d8b8f8fff0cc0867c1, type: 2}
+  biomeTint: {r: 0.03, g: 0.02, b: 0.06, a: 1}
+  spawnPool:
+  - EnemyData: {fileID: 11400000, guid: d0488aeb4b31c41f884b4cb7a29536de, type: 2}
+    Weight: 3
+  - EnemyData: {fileID: 11400000, guid: a3e16031a3a2e42c9a4b459d13178d23, type: 2}
+    Weight: 3
+  - EnemyData: {fileID: 11400000, guid: 1c3ad4833ce8b435d8120b3baf163fa5, type: 2}
+    Weight: 2
+  - EnemyData: {fileID: 11400000, guid: f4ade2ae76cd74790b349a6a4b79bc89, type: 2}
+    Weight: 2
+  - EnemyData: {fileID: 11400000, guid: c240c38597b3e46959b89b20ec0a166b, type: 2}
+    Weight: 2
+  waveCount: 7
+  baseSpawnInterval: 0.635
+  intervalDecreasePerWave: 0.08
+  baseWaveDuration: 185
+  bossData: {fileID: 11400000, guid: 99dd0625ca5aa412ca255b20b75977ec, type: 2}
+  bossChaserData: {fileID: 11400000, guid: 15a1741d3e5c14382a1e0961a9a529aa, type: 2}
+  difficultyMultiplier: 4.32
+  baseElites: 5
+  maxElites: 9
+  chamberNumber: 79
+  biomeLayer: 4
+  pressureRating: 5
+  adjacentChambers: 4e0000004b00000053000000
+  pressureMultiplierOverride: 0

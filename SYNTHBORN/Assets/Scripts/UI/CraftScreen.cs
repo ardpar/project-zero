@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Synthborn.Core.Persistence;
@@ -126,7 +127,26 @@ namespace Synthborn.UI
             bt.text = "SENTEZLE"; bt.fontSize = 14; bt.color = canCraft ? Color.white : Color.gray;
             bt.alignment = TextAnchor.MiddleCenter; bt.font = _font; bt.raycastTarget = false;
 
-            if (canCraft) btnGO.GetComponent<Button>().onClick.AddListener(() => onCraft());
+            if (canCraft) btnGO.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                onCraft();
+                StartCoroutine(SynthesisPulse());
+            });
+        }
+
+        private IEnumerator SynthesisPulse()
+        {
+            if (_recipeContainer == null) yield break;
+            var orig = _recipeContainer.localScale;
+            float t = 0f;
+            while (t < 0.25f)
+            {
+                t += Time.unscaledDeltaTime;
+                float s = 1f + 0.05f * Mathf.Sin(Mathf.PI * t / 0.25f);
+                _recipeContainer.localScale = orig * s;
+                yield return null;
+            }
+            _recipeContainer.localScale = orig;
         }
     }
 }

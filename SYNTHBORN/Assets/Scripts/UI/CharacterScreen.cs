@@ -169,6 +169,12 @@ namespace Synthborn.UI
                 var bImg = borderGO.GetComponent<Image>();
                 bImg.color = new Color(equipped.RarityColor.r, equipped.RarityColor.g, equipped.RarityColor.b, 0.3f);
                 bImg.raycastTarget = false;
+                // Animated glow for Anomalous+ items
+                if ((int)equipped.Rarity >= (int)ItemRarity.Anomalous)
+                {
+                    var glow = borderGO.AddComponent<RarityGlow>();
+                    glow.Init(equipped.RarityColor, equipped.Rarity == ItemRarity.ArchitectGrade ? 3f : 2f);
+                }
             }
 
             // Drop target

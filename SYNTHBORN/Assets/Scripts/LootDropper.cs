@@ -77,23 +77,49 @@ public class LootDropper : MonoBehaviour
         }
     }
 
+    /// <summary>Boss-specific Architect-Grade item IDs, keyed by EnemyData asset name.</summary>
+    private static readonly System.Collections.Generic.Dictionary<string, string> BossArchitectItems = new()
+    {
+        { "SummonerData", "architect_summoner_crown" },
+        { "CavernGuardianData", "architect_guardian_plate" },
+        { "HellLordData", "architect_helllord_blade" },
+        { "JungleBeastData", "architect_junglebeast_array" },
+        { "TempleKeeperData", "architect_templekeeper_frame" }
+    };
+
     private ItemData GetStabilizedLoot(int level, float pressureBoost)
     {
         ItemRarity minRarity;
         float roll = Random.value;
 
-        // Pressure boost shifts rarity thresholds
-        float legendaryThreshold = 0.10f + pressureBoost * 0.5f; // 10% → 25% at pressure 2
-        float epicThreshold = 0.30f + pressureBoost * 0.3f;      // 30% → 39% at pressure 2
+        float legendaryThreshold = 0.10f + pressureBoost * 0.5f;
+        float epicThreshold = 0.30f + pressureBoost * 0.3f;
 
         if (level >= 8 && roll < legendaryThreshold)
+        {
+            // Try boss-specific Architect-Grade item first
+            var bossItem = GetBossSpecificItem();
+            if (bossItem != null) return bossItem;
             minRarity = ItemRarity.ArchitectGrade;
+        }
         else if (level >= 4 && roll < epicThreshold)
             minRarity = ItemRarity.Anomalous;
         else
             minRarity = ItemRarity.Reinforced;
 
         return GetRandomItemOfMinRarity(minRarity);
+    }
+
+    private ItemData GetBossSpecificItem()
+    {
+        if (_trialManager == null || !_trialManager.IsTrialActive) return null;
+        var bossData = _trialManager.CurrentChamber?.bossData;
+        if (bossData == null) return null;
+
+        if (BossArchitectItems.TryGetValue(bossData.name, out string itemId))
+            return _itemDatabase.GetById(itemId);
+
+        return null;
     }
 
     private readonly System.Collections.Generic.List<ItemData> _candidates = new();
