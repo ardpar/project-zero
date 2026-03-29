@@ -5,7 +5,7 @@ namespace Synthborn.Combat
 {
     /// <summary>
     /// Finds the best attack target using cone + 360° fallback.
-    /// Uses Physics2D.OverlapCircleNonAlloc for zero-allocation queries.
+    /// Uses Physics2D.OverlapCircle with ContactFilter2D for zero-allocation queries.
     /// </summary>
     public class TargetingSystem : MonoBehaviour
     {
@@ -19,7 +19,7 @@ namespace Synthborn.Combat
         /// </summary>
         public Transform FindBestTarget(Vector2 origin, Vector2 facing, float range, float coneAngleDeg)
         {
-            int count = Physics2D.OverlapCircleNonAlloc(origin, range, _hitBuffer, _enemyLayer);
+            int count = Physics2D.OverlapCircle(origin, range, new ContactFilter2D { layerMask = _enemyLayer, useLayerMask = true, useTriggers = true }, _hitBuffer);
             if (count == 0) return null;
 
             Transform nearest = null;

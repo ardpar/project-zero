@@ -30,7 +30,6 @@ namespace Synthborn.Enemies
         // ------------------------------------------------------------------ //
 
         private ExploderData _exploderData;
-        private float        _primeTimer;
         private GameObject   _warningInstance;
         private Coroutine    _primeCoroutine;
 
@@ -64,7 +63,6 @@ namespace Synthborn.Enemies
                 case EnemyState.Priming:
                     rb.linearVelocity = Vector2.zero;
                     SpawnWarning();
-                    _primeTimer = 0f;
                     _primeCoroutine = StartCoroutine(PrimeCountdown());
                     break;
 

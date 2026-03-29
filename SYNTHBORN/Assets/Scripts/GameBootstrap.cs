@@ -27,9 +27,6 @@ namespace Synthborn.Core
         [SerializeField] private GameObject _hpOrbPrefab;
 
         [Header("Pool Sizes")]
-        [SerializeField] private int _enemyPoolSize = 50;
-        [SerializeField] private int _projectilePoolSize = 100;
-        [SerializeField] private int _xpGemPoolSize = 100;
         [SerializeField] private int _hpOrbPoolSize = 20;
 
         [Header("Scene References")]
