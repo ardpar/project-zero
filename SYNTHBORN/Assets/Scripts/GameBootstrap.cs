@@ -9,6 +9,7 @@ using Synthborn.Player;
 using Synthborn.Progression;
 using Synthborn.Waves;
 using Synthborn.Mutations;
+using Synthborn.Core.Persistence;
 using Synthborn.UI;
 
 namespace Synthborn.Core
@@ -73,6 +74,15 @@ namespace Synthborn.Core
             }
 
             var stats = new CombatStatBlock();
+
+            // S10-07: Apply persistent upgrades at run start
+            UpgradeManager.ApplyToStats(stats);
+
+            // Apply starter form stats
+            var forms = Resources.FindObjectsOfTypeAll<StarterFormData>();
+            int formIndex = SaveManager.Data.selectedStarterForm;
+            if (forms != null && formIndex >= 0 && formIndex < forms.Length)
+                forms[formIndex].ApplyToStats(stats);
 
             // Create pools (no pre-warm — lazy instantiate to avoid layer/state issues)
             var enemyPool = new ObjectPool<EnemyBrain>(

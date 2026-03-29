@@ -76,15 +76,26 @@ namespace Synthborn.Core
                 _stats.EnemiesKilled, _stats.FinalLevel, _stats.MutationsAcquired,
                 cellsEarned, victory);
 
-            UpdateStatsDisplay(cellsEarned);
+            int achBefore = AchievementManager.UnlockedCount;
+            AchievementManager.CheckRunEnd(
+                _stats.SurvivalTime, _stats.EnemiesKilled, _stats.WavesCleared,
+                _stats.MutationsAcquired, _stats.SynergiesTriggered,
+                _stats.TotalXPCollected, victory);
+            int newAchievements = AchievementManager.UnlockedCount - achBefore;
+
+            UpdateStatsDisplay(cellsEarned, newAchievements);
         }
 
-        private void UpdateStatsDisplay(int cellsEarned)
+        private void UpdateStatsDisplay(int cellsEarned, int newAchievements = 0)
         {
             if (_statsText == null || _stats == null) return;
 
             int minutes = Mathf.FloorToInt(_stats.SurvivalTime / 60f);
             int seconds = Mathf.FloorToInt(_stats.SurvivalTime % 60f);
+
+            string achText = newAchievements > 0
+                ? $"\n<color=#FFD700>+{newAchievements} Achievement{(newAchievements > 1 ? "s" : "")}!</color>"
+                : "";
 
             _statsText.text =
                 $"Time: {minutes:00}:{seconds:00}\n" +
@@ -93,7 +104,8 @@ namespace Synthborn.Core
                 $"Mutations: {_stats.MutationsAcquired}\n" +
                 $"Synergies: {_stats.SynergiesTriggered}\n" +
                 $"Waves: {_stats.WavesCleared}\n\n" +
-                $"<color=yellow>+{cellsEarned} Cells</color>";
+                $"<color=yellow>+{cellsEarned} Cells</color>" +
+                achText;
         }
 
         public void RestartRun()

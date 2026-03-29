@@ -1,6 +1,7 @@
 using UnityEngine;
 using Synthborn.Core.Pool;
 using Synthborn.Core.Events;
+using Synthborn.Core.Persistence;
 
 namespace Synthborn.Progression
 {
@@ -63,8 +64,9 @@ namespace Synthborn.Progression
                 // Collect
                 if (dist < _config.collectDistance)
                 {
-                    _xpManager?.AddXP(_xpValue);
-                    GameEvents.XPGemCollected(_xpValue);
+                    int scaledXP = Mathf.RoundToInt(_xpValue * UpgradeManager.XPGainMultiplier);
+                    _xpManager?.AddXP(scaledXP);
+                    GameEvents.XPGemCollected(scaledXP);
                     ReturnToPool();
                 }
             }
