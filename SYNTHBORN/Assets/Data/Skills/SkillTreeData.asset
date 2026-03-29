@@ -1,0 +1,735 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: SkillTreeData
+  m_EditorClassIdentifier: Synthborn.Core:Synthborn.Core.Skills:SkillTreeData
+  nodes:
+  - id: might_01
+    displayName: Sharp Edge
+    description: DMG +5%
+    branch: 0
+    tier: 0
+    skillPointCost: 1
+    prerequisiteNodeId: 
+    hpModifier: 0
+    damageModifier: 0.05
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: might_02
+    displayName: Heavy Strike
+    description: DMG +5%
+    branch: 0
+    tier: 1
+    skillPointCost: 1
+    prerequisiteNodeId: might_01
+    hpModifier: 0
+    damageModifier: 0.05
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: might_03
+    displayName: Precision
+    description: Crit +2%
+    branch: 0
+    tier: 2
+    skillPointCost: 1
+    prerequisiteNodeId: might_02
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0.02
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: might_04
+    displayName: Brutality
+    description: DMG +8%
+    branch: 0
+    tier: 3
+    skillPointCost: 1
+    prerequisiteNodeId: might_03
+    hpModifier: 0
+    damageModifier: 0.08
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: might_05
+    displayName: Keen Eyes
+    description: Crit +3%
+    branch: 0
+    tier: 4
+    skillPointCost: 1
+    prerequisiteNodeId: might_04
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0.03
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: might_06
+    displayName: Bloodlust
+    description: AtkSpd +5%
+    branch: 0
+    tier: 5
+    skillPointCost: 1
+    prerequisiteNodeId: might_05
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0.05
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: might_07
+    displayName: Wrath
+    description: DMG +10%
+    branch: 0
+    tier: 6
+    skillPointCost: 1
+    prerequisiteNodeId: might_06
+    hpModifier: 0
+    damageModifier: 0.1
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: might_08
+    displayName: Savage Blows
+    description: Crit DMG +15%
+    branch: 0
+    tier: 7
+    skillPointCost: 1
+    prerequisiteNodeId: might_07
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0.15
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: might_09
+    displayName: Frenzy
+    description: AtkSpd +8%
+    branch: 0
+    tier: 8
+    skillPointCost: 1
+    prerequisiteNodeId: might_08
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0.08
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: might_10
+    displayName: Executioner
+    description: DMG +15%, Crit +5%
+    branch: 0
+    tier: 9
+    skillPointCost: 1
+    prerequisiteNodeId: might_09
+    hpModifier: 0
+    damageModifier: 0.15
+    speedModifier: 0
+    critChance: 0.05
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: vit_01
+    displayName: Tough Skin
+    description: HP +5%
+    branch: 1
+    tier: 0
+    skillPointCost: 1
+    prerequisiteNodeId: 
+    hpModifier: 0.05
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: vit_02
+    displayName: Endurance
+    description: HP +5%
+    branch: 1
+    tier: 1
+    skillPointCost: 1
+    prerequisiteNodeId: vit_01
+    hpModifier: 0.05
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: vit_03
+    displayName: Iron Hide
+    description: Armor +3
+    branch: 1
+    tier: 2
+    skillPointCost: 1
+    prerequisiteNodeId: vit_02
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 3
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: vit_04
+    displayName: Resilience
+    description: HP +8%
+    branch: 1
+    tier: 3
+    skillPointCost: 1
+    prerequisiteNodeId: vit_03
+    hpModifier: 0.08
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: vit_05
+    displayName: Thick Plates
+    description: Armor +5
+    branch: 1
+    tier: 4
+    skillPointCost: 1
+    prerequisiteNodeId: vit_04
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 5
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: vit_06
+    displayName: Regeneration
+    description: HP +10%
+    branch: 1
+    tier: 5
+    skillPointCost: 1
+    prerequisiteNodeId: vit_05
+    hpModifier: 0.1
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: vit_07
+    displayName: Stone Wall
+    description: Armor +5
+    branch: 1
+    tier: 6
+    skillPointCost: 1
+    prerequisiteNodeId: vit_06
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 5
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: vit_08
+    displayName: Fortification
+    description: HP +10%
+    branch: 1
+    tier: 7
+    skillPointCost: 1
+    prerequisiteNodeId: vit_07
+    hpModifier: 0.1
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: vit_09
+    displayName: Juggernaut
+    description: Armor +8
+    branch: 1
+    tier: 8
+    skillPointCost: 1
+    prerequisiteNodeId: vit_08
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 8
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: vit_10
+    displayName: Immortal
+    description: HP +15%, Armor +5
+    branch: 1
+    tier: 9
+    skillPointCost: 1
+    prerequisiteNodeId: vit_09
+    hpModifier: 0.15
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 5
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: agi_01
+    displayName: Quick Step
+    description: Speed +3%
+    branch: 2
+    tier: 0
+    skillPointCost: 1
+    prerequisiteNodeId: 
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0.03
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: agi_02
+    displayName: Fleet Foot
+    description: Speed +3%
+    branch: 2
+    tier: 1
+    skillPointCost: 1
+    prerequisiteNodeId: agi_01
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0.03
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: agi_03
+    displayName: Dash Mastery
+    description: Dash CD -5%
+    branch: 2
+    tier: 2
+    skillPointCost: 1
+    prerequisiteNodeId: agi_02
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0.05
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: agi_04
+    displayName: Acceleration
+    description: Speed +5%
+    branch: 2
+    tier: 3
+    skillPointCost: 1
+    prerequisiteNodeId: agi_03
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0.05
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: agi_05
+    displayName: Evasion
+    description: Speed +5%
+    branch: 2
+    tier: 4
+    skillPointCost: 1
+    prerequisiteNodeId: agi_04
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0.05
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: agi_06
+    displayName: Blink
+    description: Dash CD -8%
+    branch: 2
+    tier: 5
+    skillPointCost: 1
+    prerequisiteNodeId: agi_05
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0.08
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: agi_07
+    displayName: Wind Walk
+    description: Speed +8%
+    branch: 2
+    tier: 6
+    skillPointCost: 1
+    prerequisiteNodeId: agi_06
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0.08
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: agi_08
+    displayName: Lightning
+    description: AtkSpd +5%
+    branch: 2
+    tier: 7
+    skillPointCost: 1
+    prerequisiteNodeId: agi_07
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0.05
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: agi_09
+    displayName: Ghost Step
+    description: Dash CD -10%
+    branch: 2
+    tier: 8
+    skillPointCost: 1
+    prerequisiteNodeId: agi_08
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0.1
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: agi_10
+    displayName: Phantom
+    description: Speed +10%, Dash CD -10%
+    branch: 2
+    tier: 9
+    skillPointCost: 1
+    prerequisiteNodeId: agi_09
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0.1
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0.1
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: fort_01
+    displayName: Scavenger
+    description: Gold +10%
+    branch: 3
+    tier: 0
+    skillPointCost: 1
+    prerequisiteNodeId: 
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0.1
+    dropRateBonus: 0
+  - id: fort_02
+    displayName: Keen Senses
+    description: XP +5%
+    branch: 3
+    tier: 1
+    skillPointCost: 1
+    prerequisiteNodeId: fort_01
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0.05
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: fort_03
+    displayName: Lucky Find
+    description: Drop Rate +3%
+    branch: 3
+    tier: 2
+    skillPointCost: 1
+    prerequisiteNodeId: fort_02
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0.03
+  - id: fort_04
+    displayName: Treasure Hunt
+    description: Gold +15%
+    branch: 3
+    tier: 3
+    skillPointCost: 1
+    prerequisiteNodeId: fort_03
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0.15
+    dropRateBonus: 0
+  - id: fort_05
+    displayName: Wisdom
+    description: XP +10%
+    branch: 3
+    tier: 4
+    skillPointCost: 1
+    prerequisiteNodeId: fort_04
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0.1
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: fort_06
+    displayName: Prospector
+    description: Drop Rate +5%
+    branch: 3
+    tier: 5
+    skillPointCost: 1
+    prerequisiteNodeId: fort_05
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0.05
+  - id: fort_07
+    displayName: Gold Rush
+    description: Gold +20%
+    branch: 3
+    tier: 6
+    skillPointCost: 1
+    prerequisiteNodeId: fort_06
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0.2
+    dropRateBonus: 0
+  - id: fort_08
+    displayName: Scholar
+    description: XP +15%
+    branch: 3
+    tier: 7
+    skillPointCost: 1
+    prerequisiteNodeId: fort_07
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0.15
+    goldGainBonus: 0
+    dropRateBonus: 0
+  - id: fort_09
+    displayName: Relic Hunter
+    description: Drop Rate +8%
+    branch: 3
+    tier: 8
+    skillPointCost: 1
+    prerequisiteNodeId: fort_08
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0
+    goldGainBonus: 0
+    dropRateBonus: 0.08
+  - id: fort_10
+    displayName: Midas Touch
+    description: Gold +25%, XP +10%
+    branch: 3
+    tier: 9
+    skillPointCost: 1
+    prerequisiteNodeId: fort_09
+    hpModifier: 0
+    damageModifier: 0
+    speedModifier: 0
+    critChance: 0
+    critDamageBonus: 0
+    attackSpeedModifier: 0
+    armorFlat: 0
+    dashCooldownModifier: 0
+    xpGainBonus: 0.1
+    goldGainBonus: 0.25
+    dropRateBonus: 0

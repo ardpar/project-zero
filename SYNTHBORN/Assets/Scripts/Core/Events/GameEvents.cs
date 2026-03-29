@@ -227,6 +227,11 @@ namespace Synthborn.Core.Events
         // ─────────────────────────────────────────────
 
         /// <summary>
+        // ─── Loot ───
+        public static event Action<string, string, int> OnLootDropped; // itemId, displayName, rarity
+        public static void RaiseLootDropped(string id, string name, Items.ItemRarity rarity) =>
+            OnLootDropped?.Invoke(id, name, (int)rarity);
+
         // ─── Heal ───
         public static event Action<float> OnPlayerHealRequested;
         public static void RaisePlayerHealRequested(float fraction) => OnPlayerHealRequested?.Invoke(fraction);
@@ -270,6 +275,7 @@ namespace Synthborn.Core.Events
             OnHPOrbRequested        = null;
             OnMutationApplied       = null;
             OnSynergyActivated      = null;
+            OnLootDropped           = null;
             OnPlayerHealRequested   = null;
             OnGoldChanged           = null;
             OnLevelStarted          = null;

@@ -11,6 +11,7 @@ using Synthborn.Waves;
 using Synthborn.Mutations;
 using Synthborn.Core.Persistence;
 using Synthborn.Core.Items;
+using Synthborn.Core.Skills;
 using Synthborn.UI;
 
 namespace Synthborn.Core
@@ -112,6 +113,11 @@ namespace Synthborn.Core
                 var itemDB = Resources.FindObjectsOfTypeAll<ItemDatabase>();
                 if (itemDB.Length > 0) InventoryManager.SetDatabase(itemDB[0]);
                 InventoryManager.ApplyEquipmentToStats(stats);
+
+                // Apply skill tree bonuses
+                var skillTrees = Resources.FindObjectsOfTypeAll<SkillTreeData>();
+                if (skillTrees.Length > 0) SkillTreeManager.SetTreeData(skillTrees[0]);
+                SkillTreeManager.ApplyToStats(stats);
             }
             else
             {
