@@ -80,9 +80,13 @@ namespace Synthborn.UI
             var rect = btnGO.GetComponent<RectTransform>();
             rect.sizeDelta = new Vector2(70, 70);
 
+            bool isMilestone = Synthborn.Waves.LevelManager.IsMilestoneLevel(levelNumber);
+
             var img = btnGO.GetComponent<Image>();
             if (completed)
                 img.color = new Color(0.15f, 0.35f, 0.15f); // green
+            else if (isMilestone && unlocked)
+                img.color = new Color(0.4f, 0.30f, 0.15f); // gold (milestone)
             else if (unlocked)
                 img.color = new Color(0.25f, 0.20f, 0.35f); // purple (playable)
             else
@@ -102,8 +106,9 @@ namespace Synthborn.UI
             // S12-12: Difficulty stars based on level number
             int stars = Mathf.Clamp((levelNumber - 1) / 20 + 1, 1, 5);
             string starStr = new string('\u2605', stars);
-            string statusIcon = completed ? "\n<size=10>\u2713</size>" : (!unlocked ? "\n<size=10>\uD83D\uDD12</size>" : "");
-            text.text = $"{levelNumber}\n<size=8>{starStr}</size>{statusIcon}";
+            string milestoneTag = isMilestone ? "<color=#FFD700>\u2726</color>" : "";
+            string statusIcon = completed ? "\n<size=10>\u2713</size>" : (!unlocked ? "\n<size=10>\u2717</size>" : "");
+            text.text = $"{milestoneTag}{levelNumber}\n<size=8>{starStr}</size>{statusIcon}";
             text.fontSize = 16;
             text.color = unlocked ? Color.white : Color.gray;
             text.alignment = TextAnchor.MiddleCenter;

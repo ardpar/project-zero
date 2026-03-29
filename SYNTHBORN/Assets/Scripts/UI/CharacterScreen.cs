@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using Synthborn.Core.Persistence;
 using Synthborn.Core.Items;
 
@@ -28,6 +29,7 @@ namespace Synthborn.UI
         [Header("Inventory")]
         [SerializeField] private Transform _inventoryContainer;
         [SerializeField] private Text _inventoryTitle;
+        [SerializeField] private Text _tooltipText;
 
         private const int GridColumns = 5;
         private const float CellSize = 64f;
@@ -215,7 +217,39 @@ namespace Synthborn.UI
             drop.OnItemDropped = OnItemDropped;
 
             CreateDraggableItem(cellGO.transform, item, false, index,
-                new Vector2(0.05f, 0.05f), new Vector2(0.95f, 0.95f));
+                new Vector2(0.05f, 0.15f), new Vector2(0.95f, 0.95f));
+
+            // Sell button (small, bottom of cell)
+            var sellGO = new GameObject("Sell", typeof(RectTransform), typeof(Image), typeof(Button));
+            sellGO.transform.SetParent(cellGO.transform, false);
+            var sRect = sellGO.GetComponent<RectTransform>();
+            sRect.anchorMin = new Vector2(0.05f, 0f);
+            sRect.anchorMax = new Vector2(0.95f, 0.15f);
+            sRect.sizeDelta = Vector2.zero; sRect.offsetMin = Vector2.zero; sRect.offsetMax = Vector2.zero;
+            sellGO.GetComponent<Image>().color = new Color(0.4f, 0.15f, 0.15f);
+            var sellText = new GameObject("T", typeof(RectTransform), typeof(Text));
+            sellText.transform.SetParent(sellGO.transform, false);
+            var stRect = sellText.GetComponent<RectTransform>();
+            stRect.anchorMin = Vector2.zero; stRect.anchorMax = Vector2.one; stRect.sizeDelta = Vector2.zero;
+            var st = sellText.GetComponent<Text>();
+            int price = InventoryManager.GetSellPrice(item.Rarity);
+            st.text = $"{price}g"; st.fontSize = 7; st.color = new Color(1f, 0.85f, 0.3f);
+            st.alignment = TextAnchor.MiddleCenter; st.font = _font; st.raycastTarget = false;
+            var capturedId = item.Id;
+            sellGO.GetComponent<Button>().onClick.AddListener(() => {
+                InventoryManager.SellItem(capturedId);
+                Refresh();
+            });
+
+            // Tooltip on hover
+            var trigger = cellGO.AddComponent<EventTrigger>();
+            var enterEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+            string tooltip = BuildItemTooltip(item);
+            enterEntry.callback.AddListener((data) => ShowItemTooltip(tooltip));
+            trigger.triggers.Add(enterEntry);
+            var exitEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
+            exitEntry.callback.AddListener((data) => ShowItemTooltip(""));
+            trigger.triggers.Add(exitEntry);
         }
 
         private void CreateEmptyGridCell(int index)
@@ -325,5 +359,44 @@ namespace Synthborn.UI
 
         private static Color DarkenColor(Color c, float factor) =>
             new Color(c.r * factor, c.g * factor, c.b * factor, 0.9f);
+
+        // ─── Tooltip ───
+
+        private void ShowItemTooltip(string text)
+        {
+            if (_tooltipText != null)
+            {
+                _tooltipText.text = text;
+                _tooltipText.supportRichText = true;
+            }
+        }
+
+        private string BuildItemTooltip(ItemData item)
+        {
+            string stats = BuildStatLine(item);
+            int sellPrice = InventoryManager.GetSellPrice(item.Rarity);
+
+            // Compare with currently equipped item in same slot
+            string comparison = "";
+            var equipped = InventoryManager.GetEquipped(item.SlotType);
+            if (equipped != null && equipped.Id != item.Id)
+            {
+                comparison = "\n<color=#AAAAAA>vs Equipped:</color>";
+                float dHP = item.HpModifier - equipped.HpModifier;
+                float dDMG = item.DamageModifier - equipped.DamageModifier;
+                float dSPD = item.SpeedModifier - equipped.SpeedModifier;
+                float dCRT = item.CritChance - equipped.CritChance;
+                int dARM = item.ArmorFlat - equipped.ArmorFlat;
+                if (dHP != 0) comparison += $" HP{dHP:+0%;-0%}";
+                if (dDMG != 0) comparison += $" DMG{dDMG:+0%;-0%}";
+                if (dSPD != 0) comparison += $" SPD{dSPD:+0%;-0%}";
+                if (dCRT != 0) comparison += $" CRT{dCRT:+0%;-0%}";
+                if (dARM != 0) comparison += $" ARM{dARM:+0;-0}";
+            }
+
+            return $"<b><color=#{ColorUtility.ToHtmlStringRGB(item.RarityColor)}>{item.DisplayName}</color></b>\n" +
+                   $"[{item.Rarity}] {ItemData.SlotName(item.SlotType)}\n" +
+                   $"{stats}\nSell: {sellPrice}g{comparison}";
+        }
     }
 }
