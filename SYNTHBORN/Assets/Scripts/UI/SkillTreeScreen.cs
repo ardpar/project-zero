@@ -70,10 +70,10 @@ namespace Synthborn.UI
 
             var ch = SaveManager.Character;
             if (_pointsText != null)
-                _pointsText.text = $"Skill Points: {ch?.unspentSkillPoints ?? 0}";
+                _pointsText.text = $"Kalibrasyon Noktas\u0131: {ch?.unspentSkillPoints ?? 0}";
 
             if (_infoText != null)
-                _infoText.text = $"Unlocked: {SkillTreeManager.UnlockedCount}/{SkillTreeManager.TotalNodes}";
+                _infoText.text = $"A\u00e7\u0131lan: {SkillTreeManager.UnlockedCount}/{SkillTreeManager.TotalNodes}";
 
             // Create 4 branch columns
             var branches = new[] { SkillBranch.SubstrateDensity, SkillBranch.StructuralIntegrity, SkillBranch.SignalConductivity, SkillBranch.DataYield };

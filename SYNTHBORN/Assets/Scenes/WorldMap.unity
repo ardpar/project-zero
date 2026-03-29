@@ -389,7 +389,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: BACK
+  m_Text: "GER\u0130"
 --- !u!222 &88733862
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -893,7 +893,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SKILLS
+  m_Text: "KAL\u0130BRASYON"
 --- !u!222 &243611483
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1240,7 +1240,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RESET (50g)
+  m_Text: SIFIRLA (50f)
 --- !u!222 &325277318
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4260,7 +4260,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Hover over a skill to see details
+  m_Text: "Detay g\xF6rmek i\xE7in bir yetene\u011Fin \xFCzerine gelin"
 --- !u!222 &1200925210
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4358,7 +4358,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SKILL TREE
+  m_Text: "KAL\u0130BRASYON A\u011EACI"
 --- !u!222 &1202907788
 CanvasRenderer:
   m_ObjectHideFlags: 0
