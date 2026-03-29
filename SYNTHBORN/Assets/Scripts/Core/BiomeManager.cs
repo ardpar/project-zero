@@ -5,7 +5,7 @@ namespace Synthborn.Core
 {
     /// <summary>
     /// Swaps arena tileset at run start for biome variety.
-    /// Reads floor/wall Tilemaps and replaces their tiles.
+    /// Applies per-biome ambient tint to the camera background.
     /// </summary>
     public class BiomeManager : MonoBehaviour
     {
@@ -13,6 +13,10 @@ namespace Synthborn.Core
         [SerializeField] private Tilemap _wallTilemap;
         [SerializeField] private TileBase[] _floorTiles;
         [SerializeField] private TileBase[] _wallTiles;
+
+        [Header("Biome Atmosphere")]
+        [Tooltip("Camera background color per biome (index matches floor/wall arrays).")]
+        [SerializeField] private Color[] _biomeTints;
 
         private void Start()
         {
@@ -22,6 +26,17 @@ namespace Synthborn.Core
             SwapTiles(_floorTilemap, _floorTiles[biomeIndex]);
             if (_wallTiles != null && biomeIndex < _wallTiles.Length)
                 SwapTiles(_wallTilemap, _wallTiles[biomeIndex]);
+
+            ApplyBiomeTint(biomeIndex);
+        }
+
+        private void ApplyBiomeTint(int biomeIndex)
+        {
+            if (_biomeTints == null || biomeIndex >= _biomeTints.Length) return;
+
+            var cam = Camera.main;
+            if (cam != null)
+                cam.backgroundColor = _biomeTints[biomeIndex];
         }
 
         private void SwapTiles(Tilemap tilemap, TileBase newTile)

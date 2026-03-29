@@ -1,68 +1,90 @@
 using UnityEngine;
 using Synthborn.Core.Pool;
 using Synthborn.Core.Events;
+using Synthborn.Combat.Health;
 
 namespace Synthborn.Enemies
 {
     /// <summary>
-    /// MVP Boss brain — behaves identically to <see cref="ChaserBrain"/> (Chase → Dead)
-    /// but is a distinct class so Vertical Slice can add phase transitions, special
-    /// attacks, and minion spawning without touching the Chaser hierarchy.
+    /// Boss brain with phase transition support.
     ///
-    /// MVP behaviour:
-    ///   - Large, slow Chaser with high HP (10x Normal), high contact damage.
-    ///   - All tuning via <see cref="BossData"/> ScriptableObject.
-    ///   - On death raises <see cref="GameEvents.OnBossDefeated"/> in addition
-    ///     to the standard OnEnemyDied event.
+    /// Behaviour:
+    ///   Chase — moves toward the player. Checks HP thresholds each tick.
+    ///           When HP drops below a BossPhase.Threshold, activates that phase:
+    ///           applies SpeedMultiplier, fires TransitionVfx.
+    ///   Dead  — raises GameEvents.OnBossDefeated.
     ///
-    /// Vertical Slice hook (not implemented here):
-    ///   Phase transitions: override EnterState(Chase) to check BossData.Phases
-    ///   when HP crosses a threshold.
+    /// Phase data is defined in BossData.Phases[] (ordered highest→lowest threshold).
     /// </summary>
     public class BossBrain : EnemyBrain
     {
-        // ------------------------------------------------------------------ //
-        // Private State
-        // ------------------------------------------------------------------ //
-
         private BossData _bossData;
+        private int _currentPhaseIndex = -1;
+        private float _baseEffectiveSpeed;
 
-        // ------------------------------------------------------------------ //
-        // EnemyBrain overrides
-        // ------------------------------------------------------------------ //
-
-        /// <inheritdoc/>
         public override void Initialize(Transform player, int waveNumber, ObjectPool<EnemyBrain> pool, EnemyData overrideData = null)
         {
             _bossData = data as BossData;
             if (_bossData == null)
-                Debug.LogWarning($"[BossBrain] EnemyData on {name} should be a BossData asset for VS+ features.", this);
+                Debug.LogWarning($"[BossBrain] EnemyData on {name} should be a BossData asset.", this);
+
+            _currentPhaseIndex = -1;
 
             base.Initialize(player, waveNumber, pool, overrideData);
+            _baseEffectiveSpeed = effectiveSpeed;
 
-            // Cinematic entrance: fire intro VFX event if configured
             if (_bossData?.IntroVfx != null)
                 GameEvents.RaiseVfxRequested(_bossData.IntroVfx, transform.position);
         }
 
-        /// <inheritdoc/>
         protected override void EnterState(EnemyState newState)
         {
             if (newState == EnemyState.Dead)
             {
-                // Boss-specific: raise global boss-defeated event so WaveSpawner
-                // can transition to Complete state and Run Manager can react.
                 GameEvents.RaiseBossDefeated();
             }
         }
 
-        /// <inheritdoc/>
         protected override void Tick()
         {
             if (CurrentState != EnemyState.Chase) return;
 
+            CheckPhaseTransition();
             ChasePlayer();
             TickContactDamage();
+        }
+
+        private void CheckPhaseTransition()
+        {
+            if (_bossData == null || _bossData.Phases == null || _bossData.Phases.Length == 0) return;
+            if (health == null) return;
+
+            float hpFraction = (float)health.CurrentHp / health.MaxHp;
+
+            for (int i = 0; i < _bossData.Phases.Length; i++)
+            {
+                if (i <= _currentPhaseIndex) continue;
+
+                var phase = _bossData.Phases[i];
+                if (hpFraction <= phase.Threshold)
+                {
+                    ActivatePhase(i, phase);
+                }
+            }
+        }
+
+        private void ActivatePhase(int index, BossPhase phase)
+        {
+            _currentPhaseIndex = index;
+
+            // Apply speed multiplier
+            effectiveSpeed = _baseEffectiveSpeed * phase.SpeedMultiplier;
+
+            // Fire transition VFX
+            if (phase.TransitionVfx != null)
+                GameEvents.RaiseVfxRequested(phase.TransitionVfx, transform.position);
+
+            Debug.Log($"[BossBrain] Phase {index + 1} activated at {(phase.Threshold * 100f):F0}% HP. Speed x{phase.SpeedMultiplier}");
         }
     }
 }

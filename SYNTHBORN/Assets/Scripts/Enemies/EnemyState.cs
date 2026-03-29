@@ -18,6 +18,15 @@ namespace Synthborn.Enemies
         /// <summary>Exploder only: AoE damage applied this frame, then transitions to Dead.</summary>
         Exploding = 3,
 
+        /// <summary>Charger only: winding up before a dash attack.</summary>
+        Charging  = 5,
+
+        /// <summary>Charger only: dashing at high speed toward the player.</summary>
+        Dashing   = 6,
+
+        /// <summary>Summoner only: stationary, spawning minions.</summary>
+        Summoning = 7,
+
         /// <summary>Entity is dead: collider disabled, pooled return pending.</summary>
         Dead      = 4,
     }

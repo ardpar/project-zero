@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b8ddc73fa7764b6dacbe3cbbb07eb4a, type: 3}
+  m_Name: CavernGuardianData
+  m_EditorClassIdentifier: Synthborn.Enemies::Synthborn.Enemies.BossData
+  <Id>k__BackingField: cavern_guardian
+  <Tier>k__BackingField: 2
+  <BaseHp>k__BackingField: 80
+  <ContactDamage>k__BackingField: 12
+  <MoveSpeed>k__BackingField: 1.5
+  <SpeedScalePerWave>k__BackingField: 0
+  <HitboxRadius>k__BackingField: 1
+  <BaseXp>k__BackingField: 50
+  <HpDropChance>k__BackingField: 0
+  <DeathVfx>k__BackingField: {fileID: 0}
+  <DeathSfx>k__BackingField: {fileID: 0}
+  <Phases>k__BackingField:
+  - Threshold: 0.75
+    SpeedMultiplier: 1.2
+    TransitionVfx: {fileID: 0}
+  - Threshold: 0.5
+    SpeedMultiplier: 1.6
+    TransitionVfx: {fileID: 0}
+  - Threshold: 0.25
+    SpeedMultiplier: 2.2
+    TransitionVfx: {fileID: 0}
+  <IntroVfx>k__BackingField: {fileID: 0}

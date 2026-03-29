@@ -5,7 +5,7 @@ namespace Synthborn.Core.Audio
     /// <summary>
     /// Intensity tiers for adaptive music. Maps to wave progression.
     /// </summary>
-    public enum MusicIntensity { Calm, Low, Medium, High }
+    public enum MusicIntensity { Calm, Low, Medium, High, Boss }
 
     /// <summary>
     /// Configuration asset for the adaptive music system.
@@ -31,6 +31,9 @@ namespace Synthborn.Core.Audio
         [Tooltip("Plays during late waves (7+) and elite encounters.")]
         public AudioClip highStem;
 
+        [Tooltip("Plays during boss fight. Falls back to highStem if null.")]
+        public AudioClip bossStem;
+
         [Header("Volume")]
         [Range(0f, 1f)] public float masterVolume = 0.4f;
 
@@ -53,6 +56,7 @@ namespace Synthborn.Core.Audio
                 MusicIntensity.Low    => lowStem,
                 MusicIntensity.Medium => mediumStem,
                 MusicIntensity.High   => highStem,
+                MusicIntensity.Boss   => bossStem != null ? bossStem : highStem,
                 _ => calmStem
             };
         }
