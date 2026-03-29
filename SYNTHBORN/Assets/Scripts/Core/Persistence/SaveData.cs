@@ -22,6 +22,9 @@ namespace Synthborn.Core.Persistence
         // Discovered mutations (for collection screen)
         public List<string> discoveredMutationIds = new();
 
+        // Tutorial
+        public bool tutorialCompleted;
+
         // Settings
         public float masterVolume = 1f;
         public float sfxVolume = 1f;
