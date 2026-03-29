@@ -20,11 +20,13 @@ namespace Synthborn.UI
             if (_panel == null) return;
             _panel.SetActive(true);
             Refresh();
+            PopupEscHandler.Register(_panel, Hide);
         }
 
         public void Hide()
         {
             if (_panel != null) _panel.SetActive(false);
+            PopupEscHandler.Unregister();
         }
 
         private void Refresh()

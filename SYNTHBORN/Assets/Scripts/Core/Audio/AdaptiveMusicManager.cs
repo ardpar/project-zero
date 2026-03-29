@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Synthborn.Core.Events;
+using Synthborn.Core.Persistence;
 
 namespace Synthborn.Core.Audio
 {
@@ -73,7 +74,7 @@ namespace Synthborn.Core.Audio
 
         private void OnBossSpawned()
         {
-            TransitionTo(MusicIntensity.High);
+            TransitionTo(MusicIntensity.Boss);
         }
 
         private void OnBossDefeated()
@@ -114,7 +115,7 @@ namespace Synthborn.Core.Audio
             {
                 // Nothing playing — start directly
                 ActiveSource.clip = clip;
-                ActiveSource.volume = _config.masterVolume;
+                ActiveSource.volume = _config.masterVolume * SaveManager.Data.musicVolume;
                 ActiveSource.Play();
                 return;
             }
@@ -136,7 +137,7 @@ namespace Synthborn.Core.Audio
             fadingIn.Play();
 
             float duration = _config.crossfadeDuration;
-            float targetVolume = _config.masterVolume;
+            float targetVolume = _config.masterVolume * SaveManager.Data.musicVolume;
             float elapsed = 0f;
 
             while (elapsed < duration)

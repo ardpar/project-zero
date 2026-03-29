@@ -1,4 +1,5 @@
 using UnityEngine;
+using Synthborn.Core.Persistence;
 
 namespace Synthborn.Core.Audio
 {
@@ -26,7 +27,7 @@ namespace Synthborn.Core.Audio
             if (_config == null || _config.menuStem == null) return;
 
             _source.clip = _config.menuStem;
-            _source.volume = _config.masterVolume;
+            _source.volume = _config.masterVolume * SaveManager.Data.musicVolume;
             _source.Play();
         }
     }

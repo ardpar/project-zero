@@ -6,14 +6,17 @@ using UnityEngine.SceneManagement;
 namespace Synthborn.UI
 {
     /// <summary>
-    /// Fade-to-black on scene load/unload.
+    /// Fade-to-black on scene load/unload with async loading.
     /// Add to a DontDestroyOnLoad Canvas with a full-screen black Image.
     /// </summary>
     public class SceneFader : MonoBehaviour
     {
         private static SceneFader _instance;
         [SerializeField] private Image _fadeImage;
+        [SerializeField] private Text _loadingText;
         [SerializeField] private float _fadeDuration = 0.3f;
+
+        private bool _isTransitioning;
 
         private void Awake()
         {
@@ -21,12 +24,13 @@ namespace Synthborn.UI
             _instance = this;
             DontDestroyOnLoad(gameObject);
             if (_fadeImage != null) _fadeImage.color = Color.clear;
+            if (_loadingText != null) _loadingText.enabled = false;
         }
 
-        /// <summary>Fade out, load scene, fade in.</summary>
+        /// <summary>Fade out, load scene async, fade in.</summary>
         public static void LoadScene(string sceneName)
         {
-            if (_instance != null)
+            if (_instance != null && !_instance._isTransitioning)
                 _instance.StartCoroutine(_instance.FadeAndLoad(sceneName));
             else
                 SceneManager.LoadScene(sceneName);
@@ -34,17 +38,30 @@ namespace Synthborn.UI
 
         private IEnumerator FadeAndLoad(string sceneName)
         {
+            _isTransitioning = true;
+            Time.timeScale = 1f;
+
             // Fade to black
             yield return Fade(0f, 1f);
 
-            Time.timeScale = 1f;
-            SceneManager.LoadScene(sceneName);
+            // Show loading text
+            if (_loadingText != null) _loadingText.enabled = true;
 
-            // Wait one frame for scene to load
+            // Async load
+            var op = SceneManager.LoadSceneAsync(sceneName);
+            op.allowSceneActivation = true;
+            while (!op.isDone)
+                yield return null;
+
+            // Hide loading text
+            if (_loadingText != null) _loadingText.enabled = false;
+
+            // Wait one frame for scene to initialize
             yield return null;
 
             // Fade from black
             yield return Fade(1f, 0f);
+            _isTransitioning = false;
         }
 
         private IEnumerator Fade(float from, float to)

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Synthborn.Core.Events;
+using Synthborn.Core.Persistence;
 
 namespace Synthborn.Core.Audio
 {
@@ -75,7 +76,7 @@ namespace Synthborn.Core.Audio
         private void Play(AudioClip clip, float volume = 0.3f)
         {
             if (clip != null && _source != null)
-                _source.PlayOneShot(clip, volume);
+                _source.PlayOneShot(clip, volume * SaveManager.Data.sfxVolume);
         }
 
         private static AudioClip GenerateTone(float freq, float dur)

@@ -27,6 +27,7 @@ namespace Synthborn.Core.Persistence
 
         // Settings
         public float masterVolume = 1f;
+        public float musicVolume = 0.4f;
         public float sfxVolume = 1f;
         public bool screenShakeEnabled = true;
         public bool fullscreen = true;

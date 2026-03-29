@@ -1,4 +1,5 @@
 using UnityEngine;
+using Synthborn.Core;
 using Synthborn.Core.Pool;
 using Synthborn.Core.Events;
 using Synthborn.Enemies;
@@ -51,6 +52,7 @@ namespace Synthborn.Waves
 
         private void Start()
         {
+            DailySeedManager.Initialize();
             StartWave(0);
         }
 

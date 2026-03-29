@@ -1,15 +1,19 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using Synthborn.Core.Events;
 
 namespace Synthborn.UI
 {
     /// <summary>
-    /// Pause menu toggled by ESC. Resume, Main Menu, Quit buttons.
+    /// Pause menu toggled by ESC or gamepad Start button.
+    /// Resume, Main Menu, Quit buttons.
     /// </summary>
     public class PauseMenu : MonoBehaviour
     {
         [SerializeField] private GameObject _pausePanel;
+        [SerializeField] private Button _resumeButton;
 
         private bool _isPaused;
 
@@ -21,8 +25,12 @@ namespace Synthborn.UI
 
         private void Update()
         {
-            if (UnityEngine.InputSystem.Keyboard.current != null &&
-                UnityEngine.InputSystem.Keyboard.current.escapeKey.wasPressedThisFrame)
+            bool escPressed = Keyboard.current != null &&
+                              Keyboard.current.escapeKey.wasPressedThisFrame;
+            bool startPressed = Gamepad.current != null &&
+                                Gamepad.current.startButton.wasPressedThisFrame;
+
+            if (escPressed || startPressed)
             {
                 if (_isPaused) Resume();
                 else Pause();
@@ -35,6 +43,10 @@ namespace Synthborn.UI
             Time.timeScale = 0f;
             GameEvents.RaiseGamePaused();
             if (_pausePanel != null) _pausePanel.SetActive(true);
+
+            // Select resume button for gamepad navigation
+            if (_resumeButton != null)
+                EventSystem.current?.SetSelectedGameObject(_resumeButton.gameObject);
         }
 
         public void Resume()
@@ -49,7 +61,7 @@ namespace Synthborn.UI
         {
             Time.timeScale = 1f;
             GameEvents.Cleanup();
-            SceneManager.LoadScene("MainMenu");
+            SceneFader.LoadScene("MainMenu");
         }
 
         public void QuitGame()

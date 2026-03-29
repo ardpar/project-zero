@@ -11,17 +11,20 @@ namespace Synthborn.UI
     {
         [SerializeField] private GameObject _panel;
         [SerializeField] private Transform _listContainer;
+        [SerializeField] private Font _font;
 
         public void Show()
         {
             if (_panel == null) return;
             _panel.SetActive(true);
             Refresh();
+            PopupEscHandler.Register(_panel, Hide);
         }
 
         public void Hide()
         {
             if (_panel != null) _panel.SetActive(false);
+            PopupEscHandler.Unregister();
         }
 
         private void Refresh()
@@ -58,7 +61,7 @@ namespace Synthborn.UI
             t.fontSize = 14;
             t.color = Color.white;
             t.alignment = TextAnchor.MiddleLeft;
-            t.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            t.font = _font != null ? _font : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             t.supportRichText = true;
         }
     }
