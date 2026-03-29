@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445571c0eb1ac4726b2f6e686db891dc, type: 3}
   m_Name: AdaptiveMusicConfig
   m_EditorClassIdentifier: Synthborn.Core.Audio::Synthborn.Core.Audio.AdaptiveMusicConfig
+  menuStem: {fileID: 8300000, guid: 72b3ee3b16e6e4014b62fef121269209, type: 3}
   calmStem: {fileID: 8300000, guid: bc9c265e0622d4a4d9c6297ca09bab65, type: 3}
   lowStem: {fileID: 8300000, guid: 95b11cd6d1a7a4397a2a7ba34619eac6, type: 3}
   mediumStem: {fileID: 8300000, guid: ee796264f9a9544c4be48820d278e501, type: 3}

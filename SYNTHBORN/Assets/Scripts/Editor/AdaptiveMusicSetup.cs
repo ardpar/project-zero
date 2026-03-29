@@ -1,18 +1,18 @@
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using Synthborn.Core.Audio;
 
 namespace Synthborn.Editor
 {
     /// <summary>
-    /// One-click setup: adds AdaptiveMusicManager to SFXManager GameObject
-    /// and wires the AdaptiveMusicConfig SO. Run from menu bar.
+    /// One-click setup menus for the adaptive music system.
     /// </summary>
     public static class AdaptiveMusicSetup
     {
-        [MenuItem("Synthborn/Setup/Add Adaptive Music Manager")]
-        public static void Setup()
+        [MenuItem("Synthborn/Setup/Add Adaptive Music (Gameplay Scene)")]
+        public static void SetupGameplay()
         {
             // Find or create on SFXManager GameObject
             var sfxManager = Object.FindFirstObjectByType<SFXManager>();
@@ -31,26 +31,42 @@ namespace Synthborn.Editor
             // Add component if not present
             var musicManager = target.GetComponent<AdaptiveMusicManager>();
             if (musicManager == null)
-            {
                 musicManager = Undo.AddComponent<AdaptiveMusicManager>(target);
-            }
 
-            // Wire config SO
-            var configGuids = AssetDatabase.FindAssets("t:AdaptiveMusicConfig");
-            if (configGuids.Length > 0)
-            {
-                var configPath = AssetDatabase.GUIDToAssetPath(configGuids[0]);
-                var config = AssetDatabase.LoadAssetAtPath<AdaptiveMusicConfig>(configPath);
-
-                var so = new SerializedObject(musicManager);
-                so.FindProperty("_config").objectReferenceValue = config;
-                so.ApplyModifiedProperties();
-            }
-
+            WireConfig(musicManager);
             EditorUtility.SetDirty(target);
+            EditorSceneManager.MarkSceneDirty(target.scene);
             Selection.activeGameObject = target;
 
-            Debug.Log("[AdaptiveMusicSetup] AdaptiveMusicManager added and wired.");
+            Debug.Log("[AdaptiveMusicSetup] AdaptiveMusicManager added and wired to gameplay scene.");
+        }
+
+        [MenuItem("Synthborn/Setup/Add Adaptive Music (Main Menu)")]
+        public static void SetupMainMenu()
+        {
+            var target = new GameObject("MainMenuMusic");
+            Undo.RegisterCreatedObjectUndo(target, "Create MainMenuMusic");
+
+            var menuMusic = Undo.AddComponent<MainMenuMusic>(target);
+            WireConfig(menuMusic);
+            EditorUtility.SetDirty(target);
+            EditorSceneManager.MarkSceneDirty(target.scene);
+            Selection.activeGameObject = target;
+
+            Debug.Log("[AdaptiveMusicSetup] MainMenuMusic added and wired to menu scene.");
+        }
+
+        private static void WireConfig(Component component)
+        {
+            var configGuids = AssetDatabase.FindAssets("t:AdaptiveMusicConfig");
+            if (configGuids.Length == 0) return;
+
+            var configPath = AssetDatabase.GUIDToAssetPath(configGuids[0]);
+            var config = AssetDatabase.LoadAssetAtPath<AdaptiveMusicConfig>(configPath);
+
+            var so = new SerializedObject(component);
+            so.FindProperty("_config").objectReferenceValue = config;
+            so.ApplyModifiedProperties();
         }
     }
 }

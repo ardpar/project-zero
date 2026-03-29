@@ -14,6 +14,10 @@ namespace Synthborn.Core.Audio
     [CreateAssetMenu(menuName = "Synthborn/Audio/AdaptiveMusicConfig")]
     public class AdaptiveMusicConfig : ScriptableObject
     {
+        [Header("Menu")]
+        [Tooltip("Plays in the main menu (separate from gameplay stems).")]
+        public AudioClip menuStem;
+
         [Header("Stems (looping clips per intensity tier)")]
         [Tooltip("Plays during wave breaks and menus.")]
         public AudioClip calmStem;
