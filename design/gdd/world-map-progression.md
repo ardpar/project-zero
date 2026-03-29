@@ -1,148 +1,170 @@
-# World Map & Persistent Progression System
+# Arena Map & Persistent Calibration System
 
-> **Status**: Approved
+> **Status**: Approved (Narrative-Aligned v2)
 > **Created**: 2026-03-29
+> **Narrative Framework**: Option A — "Arena Remembers, Subject Doesn't"
 
 ## Overview
 
-SYNTHBORN'u stage-select RPG yapısına dönüştürme. Oyuncu kalıcı bir karakter yaratır, dünya haritasından level seçer, wave'leri temizler, loot kazanır, haritaya döner.
+SYNTHBORN'u Arena haritası yapısına dönüştürme. Subject her döngüde sıfırlanır ama Arena önceki denemelerin verisini korur. Oyuncu Arena haritasından deneme odası seçer, wave'leri temizler, materyal kazanır, haritaya döner.
+
+### Narrative Çerçeve
+
+> Arena, SUBJECT-FINAL'ın her denemesini kaydeder. Subject hatırlamaz — ama Arena'nın dosyası büyür. Meta-progression, Arena'nın kalibrasyonudur. Oyuncu güçlenmez; Arena, deneyi optimize eder.
 
 ## Core Flow
 
 ```
-[Main Menu]
-  ├─ New Game → Character Creation → World Map
-  ├─ Load Game → World Map
-  └─ Settings / Quit
+[Ana Menü]
+  ├─ Yeni Deneme → Substrate Konfigürasyonu Seç → Arena Haritası
+  ├─ Devam Et → Arena Haritası
+  └─ Ayarlar / Çıkış
 
-[World Map] (hub ekranı)
-  ├─ Level Grid (100 level, kilitli/açık)
-  ├─ Inventory butonu → Equipment ekranı
-  ├─ Skill Tree butonu → Pasif skill ağacı
-  ├─ Character Info (isim, sınıf, level, statlar)
-  └─ Save & Quit
+[Arena Haritası] (hub ekranı)
+  ├─ Deneme Odası Grid (100 oda, kilitli/açık)
+  ├─ Envanter butonu → Komponent ekranı
+  ├─ Kalibrasyon Ağacı butonu → Pasif parametre ağacı
+  ├─ Subject Dosyası (designasyon, konfigürasyon, kalibrasyon seviyesi, parametreler)
+  └─ Kaydet & Çıkış
 
-[Level Gameplay]
-  ├─ 5 Wave + Boss (mevcut WaveSpawner)
-  ├─ Mutasyonlar run-içi (sıfırlanır)
-  ├─ Loot + Gold + XP kazanılır
-  └─ Level Complete → World Map'e dön
+[Deneme Odası Gameplay]
+  ├─ 5 Wave + Stabilized (mevcut WaveSpawner)
+  ├─ Mutasyonlar run-içi (ölümde sıfırlanır)
+  ├─ Materyal + Fragment + Adaptasyon Verisi kazanılır
+  └─ Oda Tamamlandı → Arena Haritası'na dön
 
-[Level Complete]
-  ├─ Sonraki level açılır
-  ├─ Loot/Gold/XP özeti
-  └─ "Return to Map" butonu
+[Oda Tamamlandı]
+  ├─ Sonraki oda(lar) açılır
+  ├─ Materyal/Fragment/Veri özeti
+  └─ "Haritaya Dön" butonu
 ```
 
 ## Scene Yapısı
 
 | Scene | İçerik |
 |-------|--------|
-| MainMenu | New Game / Load Game / Settings |
-| WorldMap | Dünya haritası, inventory, skill tree, karakter bilgisi |
+| MainMenu | Yeni Deneme / Devam Et / Ayarlar |
+| ArenaMap | Arena haritası, envanter, kalibrasyon ağacı, Subject dosyası |
 | Gameplay (SampleScene) | Wave combat (mevcut) |
 
-## Karakter Sistemi
+## Subject Dosyası Sistemi
 
-### Karakter Yaratma
-- İsim girişi (InputField)
-- Sınıf seçimi (4 sınıf)
-- Kaydet → WorldMap'e geç
+### Substrate Konfigürasyonu Seçimi
+- Designasyon suffix girişi (InputField) — örn: ARDENT, HOLLOW, SILENT
+  - Tam isim: SUBJECT-FINAL-ARDENT
+  - Klinik format, kişisel isim değil
+- Konfigürasyon seçimi (4 Substrate varyantı)
+- Kaydet → Arena Haritası'na geç
 
-### Sınıflar
-| Sınıf | HP | DMG | Speed | Crit | Armor |
-|-------|-----|------|-------|------|-------|
-| Warrior | +20% | 0 | -10% | 0 | +10 |
-| Rogue | -15% | 0 | +20% | +15% | 0 |
-| Mage | -20% | +25% | 0 | 0 | -5 |
-| Sentinel | +10% | +10% | +10% | +5% | +5 |
+### Substrate Konfigürasyonları
+| Konfigürasyon | HP | DMG | Speed | Crit | Armor | Lore Notu |
+|---------------|-----|------|-------|------|-------|-----------|
+| **DENSE LATTICE** | +20% | 0 | -10% | 0 | +10 | Yüksek kütle, yüksek dayanıklılık. Substrate'in en kalın dokuma formu. |
+| **SEVERED THREAD** | -15% | 0 | +20% | +15% | 0 | Düşük kütle, yüksek iletkenlik. Substrate bağları gevşetilmiş — hız için stabilite feda edilmiş. |
+| **NULL CASCADE** | -20% | +25% | 0 | 0 | -5 | Yüksek mutasyon oranı, yüksek instabilite. Substrate sınır parametreleri devre dışı. |
+| **BALANCED FRAME** | +10% | +10% | +10% | +5% | +5 | Standart Substrate kalibrasyonu. Arena'nın varsayılan başlangıç konfigürasyonu. |
 
-### Kalıcı Level + Stat
-- XP kazanarak level-up (level 1-99)
-- Her level: +1 stat point (STR/VIT/AGI/LCK/WIS)
-- Level-up eşik: `base_xp * (1 + level * 0.15)`
+### Kalibrasyon Seviyesi (Persistent Level)
+- Adaptasyon Verisi kazanarak kalibrasyon seviyesi artar (seviye 1-99)
+- Her seviye: +1 kalibrasyon noktası (MASS/RESILIENCE/VELOCITY/VARIANCE/YIELD)
+- Seviye eşik: `base_data * (1 + level * 0.15)`
+- **Lore notu:** Kalibrasyon seviyesi, Arena'nın bu Subject hakkında biriktirdiği veri miktarıdır. Subject bunu bilmez — sadece Arena'nın sunduğu koşulların değiştiğini hisseder.
 
-## Dünya Haritası
+## Arena Haritası
 
-### 100 Level Grid
-- 10x10 grid veya linear path
-- Her level: isim, zorluk yıldızı (★-★★★★★), biome ikonu
-- Kilitli level: koyu, tıklanamaz
-- Açık level: parlak, tıklanabilir
-- Tamamlanmış level: yeşil tik
-- Level 1 başta açık, her tamamlanan level sonrakini açar
+### 100 Deneme Odası Grid
+- 10x10 grid veya konsantrik halka düzeni (6 biome katmanına dağılmış)
+- Her oda: designasyon, basınç seviyesi (★-★★★★★), biome ikonu
+- Kilitli oda: koyu, tıklanamaz — "Arena bu odayı henüz açmadı"
+- Açık oda: parlak, tıklanabilir — "Arena bu odayı test için hazırladı"
+- Tamamlanmış oda: mavi veri izi — "Arena yeterli veri topladı"
+- Oda 1 başta açık, her tamamlanan oda bitişik odaları açar
 
-### Level Tanımı
-Mevcut `LevelData` SO genişletilir:
-- `levelNumber` (1-100)
+### Biome Dağılımı (6 Arena Çağı)
+| Biome | Oda Aralığı | Era |
+|-------|-------------|-----|
+| The Atrium | 1-16 | Era 1 — Active Operation |
+| The Assay Chambers | 17-33 | Era 2 — Peak Use |
+| The Deep Archive | 34-50 | Era 3 — Post-Architect |
+| The Collapse Stratum | 51-67 | Era 4 — Unknown Incident |
+| The Corruption Layer | 68-84 | Era 5 — Current Drift |
+| The Null Chamber | 85-100 | Era ? — Off-System |
+
+**Lore notu:** Haritada ilerlemek, Arena'nın tarihinde geriye yolculuktur. Atrium (dış katman) en yeni ve temiz; Null Chamber (merkez) en eski ve tanımsız. Oyuncu dışarıdan içeriye doğru ilerler.
+
+### Deneme Odası Tanımı
+Mevcut `LevelData` SO genişletilir → `TrialChamberData`:
+- `chamberNumber` (1-100)
+- `biomeLayer` (6 biome enum)
 - `isUnlocked` → SaveData'dan okunur
 - `isCompleted` → SaveData'dan okunur
-- `starRating` (1-5 zorluk göstergesi)
+- `pressureRating` (1-5 basınç göstergesi)
 
-## Equipment / Inventory
+## Ekipman / Envanter
 
 ### 6 Slot
 | Slot | Stat Etkisi |
 |------|-------------|
-| Helmet | HP, özel efekt |
-| Armor | Armor, Damage Reduction |
-| Weapon | Base Damage, Attack Speed |
-| Gloves | Crit Chance, Crit Damage |
-| Boots | Move Speed, Dash CD |
-| Accessory | Herhangi stat |
+| Cranial Module | HP, özel efekt |
+| Carapace Plate | Armor, Damage Reduction |
+| Appendage Core | Base Damage, Attack Speed |
+| Sensory Array | Crit Chance, Crit Damage |
+| Locomotion Frame | Move Speed, Dash CD |
+| Auxiliary Port | Herhangi stat |
 
-### Item Rarity
-| Rarity | Renk | Stat Range |
+### Komponent Bütünlüğü (Rarity)
+| Sınıf | Renk | Stat Range |
 |--------|------|-----------|
-| Common | Beyaz | +5-10% |
-| Uncommon | Yeşil | +10-20% |
-| Rare | Mavi | +20-35% |
-| Epic | Mor | +35-50% |
-| Legendary | Altın | +50-100% |
+| Baseline | Gri | +5-10% |
+| Calibrated | Yeşil | +10-20% |
+| Reinforced | Mavi | +20-35% |
+| Anomalous | Mor | +35-50% |
+| Architect-Grade | Altın | +50-100% |
 
-### Loot Kaynakları
-- Wave düşmanları: Common/Uncommon
-- Elite: Uncommon/Rare
-- Boss: Rare/Epic garantili, Legendary şansı
-- Yüksek level = daha iyi loot
+### Materyal Kaynakları
+- Wave düşmanları: Baseline/Calibrated
+- Elite: Calibrated/Reinforced
+- Stabilized: Reinforced/Anomalous garantili, Architect-Grade şansı
+- Yüksek basınç odası = daha yüksek bütünlük materyali
 
-## Pasif Skill Tree
+## Kalibrasyon Ağacı
 
 ### 4 Dal, ~40 Node
 | Dal | Node'lar |
 |-----|----------|
-| Might | +5% DMG, +2% Crit, +10% Crit DMG, +5% AtkSpd... |
-| Vitality | +10% HP, +3 Armor, +2% HP Regen, +5% Heal... |
-| Agility | +5% Speed, -10% Dash CD, +3% Dodge, +1 Dash... |
-| Fortune | +10% Gold, +5% Drop Rate, +10% XP, +5% Rare Drop... |
+| Substrate Density | +5% DMG, +2% Crit, +10% Crit DMG, +5% AtkSpd... |
+| Structural Integrity | +10% HP, +3 Armor, +2% Regen, +5% Heal... |
+| Signal Conductivity | +5% Speed, -10% Dash CD, +3% Dodge, +1 Dash... |
+| Data Yield | +10% Fragment, +5% Drop Rate, +10% XP, +5% Rare Drop... |
 
 ### Point Kaynağı
-- Her karakter level-up: +1 skill point
-- Bazı achievement'lar: +1 bonus skill point
+- Her kalibrasyon seviyesi: +1 kalibrasyon noktası
+- Bazı Stabilized ilk yenilgisi: +1 bonus nokta
 
 ## Save Sistemi
 
 ### SaveData Genişletme
 ```
-CharacterSaveData:
-  - characterName
-  - classType (0-3)
-  - characterLevel
-  - characterXP
-  - statPoints[5] (STR/VIT/AGI/LCK/WIS)
-  - equippedItems[6] (slot → item ID)
-  - inventoryItems[] (tüm sahip olunan itemler)
-  - skillTreeNodes[] (açılmış node ID'leri)
-  - completedLevels[] (tamamlanmış level numaraları)
-  - currentGold
+SubjectFileData:
+  - designation (suffix — e.g., "ARDENT")
+  - substrateConfig (0-3)
+  - calibrationLevel
+  - adaptationData (XP equivalent)
+  - calibrationPoints[5] (MASS/RESILIENCE/VELOCITY/VARIANCE/YIELD)
+  - equippedComponents[6] (slot → component ID)
+  - inventoryComponents[] (tüm sahip olunan komponentler)
+  - calibrationNodes[] (açılmış node ID'leri)
+  - completedChambers[] (tamamlanmış oda numaraları)
+  - currentFragments (meta kaynak)
+  - signalArchiveEntries[] (açılmış lore fragment ID'leri)
 ```
 
 ## Implementation Sırası
 
 | Sprint | İçerik |
 |--------|--------|
-| 12 | MainMenu redesign + Character Creation + Save/Load overhaul |
-| 13 | World Map UI + Level select + Level unlock sistemi |
-| 14 | Inventory + Equipment + Item drop sistemi |
-| 15 | Pasif Skill Tree + Stat point dağıtımı |
-| 16 | 100 level tanımlama + balans + polish |
+| 14 | MainMenu redesign + Substrate Konfigürasyon Seçimi + Save/Load overhaul |
+| 15 | Arena Haritası UI + Oda select + Oda unlock sistemi |
+| 16 | Envanter + Ekipman + Komponent drop sistemi |
+| 17 | Kalibrasyon Ağacı + Kalibrasyon noktası dağıtımı |
+| 18 | 100 oda tanımlama + balans + polish |

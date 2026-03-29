@@ -15,6 +15,7 @@ namespace Synthborn.Waves
         [SerializeField] private WaveTableData _waveTable;
         [SerializeField] private EnemyScalingConfig _scalingConfig;
         [SerializeField] private Transform _playerTransform;
+        [SerializeField] private LevelManager _levelManager;
 
         private ObjectPool<EnemyBrain> _enemyPool;
 
@@ -62,7 +63,7 @@ namespace Synthborn.Waves
             DailySeedManager.Initialize();
             // Initial start is now handled by LevelManager.
             // If no LevelManager exists, start wave 0 as fallback.
-            if (FindFirstObjectByType<LevelManager>() == null)
+            if (_levelManager == null)
                 StartWave(0);
         }
 

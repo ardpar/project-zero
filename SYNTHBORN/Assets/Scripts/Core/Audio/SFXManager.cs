@@ -19,6 +19,10 @@ namespace Synthborn.Core.Audio
         [SerializeField] private AudioClip _dashClip;
         [SerializeField] private AudioClip _mutationClip;
         [SerializeField] private AudioClip _synergyClip;
+        [SerializeField] private AudioClip _playerHitClip;
+        [SerializeField] private AudioClip _playerDeathClip;
+        [SerializeField] private AudioClip _bossSpawnClip;
+        [SerializeField] private AudioClip _hpPickupClip;
 
         private AudioSource _source;
 
@@ -41,6 +45,10 @@ namespace Synthborn.Core.Audio
             if (_dashClip == null) _dashClip = GenerateTone(200f, 0.1f);
             if (_mutationClip == null) _mutationClip = GenerateChirp(600f, 1000f, 0.2f);
             if (_synergyClip == null) _synergyClip = GenerateChirp(800f, 1600f, 0.4f);
+            if (_playerHitClip == null) _playerHitClip = GenerateTone(250f, 0.12f);
+            if (_playerDeathClip == null) _playerDeathClip = GenerateChirp(600f, 100f, 0.6f);
+            if (_bossSpawnClip == null) _bossSpawnClip = GenerateChirp(100f, 400f, 0.5f);
+            if (_hpPickupClip == null) _hpPickupClip = GenerateChirp(600f, 900f, 0.15f);
         }
 
         private void OnEnable()
@@ -52,6 +60,10 @@ namespace Synthborn.Core.Audio
             GameEvents.OnPlayerDashStarted += OnDash;
             GameEvents.OnMutationApplied += OnMutation;
             GameEvents.OnSynergyActivated += OnSynergy;
+            GameEvents.OnPlayerHPChanged += OnPlayerHPChanged;
+            GameEvents.OnPlayerDied += OnPlayerDied;
+            GameEvents.OnBossSpawned += OnBossSpawned;
+            GameEvents.OnPlayerHealRequested += OnHPPickup;
         }
 
         private void OnDisable()
@@ -63,6 +75,10 @@ namespace Synthborn.Core.Audio
             GameEvents.OnPlayerDashStarted -= OnDash;
             GameEvents.OnMutationApplied -= OnMutation;
             GameEvents.OnSynergyActivated -= OnSynergy;
+            GameEvents.OnPlayerHPChanged -= OnPlayerHPChanged;
+            GameEvents.OnPlayerDied -= OnPlayerDied;
+            GameEvents.OnBossSpawned -= OnBossSpawned;
+            GameEvents.OnPlayerHealRequested -= OnHPPickup;
         }
 
         private void OnDamage(Vector2 p, int d, bool crit) => Play(_hitClip);
@@ -72,6 +88,16 @@ namespace Synthborn.Core.Audio
         private void OnDash(Vector2 d) => Play(_dashClip);
         private void OnMutation(string id, bool s) => Play(_mutationClip, 0.4f);
         private void OnSynergy(string id, string n) => Play(_synergyClip, 0.5f);
+
+        private int _lastHP = int.MaxValue;
+        private void OnPlayerHPChanged(int current, int max)
+        {
+            if (current < _lastHP) Play(_playerHitClip, 0.4f);
+            _lastHP = current;
+        }
+        private void OnPlayerDied() => Play(_playerDeathClip, 0.6f);
+        private void OnBossSpawned() => Play(_bossSpawnClip, 0.6f);
+        private void OnHPPickup(float _) => Play(_hpPickupClip, 0.3f);
 
         private void Play(AudioClip clip, float volume = 0.3f)
         {

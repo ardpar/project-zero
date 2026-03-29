@@ -48,3 +48,4 @@ MonoBehaviour:
   _burstSize: 0.35
   _particleCount: 12
   _lifetime: 0.5
+  _burstMaterial: {fileID: 2100000, guid: 9d7a3c86ac44c4f5c84127c1a23be3de, type: 2}

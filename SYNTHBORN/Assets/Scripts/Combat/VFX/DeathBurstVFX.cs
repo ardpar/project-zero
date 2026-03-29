@@ -12,6 +12,7 @@ namespace Synthborn.Combat.VFX
         [SerializeField] private float _burstSize = 0.2f;
         [SerializeField] private int _particleCount = 8;
         [SerializeField] private float _lifetime = 0.5f;
+        [SerializeField] private Material _burstMaterial;
 
         private void Start()
         {
@@ -37,10 +38,12 @@ namespace Synthborn.Combat.VFX
             shape.radius = 0.3f;
 
             var renderer = GetComponent<ParticleSystemRenderer>();
-            if (renderer != null)
+            if (renderer != null && _burstMaterial != null)
             {
-                renderer.material = new Material(Shader.Find("Particles/Standard Unlit"));
-                renderer.material.SetColor("_Color", _burstColor);
+                renderer.material = _burstMaterial;
+                var mpb = new MaterialPropertyBlock();
+                mpb.SetColor("_Color", _burstColor);
+                renderer.SetPropertyBlock(mpb);
             }
 
             ps.Play();

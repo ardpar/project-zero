@@ -49,20 +49,21 @@ namespace Synthborn.Progression
                 return;
             }
 
-            float dist = Vector2.Distance(transform.position, _player.position);
+            Vector2 offset = (Vector2)_player.position - (Vector2)transform.position;
+            float sqrDist = offset.sqrMagnitude;
 
             // Enter magnet range
-            if (!_magnetized && dist < _config.pickupRadius)
+            if (!_magnetized && sqrDist < _config.pickupRadius * _config.pickupRadius)
                 _magnetized = true;
 
             // Magnetized: pull toward player
             if (_magnetized)
             {
-                Vector2 dir = ((Vector2)_player.position - (Vector2)transform.position).normalized;
+                Vector2 dir = offset.normalized;
                 transform.Translate(dir * _config.magnetSpeed * Time.deltaTime);
 
                 // Collect
-                if (dist < _config.collectDistance)
+                if (sqrDist < _config.collectDistance * _config.collectDistance)
                 {
                     int scaledXP = Mathf.RoundToInt(_xpValue * UpgradeManager.XPGainMultiplier);
                     _xpManager?.AddXP(scaledXP);

@@ -15,6 +15,7 @@ namespace Synthborn.Core.VFX
         private Color _originalColor;
         private Coroutine _flashRoutine;
         private static readonly Color FlashColor = Color.white;
+        private WaitForSeconds _waitFlash;
 
         private void Awake()
         {
@@ -22,6 +23,7 @@ namespace Synthborn.Core.VFX
                 _renderer = GetComponent<SpriteRenderer>();
             if (_renderer != null)
                 _originalColor = _renderer.color;
+            _waitFlash = new WaitForSeconds(_flashDuration);
         }
 
         public void Flash()
@@ -35,7 +37,7 @@ namespace Synthborn.Core.VFX
         private IEnumerator FlashRoutine()
         {
             _renderer.color = FlashColor;
-            yield return new WaitForSeconds(_flashDuration);
+            yield return _waitFlash;
             _renderer.color = _originalColor;
             _flashRoutine = null;
         }

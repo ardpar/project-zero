@@ -1,18 +1,20 @@
 using UnityEngine;
+using Synthborn.Core.Pool;
 
 namespace Synthborn.Core.VFX
 {
     /// <summary>
     /// Floating damage number that drifts up and fades out.
-    /// Spawned by DamageNumberSpawner, returns itself to pool or self-destructs.
+    /// Pooled by DamageNumberSpawner — returns itself to pool when lifetime expires.
     /// </summary>
-    public class DamageNumber : MonoBehaviour
+    public class DamageNumber : MonoBehaviour, IPoolable
     {
         private TextMesh _text;
         private float _lifetime;
         private float _timer;
         private Color _baseColor;
         private Vector3 _velocity;
+        private ObjectPool<DamageNumber> _pool;
 
         private void Awake()
         {
@@ -27,9 +29,12 @@ namespace Synthborn.Core.VFX
             }
         }
 
+        /// <summary>Set pool reference for self-return.</summary>
+        public void SetPool(ObjectPool<DamageNumber> pool) => _pool = pool;
+
         public void Init(int damage, bool isCrit, Vector2 position)
         {
-            transform.position = (Vector3)position + Vector3.back; // in front of sprites
+            transform.position = (Vector3)position + Vector3.back;
 
             _text.text = damage.ToString();
             _text.fontSize = isCrit ? 64 : 48;
@@ -40,8 +45,6 @@ namespace Synthborn.Core.VFX
             _lifetime = 0.8f;
             _timer = 0f;
             _velocity = new Vector3(Random.Range(-0.5f, 0.5f), 1.5f, 0f);
-
-            gameObject.SetActive(true);
         }
 
         private void Update()
@@ -49,17 +52,34 @@ namespace Synthborn.Core.VFX
             _timer += Time.deltaTime;
             if (_timer >= _lifetime)
             {
-                Destroy(gameObject);
+                ReturnToPool();
                 return;
             }
 
-            // Float up and slow down
             transform.position += _velocity * Time.deltaTime;
             _velocity.y *= 0.95f;
 
-            // Fade out
             float alpha = 1f - (_timer / _lifetime);
             _text.color = new Color(_baseColor.r, _baseColor.g, _baseColor.b, alpha);
+        }
+
+        private void ReturnToPool()
+        {
+            if (_pool != null)
+                _pool.Return(this);
+            else
+                gameObject.SetActive(false);
+        }
+
+        public void OnPoolGet()
+        {
+            _timer = 0f;
+            gameObject.SetActive(true);
+        }
+
+        public void OnPoolReturn()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

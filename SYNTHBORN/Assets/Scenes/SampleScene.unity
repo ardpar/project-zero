@@ -16765,6 +16765,7 @@ MonoBehaviour:
   _waveText: {fileID: 325945260}
   _dashCDFill: {fileID: 1196772552}
   _mutationIconContainer: {fileID: 1406847597}
+  _mutationDatabase: {fileID: 11400000, guid: f865b249c94044db38477a3e0734df8a, type: 2}
 --- !u!114 &1436797391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16934,6 +16935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Synthborn.UI::Synthborn.UI.PauseMenu
   _pausePanel: {fileID: 1376181731}
   _resumeButton: {fileID: 11506758}
+  _settingsScreen: {fileID: 0}
 --- !u!1 &1492779662
 GameObject:
   m_ObjectHideFlags: 0
@@ -17191,6 +17193,7 @@ GameObject:
   - component: {fileID: 1553571848}
   - component: {fileID: 1553571849}
   - component: {fileID: 1553571850}
+  - component: {fileID: 1553571851}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -17240,6 +17243,7 @@ MonoBehaviour:
   _waveTable: {fileID: 11400000, guid: 540ab8e157453476b89bee40ccb62ee5, type: 2}
   _scalingConfig: {fileID: 11400000, guid: 9ce796348a57c4d88b23079e045d91b7, type: 2}
   _playerTransform: {fileID: 1839279972}
+  _levelManager: {fileID: 359120357}
 --- !u!4 &1553571838
 Transform:
   m_ObjectHideFlags: 0
@@ -17330,6 +17334,7 @@ MonoBehaviour:
   _particlesPerDeath: 6
   _particleSpeed: 3
   _particleLifetime: 0.4
+  _poolPrewarm: 64
 --- !u!114 &1553571843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17397,6 +17402,10 @@ MonoBehaviour:
   _dashClip: {fileID: 8300000, guid: e9aaa8e2f57a6e549affda5d8d20b162, type: 3}
   _mutationClip: {fileID: 8300000, guid: a7160bcbac267aa429c5eae68cfbfe22, type: 3}
   _synergyClip: {fileID: 8300000, guid: 729b9330ce5aa5d45a32a745ac23352f, type: 3}
+  _playerHitClip: {fileID: 0}
+  _playerDeathClip: {fileID: 0}
+  _bossSpawnClip: {fileID: 0}
+  _hpPickupClip: {fileID: 0}
 --- !u!114 &1553571847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17467,6 +17476,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LootDropper
   _itemDatabase: {fileID: 11400000, guid: dc084e2cb6d0843b79dc3064b102b6c0, type: 2}
+--- !u!114 &1553571851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553571834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62b1a4c78e5a74839b93db05ce499ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Synthborn.Core::Synthborn.Core.VFX.HitstopManager
+  _critHitstopDuration: 0.04
+  _killHitstopDuration: 0.06
+  _bossHitstopDuration: 0.12
 --- !u!1 &1618262612
 GameObject:
   m_ObjectHideFlags: 0

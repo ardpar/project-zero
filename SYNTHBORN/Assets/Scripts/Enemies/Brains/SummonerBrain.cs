@@ -49,8 +49,12 @@ namespace Synthborn.Enemies
         {
             if (_summonerData == null) return;
 
-            // Clean up dead minions from tracking list
-            _activeMinions.RemoveAll(m => m == null || !m.gameObject.activeInHierarchy);
+            // Clean up dead minions from tracking list (reverse loop to avoid lambda alloc)
+            for (int i = _activeMinions.Count - 1; i >= 0; i--)
+            {
+                if (_activeMinions[i] == null || !_activeMinions[i].gameObject.activeSelf)
+                    _activeMinions.RemoveAt(i);
+            }
 
             switch (CurrentState)
             {
@@ -65,8 +69,8 @@ namespace Synthborn.Enemies
 
         private void TickChase()
         {
-            float dist = DistanceToPlayer();
-            if (dist <= _summonerData.SummonRange)
+            float dist = SqrDistanceToPlayer();
+            if (dist <= _summonerData.SummonRange * _summonerData.SummonRange)
             {
                 SetState(EnemyState.Summoning);
                 return;
@@ -79,8 +83,9 @@ namespace Synthborn.Enemies
         private void TickSummoning()
         {
             // Return to chase if player escapes range
-            float dist = DistanceToPlayer();
-            if (dist > _summonerData.SummonRange * 1.2f)
+            float dist = SqrDistanceToPlayer();
+            float escapeRange = _summonerData.SummonRange * 1.2f;
+            if (dist > escapeRange * escapeRange)
             {
                 SetState(EnemyState.Chase);
                 return;
@@ -125,10 +130,10 @@ namespace Synthborn.Enemies
             _activeMinions.Clear();
         }
 
-        private float DistanceToPlayer()
+        private float SqrDistanceToPlayer()
         {
             if (playerTransform == null) return float.MaxValue;
-            return Vector2.Distance(rb.position, (Vector2)playerTransform.position);
+            return (rb.position - (Vector2)playerTransform.position).sqrMagnitude;
         }
     }
 }

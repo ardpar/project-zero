@@ -58,6 +58,9 @@ namespace Synthborn.Enemies
         /// </summary>
         protected Transform playerTransform;
 
+        /// <summary>Cached player collider for contact damage checks.</summary>
+        private Collider2D _playerCollider;
+
         // ------------------------------------------------------------------ //
         // State
         // ------------------------------------------------------------------ //
@@ -132,10 +135,11 @@ namespace Synthborn.Enemies
             if (overrideData != null)
                 data = overrideData;
 
-            playerTransform = player;
-            currentWave     = waveNumber;
-            _pool           = pool;
-            _isDead         = false;
+            playerTransform  = player;
+            _playerCollider  = player != null ? player.GetComponent<Collider2D>() : null;
+            currentWave      = waveNumber;
+            _pool            = pool;
+            _isDead          = false;
 
             effectiveSpeed = ComputeEffectiveSpeed(waveNumber);
 
@@ -226,12 +230,10 @@ namespace Synthborn.Enemies
             _contactDamageTimer = 0f;
 
             // Physical overlap check — only damage when colliders actually touch
-            if (playerTransform == null) return;
-            var playerCol = playerTransform.GetComponent<Collider2D>();
-            if (playerCol == null) return;
+            if (_playerCollider == null) return;
 
             // Use Distance check for trigger+non-trigger overlap
-            var result = col.Distance(playerCol);
+            var result = col.Distance(_playerCollider);
             if (!result.isOverlapped) return;
 
             var info = new DamageInfo(data.ContactDamage, DamageSource.EnemyContact, false, rb.position);

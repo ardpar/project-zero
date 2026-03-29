@@ -26,6 +26,7 @@ namespace Synthborn.UI
 
         [Header("Mutation Icons")]
         [SerializeField] private Transform _mutationIconContainer;
+        [SerializeField] private MutationDatabase _mutationDatabase;
 
         private float _xpTargetFill;
         private float _xpCurrentFill;
@@ -112,9 +113,6 @@ namespace Synthborn.UI
         {
             if (_mutationIconContainer == null) return;
 
-            // Find the mutation data for its icon
-            var db = Object.FindFirstObjectByType<MutationManager>();
-            // Create a small icon in the container
             var iconGO = new GameObject("MutIcon", typeof(RectTransform), typeof(Image));
             iconGO.transform.SetParent(_mutationIconContainer, false);
             var rt = iconGO.GetComponent<RectTransform>();
@@ -122,16 +120,11 @@ namespace Synthborn.UI
             var img = iconGO.GetComponent<Image>();
             img.color = isSlot ? new Color(1f, 0.8f, 0.3f) : Color.white;
 
-            // Try to find the icon sprite from MutationDatabase
-            var databases = Resources.FindObjectsOfTypeAll<MutationDatabase>();
-            foreach (var mdb in databases)
+            if (_mutationDatabase != null)
             {
-                var m = mdb.GetById(mutationId);
+                var m = _mutationDatabase.GetById(mutationId);
                 if (m != null && m.icon != null)
-                {
                     img.sprite = m.icon;
-                    break;
-                }
             }
         }
     }

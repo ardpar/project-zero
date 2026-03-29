@@ -83,17 +83,19 @@ public class LootDropper : MonoBehaviour
         return GetRandomItemOfMinRarity(minRarity);
     }
 
+    private readonly System.Collections.Generic.List<ItemData> _candidates = new();
+
     private ItemData GetRandomItemOfMinRarity(ItemRarity minRarity)
     {
-        var candidates = new System.Collections.Generic.List<ItemData>();
+        _candidates.Clear();
         foreach (var item in _itemDatabase.allItems)
             if (item != null && (int)item.Rarity >= (int)minRarity)
-                candidates.Add(item);
+                _candidates.Add(item);
 
-        if (candidates.Count == 0)
+        if (_candidates.Count == 0)
             foreach (var item in _itemDatabase.allItems)
-                if (item != null) candidates.Add(item);
+                if (item != null) _candidates.Add(item);
 
-        return candidates.Count > 0 ? candidates[Random.Range(0, candidates.Count)] : null;
+        return _candidates.Count > 0 ? _candidates[Random.Range(0, _candidates.Count)] : null;
     }
 }
