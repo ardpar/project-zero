@@ -15,7 +15,7 @@ namespace Synthborn.UI
         [SerializeField] private Text _unspentText;
         [SerializeField] private Font _font;
 
-        private static readonly string[] StatNames = { "STR", "VIT", "AGI", "LCK", "WIS" };
+        private static readonly string[] StatNames = { "MASS", "RESILIENCE", "VELOCITY", "VARIANCE", "YIELD" };
         private static readonly string[] StatDesc = { "Damage", "HP", "Speed", "Crit", "XP Gain" };
         private static readonly Color[] StatColors = {
             new Color(1f, 0.4f, 0.4f),

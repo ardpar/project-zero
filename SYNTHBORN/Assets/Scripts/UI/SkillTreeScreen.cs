@@ -76,14 +76,14 @@ namespace Synthborn.UI
                 _infoText.text = $"Unlocked: {SkillTreeManager.UnlockedCount}/{SkillTreeManager.TotalNodes}";
 
             // Create 4 branch columns
-            var branches = new[] { SkillBranch.Might, SkillBranch.Vitality, SkillBranch.Agility, SkillBranch.Fortune };
+            var branches = new[] { SkillBranch.SubstrateDensity, SkillBranch.StructuralIntegrity, SkillBranch.SignalConductivity, SkillBranch.DataYield };
             var branchColors = new[] {
-                new Color(0.9f, 0.3f, 0.2f), // Might - red
-                new Color(0.3f, 0.9f, 0.3f), // Vitality - green
-                new Color(0.3f, 0.5f, 0.9f), // Agility - blue
-                new Color(0.9f, 0.85f, 0.2f) // Fortune - gold
+                new Color(0.9f, 0.3f, 0.2f), // Substrate Density - red
+                new Color(0.3f, 0.9f, 0.3f), // Structural Integrity - green
+                new Color(0.3f, 0.5f, 0.9f), // Signal Conductivity - blue
+                new Color(0.9f, 0.85f, 0.2f) // Data Yield - gold
             };
-            var branchNames = new[] { "MIGHT", "VITALITY", "AGILITY", "FORTUNE" };
+            var branchNames = new[] { "SUBSTRATE DENSITY", "STRUCTURAL INTEGRITY", "SIGNAL CONDUCTIVITY", "DATA YIELD" };
 
             for (int b = 0; b < branches.Length; b++)
                 CreateBranchColumn(branches[b], branchNames[b], branchColors[b], b, branches.Length);
@@ -222,7 +222,7 @@ namespace Synthborn.UI
             if (node.armorFlat != 0) stats += $"Armor +{node.armorFlat}  ";
             if (node.dashCooldownModifier != 0) stats += $"DashCD {node.dashCooldownModifier:+0%;-0%}  ";
             if (node.xpGainBonus != 0) stats += $"XP {node.xpGainBonus:+0%;-0%}  ";
-            if (node.goldGainBonus != 0) stats += $"Fragment {node.goldGainBonus:+0%;-0%}  ";
+            if (node.fragmentGainBonus != 0) stats += $"Fragment {node.fragmentGainBonus:+0%;-0%}  ";
             if (node.dropRateBonus != 0) stats += $"Drop {node.dropRateBonus:+0%;-0%}  ";
 
             string prereq = "";

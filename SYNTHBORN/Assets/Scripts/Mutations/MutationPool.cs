@@ -14,17 +14,17 @@ namespace Synthborn.Mutations
         private readonly MutationDatabase _database;
         private readonly MutationManager _manager;
 
-        // Pity timer: levels without Rare+ / Legendary
+        // Pity timer: levels without Reinforced+ / Architect-Grade
         private int _levelsSinceRare;
         private int _levelsSinceLegendary;
         private const int PityRareThreshold = 5;
         private const int PityLegendaryThreshold = 10;
 
         // Rarity base weights (GDD)
-        private const float CommonWeight = 50f;
-        private const float UncommonWeight = 30f;
-        private const float RareWeight = 15f;
-        private const float LegendaryWeight = 5f;
+        private const float BaselineWeight = 50f;
+        private const float CalibratedWeight = 30f;
+        private const float ReinforcedWeight = 15f;
+        private const float ArchitectGradeWeight = 5f;
 
         // Synergy bias multiplier (GDD: 1.5x)
         private const float SynergyBiasMultiplier = 1.5f;
@@ -62,8 +62,8 @@ namespace Synthborn.Mutations
             bool hasLegendary = false;
             foreach (var card in selected)
             {
-                if (card.rarity >= MutationRarity.Rare) hasRarePlus = true;
-                if (card.rarity == MutationRarity.Legendary) hasLegendary = true;
+                if (card.rarity >= MutationRarity.Reinforced) hasRarePlus = true;
+                if (card.rarity == MutationRarity.ArchitectGrade) hasLegendary = true;
             }
 
             if (hasRarePlus) _levelsSinceRare = 0; else _levelsSinceRare++;
@@ -108,7 +108,7 @@ namespace Synthborn.Mutations
             var activeTags = _manager.GetAllSynergyTags();
             var weights = new float[candidates.Count];
 
-            // Pity: force at least one Rare if threshold met
+            // Pity: force at least one Reinforced if threshold met
             bool pityRare = _levelsSinceRare >= PityRareThreshold;
             bool pityLegendary = _levelsSinceLegendary >= PityLegendaryThreshold;
 
@@ -118,7 +118,7 @@ namespace Synthborn.Mutations
                 float w = GetBaseWeight(m.rarity);
 
                 // Level scaling: higher levels slightly boost rare+ weights
-                if (m.rarity >= MutationRarity.Rare)
+                if (m.rarity >= MutationRarity.Reinforced)
                     w *= 1f + playerLevel * 0.02f;
 
                 // Synergy bias: if mutation has tags that match active tags
@@ -135,9 +135,9 @@ namespace Synthborn.Mutations
                 }
 
                 // Pity timer boost
-                if (pityLegendary && m.rarity == MutationRarity.Legendary)
+                if (pityLegendary && m.rarity == MutationRarity.ArchitectGrade)
                     w *= 10f;
-                else if (pityRare && m.rarity >= MutationRarity.Rare)
+                else if (pityRare && m.rarity >= MutationRarity.Reinforced)
                     w *= 5f;
 
                 weights[i] = w;
@@ -150,11 +150,11 @@ namespace Synthborn.Mutations
         {
             return rarity switch
             {
-                MutationRarity.Common => CommonWeight,
-                MutationRarity.Uncommon => UncommonWeight,
-                MutationRarity.Rare => RareWeight,
-                MutationRarity.Legendary => LegendaryWeight,
-                _ => CommonWeight
+                MutationRarity.Baseline => BaselineWeight,
+                MutationRarity.Calibrated => CalibratedWeight,
+                MutationRarity.Reinforced => ReinforcedWeight,
+                MutationRarity.ArchitectGrade => ArchitectGradeWeight,
+                _ => BaselineWeight
             };
         }
 

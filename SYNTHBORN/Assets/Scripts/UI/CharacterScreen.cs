@@ -31,9 +31,16 @@ namespace Synthborn.UI
         [SerializeField] private Text _inventoryTitle;
         [SerializeField] private Text _tooltipText;
 
+        [Header("Merge")]
+        [SerializeField] private Button _mergeButton;
+        [SerializeField] private Text _mergeStatusText;
+
         private const int GridColumns = 5;
         private const float CellSize = 64f;
         private const float EquipSlotSize = 72f;
+
+        private bool _mergeMode;
+        private string _mergeFirstItemId;
 
         // Equipment slot positions (normalized within equipment container)
         // Layout like the reference image: head top-center, chest center,
@@ -52,6 +59,13 @@ namespace Synthborn.UI
         {
             if (_panel == null) return;
             _panel.SetActive(true);
+            _mergeMode = false;
+            _mergeFirstItemId = null;
+            if (_mergeButton != null)
+            {
+                _mergeButton.onClick.RemoveAllListeners();
+                _mergeButton.onClick.AddListener(ToggleMergeMode);
+            }
             Refresh();
             PopupEscHandler.Register(_panel, Hide);
         }
@@ -104,11 +118,11 @@ namespace Synthborn.UI
             }
 
             _statsText.text =
-                $"<color=#FF6666>STR</color>  {ch.statPoints[0]}  (+{totalDMG * 100:F0}% DMG)\n" +
-                $"<color=#66FF66>VIT</color>  {ch.statPoints[1]}  (+{totalHP * 100:F0}% HP)\n" +
-                $"<color=#6666FF>AGI</color>  {ch.statPoints[2]}  (+{totalSPD * 100:F0}% SPD)\n" +
-                $"<color=#FFFF66>LCK</color>  {ch.statPoints[3]}  (+{totalCRIT * 100:F0}% CRIT)\n" +
-                $"<color=#66FFFF>WIS</color>  {ch.statPoints[4]}  (+{ch.statPoints[4] * 3:F0}% XP)\n\n" +
+                $"<color=#FF6666>MASS</color>  {ch.statPoints[0]}  (+{totalDMG * 100:F0}% DMG)\n" +
+                $"<color=#66FF66>RESILIENCE</color>  {ch.statPoints[1]}  (+{totalHP * 100:F0}% HP)\n" +
+                $"<color=#6666FF>VELOCITY</color>  {ch.statPoints[2]}  (+{totalSPD * 100:F0}% SPD)\n" +
+                $"<color=#FFFF66>VARIANCE</color>  {ch.statPoints[3]}  (+{totalCRIT * 100:F0}% CRIT)\n" +
+                $"<color=#66FFFF>YIELD</color>  {ch.statPoints[4]}  (+{ch.statPoints[4] * 3:F0}% XP)\n\n" +
                 $"Armor: {totalARM}\n" +
                 $"Fragment: {ch.gold}\n" +
                 $"XP: {ch.characterXP}/{ch.XPToNextLevel}\n" +
@@ -236,10 +250,20 @@ namespace Synthborn.UI
             st.text = $"{price}f"; st.fontSize = 7; st.color = new Color(1f, 0.85f, 0.3f);
             st.alignment = TextAnchor.MiddleCenter; st.font = _font; st.raycastTarget = false;
             var capturedId = item.Id;
-            sellGO.GetComponent<Button>().onClick.AddListener(() => {
-                InventoryManager.SellItem(capturedId);
-                Refresh();
-            });
+            if (_mergeMode)
+            {
+                // In merge mode: clicking cell triggers merge selection
+                var mergeBtn = cellGO.AddComponent<Button>();
+                mergeBtn.onClick.AddListener(() => OnMergeItemClicked(capturedId));
+                sellGO.SetActive(false);
+            }
+            else
+            {
+                sellGO.GetComponent<Button>().onClick.AddListener(() => {
+                    InventoryManager.SellItem(capturedId);
+                    Refresh();
+                });
+            }
 
             // Tooltip on hover
             var trigger = cellGO.AddComponent<EventTrigger>();
@@ -394,9 +418,86 @@ namespace Synthborn.UI
                 if (dARM != 0) comparison += $" ARM{dARM:+0;-0}";
             }
 
+            string rarityName = ItemData.RarityDisplayName(item.Rarity);
             return $"<b><color=#{ColorUtility.ToHtmlStringRGB(item.RarityColor)}>{item.DisplayName}</color></b>\n" +
-                   $"[{item.Rarity}] {ItemData.SlotName(item.SlotType)}\n" +
+                   $"[{rarityName}] {ItemData.SlotName(item.SlotType)}\n" +
                    $"{stats}\nSat: {sellPrice}f{comparison}";
+        }
+
+        // ─── Merge ───
+
+        private void ToggleMergeMode()
+        {
+            _mergeMode = !_mergeMode;
+            _mergeFirstItemId = null;
+            UpdateMergeStatus(_mergeMode
+                ? "Birle\u015ftirme modu: \u0130lk komponenti se\u00e7in"
+                : "");
+            Refresh();
+        }
+
+        private void OnMergeItemClicked(string itemId)
+        {
+            if (!_mergeMode) return;
+
+            var itemDB = Resources.FindObjectsOfTypeAll<ItemDatabase>();
+            if (itemDB.Length == 0) return;
+            var db = itemDB[0];
+
+            if (_mergeFirstItemId == null)
+            {
+                _mergeFirstItemId = itemId;
+                var first = db.GetById(itemId);
+                string rarityName = first != null ? ItemData.RarityDisplayName(first.Rarity) : "?";
+                UpdateMergeStatus($"Se\u00e7ilen: {first?.DisplayName} [{rarityName}]\n\u0130kinci komponenti se\u00e7in (ayn\u0131 rarity)");
+                return;
+            }
+
+            if (_mergeFirstItemId == itemId)
+            {
+                UpdateMergeStatus("<color=red>Ayn\u0131 komponenti se\u00e7emezsiniz!</color>");
+                return;
+            }
+
+            var item1 = db.GetById(_mergeFirstItemId);
+            var item2 = db.GetById(itemId);
+            if (item1 == null || item2 == null) return;
+
+            if (item1.Rarity != item2.Rarity)
+            {
+                UpdateMergeStatus("<color=red>Komponentler ayn\u0131 rarity olmal\u0131!</color>");
+                _mergeFirstItemId = null;
+                return;
+            }
+
+            if ((int)item1.Rarity >= (int)ItemRarity.ArchitectGrade)
+            {
+                UpdateMergeStatus("<color=red>Architect-Grade birle\u015ftirilemez!</color>");
+                _mergeFirstItemId = null;
+                return;
+            }
+
+            string resultId = CraftingManager.MergeComponents(db, _mergeFirstItemId, itemId);
+            if (resultId != null)
+            {
+                var result = db.GetById(resultId);
+                string name = result?.DisplayName ?? resultId;
+                string rarityName = result != null ? ItemData.RarityDisplayName(result.Rarity) : "?";
+                UpdateMergeStatus($"<color=green>Birle\u015ftirildi: {name} [{rarityName}]</color>");
+            }
+            else
+            {
+                UpdateMergeStatus("<color=red>Birle\u015ftirme ba\u015far\u0131s\u0131z!</color>");
+            }
+
+            _mergeFirstItemId = null;
+            Refresh();
+        }
+
+        private void UpdateMergeStatus(string text)
+        {
+            if (_mergeStatusText != null)
+                _mergeStatusText.text = text;
         }
     }
 }

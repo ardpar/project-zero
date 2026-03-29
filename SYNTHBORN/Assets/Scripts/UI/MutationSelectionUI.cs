@@ -197,10 +197,10 @@ namespace Synthborn.UI
         {
             return rarity switch
             {
-                MutationRarity.Common => new Color(0.7f, 0.7f, 0.7f),      // Gray
-                MutationRarity.Uncommon => new Color(0.2f, 0.8f, 0.2f),    // Green
-                MutationRarity.Rare => new Color(0.3f, 0.5f, 1.0f),        // Blue
-                MutationRarity.Legendary => new Color(1.0f, 0.8f, 0.0f),   // Gold
+                MutationRarity.Baseline => new Color(0.7f, 0.7f, 0.7f),      // Gray
+                MutationRarity.Calibrated => new Color(0.2f, 0.8f, 0.2f),    // Green
+                MutationRarity.Reinforced => new Color(0.3f, 0.5f, 1.0f),        // Blue
+                MutationRarity.ArchitectGrade => new Color(1.0f, 0.8f, 0.0f),   // Gold
                 _ => Color.white
             };
         }

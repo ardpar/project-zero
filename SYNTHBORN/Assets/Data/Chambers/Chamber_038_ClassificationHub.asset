@@ -10,34 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e330668ce8eec4b619823c6d4cfe4e34, type: 3}
-  m_Name: Chamber_033_AssayThreshold
+  m_Name: Chamber_038_ClassificationHub
   m_EditorClassIdentifier: Synthborn.Waves::Synthborn.Waves.TrialChamberData
-  levelName: Assay Threshold
-  floorTile: {fileID: 11400000, guid: 7d5abd2c5181b43f2b6cce0086bc46ef, type: 2}
-  wallTile: {fileID: 11400000, guid: 39d3d4bd4b21a47a08afeb547b0e4f27, type: 2}
-  biomeTint: {r: 0.05, g: 0.1, b: 0.05, a: 1}
+  levelName: Classification Hub
+  floorTile: {fileID: 11400000, guid: 5d78f1960ffbd468fa28db5a5812585a, type: 2}
+  wallTile: {fileID: 11400000, guid: 14ba7b90cf329476bba94501f2050f03, type: 2}
+  biomeTint: {r: 0.1, g: 0.08, b: 0.06, a: 1}
   spawnPool:
   - EnemyData: {fileID: 11400000, guid: 1c3ad4833ce8b435d8120b3baf163fa5, type: 2}
     Weight: 2
   - EnemyData: {fileID: 11400000, guid: d0488aeb4b31c41f884b4cb7a29536de, type: 2}
-    Weight: 2
+    Weight: 3
   - EnemyData: {fileID: 11400000, guid: f4ade2ae76cd74790b349a6a4b79bc89, type: 2}
     Weight: 2
   - EnemyData: {fileID: 11400000, guid: a3e16031a3a2e42c9a4b459d13178d23, type: 2}
-    Weight: 1
+    Weight: 2
   - EnemyData: {fileID: 11400000, guid: 326e3e47008f9428eb5c5df50ddb8673, type: 2}
     Weight: 1
   waveCount: 6
-  baseSpawnInterval: 0.88000005
-  intervalDecreasePerWave: 0.12
-  baseWaveDuration: 180
-  bossData: {fileID: 11400000, guid: f701a6e99e35b433c982f7a92746d674, type: 2}
+  baseSpawnInterval: 0.92
+  intervalDecreasePerWave: 0.1
+  baseWaveDuration: 130
+  bossData: {fileID: 11400000, guid: 99ce8c2055a4e48c9933fcbff5ada0a8, type: 2}
   bossChaserData: {fileID: 11400000, guid: 15a1741d3e5c14382a1e0961a9a529aa, type: 2}
-  difficultyMultiplier: 2.78
-  baseElites: 5
-  maxElites: 8
-  chamberNumber: 33
-  biomeLayer: 1
+  difficultyMultiplier: 2.4
+  baseElites: 3
+  maxElites: 6
+  chamberNumber: 38
+  biomeLayer: 2
   pressureRating: 3
-  adjacentChambers: 1e0000001f00000022000000
+  adjacentChambers: 22000000270000002a000000
   pressureMultiplierOverride: 0

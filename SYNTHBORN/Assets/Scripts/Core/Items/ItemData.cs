@@ -3,7 +3,19 @@ using UnityEngine;
 namespace Synthborn.Core.Items
 {
     public enum ItemSlotType { Helmet, Armor, Weapon, Gloves, Boots, Accessory }
-    public enum ItemRarity { Common, Uncommon, Rare, Epic, Legendary }
+
+    /// <summary>
+    /// Component integrity classification (Arena terminology).
+    /// Int values preserved for save compatibility: 0=Baseline, 1=Calibrated, 2=Reinforced, 3=Anomalous, 4=Architect-Grade.
+    /// </summary>
+    public enum ItemRarity
+    {
+        Baseline = 0,       // was Common
+        Calibrated = 1,     // was Uncommon
+        Reinforced = 2,     // was Rare
+        Anomalous = 3,      // was Epic
+        ArchitectGrade = 4  // was Legendary
+    }
 
     /// <summary>
     /// Defines an equippable item with stat modifiers and rarity.
@@ -57,23 +69,34 @@ namespace Synthborn.Core.Items
         /// <summary>Rarity color for UI display.</summary>
         public Color RarityColor => Rarity switch
         {
-            ItemRarity.Common => Color.white,
-            ItemRarity.Uncommon => new Color(0.2f, 0.8f, 0.2f),
-            ItemRarity.Rare => new Color(0.3f, 0.5f, 1f),
-            ItemRarity.Epic => new Color(0.7f, 0.3f, 0.9f),
-            ItemRarity.Legendary => new Color(1f, 0.85f, 0.2f),
+            ItemRarity.Baseline => new Color(0.7f, 0.7f, 0.7f),
+            ItemRarity.Calibrated => new Color(0.2f, 0.8f, 0.2f),
+            ItemRarity.Reinforced => new Color(0.3f, 0.5f, 1f),
+            ItemRarity.Anomalous => new Color(0.7f, 0.3f, 0.9f),
+            ItemRarity.ArchitectGrade => new Color(1f, 0.85f, 0.2f),
             _ => Color.white
+        };
+
+        /// <summary>Display name for rarity (Arena terminology).</summary>
+        public static string RarityDisplayName(ItemRarity r) => r switch
+        {
+            ItemRarity.Baseline => "Baseline",
+            ItemRarity.Calibrated => "Calibrated",
+            ItemRarity.Reinforced => "Reinforced",
+            ItemRarity.Anomalous => "Anomalous",
+            ItemRarity.ArchitectGrade => "Architect-Grade",
+            _ => "?"
         };
 
         /// <summary>Slot display name.</summary>
         public static string SlotName(ItemSlotType slot) => slot switch
         {
-            ItemSlotType.Helmet => "Helmet",
-            ItemSlotType.Armor => "Armor",
-            ItemSlotType.Weapon => "Weapon",
-            ItemSlotType.Gloves => "Gloves",
-            ItemSlotType.Boots => "Boots",
-            ItemSlotType.Accessory => "Accessory",
+            ItemSlotType.Helmet => "Cranial Module",
+            ItemSlotType.Armor => "Carapace Plate",
+            ItemSlotType.Weapon => "Appendage Core",
+            ItemSlotType.Gloves => "Sensory Array",
+            ItemSlotType.Boots => "Locomotion Frame",
+            ItemSlotType.Accessory => "Auxiliary Port",
             _ => "?"
         };
     }

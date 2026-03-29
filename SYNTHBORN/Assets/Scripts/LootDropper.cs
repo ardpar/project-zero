@@ -57,12 +57,12 @@ public class LootDropper : MonoBehaviour
         {
             case 0: // Normal — base 5% chance, pressure-boosted
                 if (Random.value < 0.05f * (1f + pressureBoost))
-                    droppedItem = GetRandomItemOfMinRarity(ItemRarity.Common);
+                    droppedItem = GetRandomItemOfMinRarity(ItemRarity.Baseline);
                 break;
             case 1: // Elite — base 30%, pressure-boosted
                 if (Random.value < 0.30f * (1f + pressureBoost))
                     droppedItem = GetRandomItemOfMinRarity(
-                        pressureBoost >= 0.3f ? ItemRarity.Rare : ItemRarity.Uncommon);
+                        pressureBoost >= 0.3f ? ItemRarity.Reinforced : ItemRarity.Calibrated);
                 break;
             case 2: // Stabilized (Boss) — guaranteed, rarity scales with pressure
                 droppedItem = GetStabilizedLoot(currentLevel, pressureBoost);
@@ -87,11 +87,11 @@ public class LootDropper : MonoBehaviour
         float epicThreshold = 0.30f + pressureBoost * 0.3f;      // 30% → 39% at pressure 2
 
         if (level >= 8 && roll < legendaryThreshold)
-            minRarity = ItemRarity.Legendary;
+            minRarity = ItemRarity.ArchitectGrade;
         else if (level >= 4 && roll < epicThreshold)
-            minRarity = ItemRarity.Epic;
+            minRarity = ItemRarity.Anomalous;
         else
-            minRarity = ItemRarity.Rare;
+            minRarity = ItemRarity.Reinforced;
 
         return GetRandomItemOfMinRarity(minRarity);
     }

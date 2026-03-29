@@ -73,10 +73,10 @@ namespace Synthborn.UI
 
         private static Color GetRarityColor(MutationRarity rarity) => rarity switch
         {
-            MutationRarity.Common => new Color(0.3f, 0.3f, 0.3f),
-            MutationRarity.Uncommon => new Color(0.15f, 0.35f, 0.15f),
-            MutationRarity.Rare => new Color(0.15f, 0.25f, 0.5f),
-            MutationRarity.Legendary => new Color(0.5f, 0.4f, 0.1f),
+            MutationRarity.Baseline => new Color(0.3f, 0.3f, 0.3f),
+            MutationRarity.Calibrated => new Color(0.15f, 0.35f, 0.15f),
+            MutationRarity.Reinforced => new Color(0.15f, 0.25f, 0.5f),
+            MutationRarity.ArchitectGrade => new Color(0.5f, 0.4f, 0.1f),
             _ => new Color(0.2f, 0.2f, 0.2f)
         };
     }

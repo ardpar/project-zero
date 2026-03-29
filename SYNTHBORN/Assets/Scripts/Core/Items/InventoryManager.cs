@@ -102,6 +102,17 @@ namespace Synthborn.Core.Items
         }
 
         /// <summary>Sell an item from inventory for gold.</summary>
+        /// <summary>Remove an item from inventory without selling (used by merge).</summary>
+        public static bool RemoveFromInventory(string itemId)
+        {
+            var ch = SaveManager.Character;
+            if (ch == null) return false;
+            int idx = ch.inventoryItems.FindIndex(e => e.itemId == itemId);
+            if (idx < 0) return false;
+            ch.inventoryItems.RemoveAt(idx);
+            return true;
+        }
+
         public static bool SellItem(string itemId)
         {
             var ch = SaveManager.Character;
@@ -122,11 +133,11 @@ namespace Synthborn.Core.Items
         /// <summary>Gold value for selling an item by rarity.</summary>
         public static int GetSellPrice(ItemRarity rarity) => rarity switch
         {
-            ItemRarity.Common => 10,
-            ItemRarity.Uncommon => 25,
-            ItemRarity.Rare => 75,
-            ItemRarity.Epic => 200,
-            ItemRarity.Legendary => 500,
+            ItemRarity.Baseline => 10,
+            ItemRarity.Calibrated => 25,
+            ItemRarity.Reinforced => 75,
+            ItemRarity.Anomalous => 200,
+            ItemRarity.ArchitectGrade => 500,
             _ => 5
         };
 

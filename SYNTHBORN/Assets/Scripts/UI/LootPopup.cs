@@ -50,11 +50,11 @@ namespace Synthborn.UI
                 string rarityName = ((ItemRarity)rarity).ToString();
                 Color col = ((ItemRarity)rarity) switch
                 {
-                    ItemRarity.Common => Color.white,
-                    ItemRarity.Uncommon => new Color(0.2f, 0.8f, 0.2f),
-                    ItemRarity.Rare => new Color(0.3f, 0.5f, 1f),
-                    ItemRarity.Epic => new Color(0.7f, 0.3f, 0.9f),
-                    ItemRarity.Legendary => new Color(1f, 0.85f, 0.2f),
+                    ItemRarity.Baseline => Color.white,
+                    ItemRarity.Calibrated => new Color(0.2f, 0.8f, 0.2f),
+                    ItemRarity.Reinforced => new Color(0.3f, 0.5f, 1f),
+                    ItemRarity.Anomalous => new Color(0.7f, 0.3f, 0.9f),
+                    ItemRarity.ArchitectGrade => new Color(1f, 0.85f, 0.2f),
                     _ => Color.white
                 };
 

@@ -17,12 +17,12 @@ namespace Synthborn.Mutations
         Passive
     }
 
-    /// <summary>Mutation rarity tier. Affects drop weight and power level.</summary>
+    /// <summary>Mutation rarity tier (Arena terminology). Affects drop weight and power level.</summary>
     public enum MutationRarity
     {
-        Common,     // ~50% base weight, +10-15% stat boost
-        Uncommon,   // ~30%, +20-30% or simple special effect
-        Rare,       // ~15%, +40%+ or powerful special effect
-        Legendary   // ~5%, game-changing or strong synergy enabler
+        Baseline,         // ~50% base weight, +10-15% stat boost
+        Calibrated,       // ~30%, +20-30% or simple special effect
+        Reinforced,       // ~15%, +40%+ or powerful special effect
+        ArchitectGrade    // ~5%, game-changing or strong synergy enabler
     }
 }

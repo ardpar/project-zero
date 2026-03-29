@@ -48,32 +48,42 @@ namespace Synthborn.UI
             if (_recipeContainer == null) return;
             foreach (Transform child in _recipeContainer) Destroy(child.gameObject);
 
-            // Recipe 1: 3 Compound → Common Component
-            CreateRecipe("Temel Sentez", "3x Residual Compound \u2192 Rastgele Common Komponent",
+            // Recipe 1: 3 Compound → Baseline
+            CreateRecipe("Temel Sentez", "3x Residual Compound \u2192 Baseline Komponent",
                 ch.scrapMetal >= 3, () => {
-                    if (CraftingManager.CraftCommon(_db))
+                    if (CraftingManager.SynthesizeBaseline(_db))
                     {
-                        if (_resultText != null) _resultText.text = "<color=white>Common komponent sentezlendi!</color>";
+                        if (_resultText != null) _resultText.text = "<color=#B0B0B0>Baseline komponent sentezlendi!</color>";
                         Refresh();
                     }
                 });
 
-            // Recipe 2: 2 Residue + 1 Compound → Rare Component
-            CreateRecipe("Nadir Sentez", "2x Mutation Residue + 1x Compound \u2192 Rastgele Rare Komponent",
+            // Recipe 2: 5 Compound → Calibrated
+            CreateRecipe("Kalibre Sentez", "5x Residual Compound \u2192 Calibrated Komponent",
+                ch.scrapMetal >= 5, () => {
+                    if (CraftingManager.SynthesizeCalibrated(_db))
+                    {
+                        if (_resultText != null) _resultText.text = "<color=#33CC33>Calibrated komponent sentezlendi!</color>";
+                        Refresh();
+                    }
+                });
+
+            // Recipe 3: 2 Residue + 1 Compound → Reinforced
+            CreateRecipe("G\u00fc\u00e7lendirilmi\u015f Sentez", "2x Mutation Residue + 1x Compound \u2192 Reinforced Komponent",
                 ch.darkCrystals >= 2 && ch.scrapMetal >= 1, () => {
-                    if (CraftingManager.CraftRare(_db))
+                    if (CraftingManager.SynthesizeReinforced(_db))
                     {
-                        if (_resultText != null) _resultText.text = "<color=#3355FF>Rare komponent sentezlendi!</color>";
+                        if (_resultText != null) _resultText.text = "<color=#3355FF>Reinforced komponent sentezlendi!</color>";
                         Refresh();
                     }
                 });
 
-            // Recipe 3: 1 Core + 3 Residue → Legendary Component
-            CreateRecipe("Efsanevi Sentez", "1x Stabilized Core + 3x Mutation Residue \u2192 Legendary Komponent",
+            // Recipe 4: 1 Core + 3 Residue → Architect-Grade
+            CreateRecipe("Mimar Sentezi", "1x Stabilized Core + 3x Mutation Residue \u2192 Architect-Grade Komponent",
                 ch.bossEssences >= 1 && ch.darkCrystals >= 3, () => {
-                    if (CraftingManager.CraftLegendary(_db))
+                    if (CraftingManager.SynthesizeArchitectGrade(_db))
                     {
-                        if (_resultText != null) _resultText.text = "<color=#FFD700>Legendary komponent sentezlendi!</color>";
+                        if (_resultText != null) _resultText.text = "<color=#FFD700>Architect-Grade komponent sentezlendi!</color>";
                         Refresh();
                     }
                 });

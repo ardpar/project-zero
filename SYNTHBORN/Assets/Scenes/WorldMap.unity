@@ -1880,6 +1880,23 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _biomeConfigs:
   - {fileID: 11400000, guid: 5846c3780da6843429964c1794bfd0bd, type: 2}
   - {fileID: 11400000, guid: e808036330e014b25b18e7969360f907, type: 2}
@@ -3533,6 +3550,8 @@ MonoBehaviour:
   _inventoryContainer: {fileID: 957862482}
   _inventoryTitle: {fileID: 2044499276}
   _tooltipText: {fileID: 0}
+  _mergeButton: {fileID: 0}
+  _mergeStatusText: {fileID: 0}
 --- !u!114 &1008346269
 MonoBehaviour:
   m_ObjectHideFlags: 0

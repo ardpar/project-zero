@@ -3,7 +3,14 @@ using UnityEngine;
 
 namespace Synthborn.Core.Skills
 {
-    public enum SkillBranch { Might, Vitality, Agility, Fortune }
+    /// <summary>Kalibrasyon Ağacı branch types (Arena terminology).</summary>
+    public enum SkillBranch
+    {
+        SubstrateDensity = 0,       // was Might — Damage + Crit
+        StructuralIntegrity = 1,    // was Vitality — HP + Armor
+        SignalConductivity = 2,     // was Agility — Speed + Dash
+        DataYield = 3               // was Fortune — XP + Loot
+    }
 
     /// <summary>
     /// Single node in the passive skill tree.
@@ -31,7 +38,7 @@ namespace Synthborn.Core.Skills
         public int armorFlat;
         public float dashCooldownModifier;
         public float xpGainBonus;
-        public float goldGainBonus;
+        public float fragmentGainBonus;
         public float dropRateBonus;
     }
 }

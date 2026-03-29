@@ -379,6 +379,9 @@ MonoBehaviour:
   _lootListText: {fileID: 1885955326}
   _nextChamberContainer: {fileID: 813612442}
   _returnButton: {fileID: 963695239}
+  _inventoryButton: {fileID: 0}
+  _synthesisButton: {fileID: 0}
+  _shopButton: {fileID: 0}
   _font: {fileID: 0}
 --- !u!1 &96379335
 GameObject:
@@ -17158,6 +17161,7 @@ MonoBehaviour:
   _xpFill: {fileID: 11210387}
   _levelText: {fileID: 2092026733}
   _waveText: {fileID: 325945260}
+  _chamberText: {fileID: 0}
   _dashCDFill: {fileID: 1196772552}
   _mutationIconContainer: {fileID: 1406847597}
   _mutationDatabase: {fileID: 11400000, guid: f865b249c94044db38477a3e0734df8a, type: 2}
@@ -17917,6 +17921,23 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6c0566dc412a746b68b03295a1f0824d, type: 2}
   - {fileID: 11400000, guid: 9ee009599128941a3a3fd88aa3b5b1f0, type: 2}
   - {fileID: 11400000, guid: 18f620bcf4bf847d491d72ca6b7fec29, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

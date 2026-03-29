@@ -22,10 +22,14 @@ namespace Synthborn.UI
         [SerializeField] private Transform _nextChamberContainer;
         [SerializeField] private Button _returnButton;
         [SerializeField] private Button _inventoryButton;
+        [SerializeField] private Button _synthesisButton;
+        [SerializeField] private Button _shopButton;
 
         [SerializeField] private Font _font;
 
         private CharacterScreen _characterScreen;
+        private CraftScreen _craftScreen;
+        private ShopScreen _shopScreen;
 
         private void OnEnable()
         {
@@ -41,8 +45,14 @@ namespace Synthborn.UI
         {
             if (_panel != null) _panel.SetActive(false);
             _characterScreen = FindAnyObjectByType<CharacterScreen>(FindObjectsInactive.Include);
+            _craftScreen = FindAnyObjectByType<CraftScreen>(FindObjectsInactive.Include);
+            _shopScreen = FindAnyObjectByType<ShopScreen>(FindObjectsInactive.Include);
             if (_inventoryButton != null)
                 _inventoryButton.onClick.AddListener(OnInventoryClicked);
+            if (_synthesisButton != null)
+                _synthesisButton.onClick.AddListener(() => _craftScreen?.Show());
+            if (_shopButton != null)
+                _shopButton.onClick.AddListener(() => _shopScreen?.Show());
         }
 
         private void Show()
