@@ -19,12 +19,9 @@ namespace Synthborn.Enemies
 
         public override void Initialize(Transform player, int waveNumber, ObjectPool<EnemyBrain> pool, EnemyData overrideData = null)
         {
-            _poisonerData = data as PoisonerData;
-            if (_poisonerData == null)
-                Debug.LogError($"[PoisonerBrain] EnemyData on {name} must be a PoisonerData asset.", this);
-
             _trailTimer = 0f;
             base.Initialize(player, waveNumber, pool, overrideData);
+            _poisonerData = data as PoisonerData;
         }
 
         protected override void EnterState(EnemyState newState) { }

@@ -26,11 +26,8 @@ namespace Synthborn.Enemies
 
         public override void Initialize(Transform player, int waveNumber, ObjectPool<EnemyBrain> pool, EnemyData overrideData = null)
         {
-            _chargerData = data as ChargerData;
-            if (_chargerData == null)
-                Debug.LogError($"[ChargerBrain] EnemyData on {name} must be a ChargerData asset.", this);
-
             base.Initialize(player, waveNumber, pool, overrideData);
+            _chargerData = data as ChargerData;
             _cooldownTimer = _chargerData != null ? _chargerData.ChargeCooldown * 0.5f : 1f;
         }
 

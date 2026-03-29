@@ -39,10 +39,8 @@ namespace Synthborn.Enemies
 
         protected override void EnterState(EnemyState newState)
         {
-            if (newState == EnemyState.Dead)
-            {
-                GameEvents.RaiseBossDefeated();
-            }
+            // BossDefeated is raised by WaveSpawner.HandleEnemyDied (single source)
+            // Do NOT raise it here — causes double XP/gold/save
         }
 
         protected override void Tick()

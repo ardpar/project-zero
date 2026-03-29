@@ -16,6 +16,7 @@ namespace Synthborn.Enemies
         private float _damageTimer;
         private float _lifetime;
         private bool _initialized;
+        private SpriteRenderer _sr;
 
         /// <summary>Configure this trail segment at spawn time.</summary>
         public void Initialize(float duration, int damagePerSecond, float radius)
@@ -25,6 +26,7 @@ namespace Synthborn.Enemies
             _lifetime = 0f;
             _damageTimer = 0f;
             _initialized = true;
+            _sr = GetComponent<SpriteRenderer>();
 
             var col = GetComponent<CircleCollider2D>();
             col.radius = radius;
@@ -43,15 +45,14 @@ namespace Synthborn.Enemies
             }
 
             // Fade out visual over last 30% of lifetime
-            var sr = GetComponent<SpriteRenderer>();
-            if (sr != null)
+            if (_sr != null)
             {
                 float fadeStart = _duration * 0.7f;
                 if (_lifetime > fadeStart)
                 {
                     float alpha = 1f - (_lifetime - fadeStart) / (_duration - fadeStart);
-                    var c = sr.color;
-                    sr.color = new Color(c.r, c.g, c.b, alpha * 0.6f);
+                    var c = _sr.color;
+                    _sr.color = new Color(c.r, c.g, c.b, alpha * 0.6f);
                 }
             }
         }

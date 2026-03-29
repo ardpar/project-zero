@@ -241,7 +241,10 @@ namespace Synthborn.Waves
             var brain = _enemyPool.Get();
             brain.transform.position = pos;
 
-            brain.Initialize(_playerTransform, _currentWave + 1, _enemyPool, data);
+            // Apply difficulty multiplier as effective wave scaling
+            // Higher difficulty = enemies behave as if in a later wave (more HP, faster)
+            int effectiveWave = Mathf.RoundToInt((_currentWave + 1) * _difficultyMultiplier);
+            brain.Initialize(_playerTransform, effectiveWave, _enemyPool, data);
             _aliveCount++;
         }
 

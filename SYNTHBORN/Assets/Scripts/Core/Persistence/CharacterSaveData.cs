@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Synthborn.Core.Persistence
 {
@@ -19,6 +20,7 @@ namespace Synthborn.Core.Persistence
         public int characterXP;
         public int[] statPoints = new int[5]; // STR, VIT, AGI, LCK, WIS
         public int unspentStatPoints;
+        public int unspentSkillPoints;
 
         // Equipment (item IDs per slot: 0=Helmet, 1=Armor, 2=Weapon, 3=Gloves, 4=Boots, 5=Accessory)
         public string[] equippedItemIds = new string[6];
@@ -55,8 +57,8 @@ namespace Synthborn.Core.Persistence
                 highestLevelUnlocked = levelNumber + 1;
         }
 
-        /// <summary>XP needed for next level.</summary>
-        public int XPToNextLevel => (int)(100 * (1f + characterLevel * 0.15f));
+        /// <summary>XP needed for next level. Exponential curve with soft cap.</summary>
+        public int XPToNextLevel => (int)(100 * Mathf.Pow(characterLevel, 1.4f));
 
         /// <summary>Add XP and handle level-ups. Returns number of level-ups.</summary>
         public int AddXP(int amount)
@@ -68,6 +70,7 @@ namespace Synthborn.Core.Persistence
                 characterXP -= XPToNextLevel;
                 characterLevel++;
                 unspentStatPoints++;
+                unspentSkillPoints++;
                 levelUps++;
             }
             return levelUps;

@@ -70,7 +70,7 @@ namespace Synthborn.UI
 
             var ch = SaveManager.Character;
             if (_pointsText != null)
-                _pointsText.text = $"Skill Points: {ch?.unspentStatPoints ?? 0}";
+                _pointsText.text = $"Skill Points: {ch?.unspentSkillPoints ?? 0}";
 
             if (_infoText != null)
                 _infoText.text = $"Unlocked: {SkillTreeManager.UnlockedCount}/{SkillTreeManager.TotalNodes}";

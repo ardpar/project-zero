@@ -28,7 +28,7 @@ namespace Synthborn.Core.Skills
 
             var node = _treeData.GetNode(nodeId);
             if (node == null) return false;
-            if (ch.unspentStatPoints < node.skillPointCost) return false;
+            if (ch.unspentSkillPoints < node.skillPointCost) return false;
 
             // Check prerequisite
             if (!string.IsNullOrEmpty(node.prerequisiteNodeId))
@@ -45,7 +45,7 @@ namespace Synthborn.Core.Skills
             var ch = SaveManager.Character;
             var node = _treeData.GetNode(nodeId);
 
-            ch.unspentStatPoints -= node.skillPointCost;
+            ch.unspentSkillPoints -= node.skillPointCost;
             ch.unlockedSkillNodes.Add(nodeId);
             SaveManager.SaveSlot();
             return true;
@@ -67,7 +67,7 @@ namespace Synthborn.Core.Skills
             }
 
             ch.gold -= goldCost;
-            ch.unspentStatPoints += refund;
+            ch.unspentSkillPoints += refund;
             ch.unlockedSkillNodes.Clear();
             SaveManager.SaveSlot();
             return true;

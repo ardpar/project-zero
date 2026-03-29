@@ -23,14 +23,11 @@ namespace Synthborn.Enemies
 
         public override void Initialize(Transform player, int waveNumber, ObjectPool<EnemyBrain> pool, EnemyData overrideData = null)
         {
-            _summonerData = data as SummonerData;
-            if (_summonerData == null)
-                Debug.LogError($"[SummonerBrain] EnemyData on {name} must be a SummonerData asset.", this);
-
             _pool = pool;
             _activeMinions.Clear();
 
             base.Initialize(player, waveNumber, pool, overrideData);
+            _summonerData = data as SummonerData;
         }
 
         protected override void EnterState(EnemyState newState)

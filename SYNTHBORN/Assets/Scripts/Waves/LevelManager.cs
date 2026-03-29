@@ -165,8 +165,9 @@ namespace Synthborn.Waves
                 return baseLevel;
             }
 
-            // Fallback: return first level
-            return _levels[0];
+            // Fallback: should not reach here, but guard against crash
+            Debug.LogError("[LevelManager] No levels configured!");
+            return ScriptableObject.CreateInstance<LevelData>();
         }
 
         private static void SwapTiles(Tilemap tilemap, TileBase newTile)

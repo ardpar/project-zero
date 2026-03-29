@@ -59,6 +59,9 @@ namespace Synthborn.Core
         private void OnBossDefeated()
         {
             if (_state != RunState.Playing) return;
+            // In multi-level mode (WorldMap flow), LevelManager handles boss defeat.
+            // RunManager victory only fires in legacy single-level mode (no character loaded).
+            if (Persistence.SaveManager.Character != null) return;
             _state = RunState.Victory;
             ShowEndScreen(_victoryPanel);
         }
@@ -89,7 +92,9 @@ namespace Synthborn.Core
             {
                 int xpReward = _stats.EnemiesKilled + _stats.WavesCleared * 10;
                 ch.AddXP(xpReward);
-                ch.gold = Persistence.GoldManager.RunGold;
+                // On death: keep only 20% of run gold. On victory (level complete): LevelManager saves full gold.
+                bool isDeath = _state == RunState.GameOver;
+                ch.gold = isDeath ? Persistence.GoldManager.ConvertToMeta() : Persistence.GoldManager.RunGold;
                 ch.totalPlayTime += _stats.SurvivalTime;
                 SaveManager.SaveSlot();
                 SaveManager.Save();
