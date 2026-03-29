@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using Synthborn.Core.Persistence;
 using Synthborn.Core.Skills;
 
@@ -19,6 +21,7 @@ namespace Synthborn.UI
         [SerializeField] private SkillTreeData _treeData;
         [SerializeField] private Font _font;
         [SerializeField] private int _resetCost = 50;
+        [SerializeField] private Text _tooltipText;
 
         private void Awake()
         {
@@ -174,12 +177,70 @@ namespace Synthborn.UI
             // Hover effect
             if (go.GetComponent<ButtonHoverEffect>() == null)
                 go.AddComponent<ButtonHoverEffect>();
+
+            // S13-10: Tooltip on hover
+            var trigger = go.AddComponent<EventTrigger>();
+            var enterEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+            string tooltipStr = BuildTooltip(node, unlocked);
+            enterEntry.callback.AddListener((data) => ShowTooltip(tooltipStr));
+            trigger.triggers.Add(enterEntry);
+
+            var exitEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
+            exitEntry.callback.AddListener((data) => ShowTooltip(""));
+            trigger.triggers.Add(exitEntry);
         }
 
         private void OnNodeClicked(string nodeId)
         {
             if (SkillTreeManager.TryUnlock(nodeId))
+            {
+                // S13-11: Unlock animation
+                StartCoroutine(UnlockPulse());
                 Refresh();
+            }
+        }
+
+        private void ShowTooltip(string text)
+        {
+            if (_tooltipText != null)
+            {
+                _tooltipText.text = text;
+                _tooltipText.supportRichText = true;
+            }
+        }
+
+        private static string BuildTooltip(SkillNodeData node, bool unlocked)
+        {
+            string status = unlocked ? "<color=green>UNLOCKED</color>" : $"Cost: {node.skillPointCost} point";
+            string stats = "";
+            if (node.hpModifier != 0) stats += $"HP {node.hpModifier:+0%;-0%}  ";
+            if (node.damageModifier != 0) stats += $"DMG {node.damageModifier:+0%;-0%}  ";
+            if (node.speedModifier != 0) stats += $"SPD {node.speedModifier:+0%;-0%}  ";
+            if (node.critChance != 0) stats += $"Crit {node.critChance:+0%;-0%}  ";
+            if (node.critDamageBonus != 0) stats += $"CritDMG {node.critDamageBonus:+0%;-0%}  ";
+            if (node.attackSpeedModifier != 0) stats += $"AtkSpd {node.attackSpeedModifier:+0%;-0%}  ";
+            if (node.armorFlat != 0) stats += $"Armor +{node.armorFlat}  ";
+            if (node.dashCooldownModifier != 0) stats += $"DashCD {node.dashCooldownModifier:+0%;-0%}  ";
+            if (node.xpGainBonus != 0) stats += $"XP {node.xpGainBonus:+0%;-0%}  ";
+            if (node.goldGainBonus != 0) stats += $"Gold {node.goldGainBonus:+0%;-0%}  ";
+            if (node.dropRateBonus != 0) stats += $"Drop {node.dropRateBonus:+0%;-0%}  ";
+
+            return $"<b>{node.displayName}</b>\n{node.description}\n{stats}\n{status}";
+        }
+
+        private IEnumerator UnlockPulse()
+        {
+            if (_treeContainer == null) yield break;
+            var orig = _treeContainer.localScale;
+            float t = 0f;
+            while (t < 0.2f)
+            {
+                t += Time.unscaledDeltaTime;
+                float s = 1f + 0.03f * Mathf.Sin(Mathf.PI * t / 0.2f);
+                _treeContainer.localScale = orig * s;
+                yield return null;
+            }
+            _treeContainer.localScale = orig;
         }
 
         private void OnReset()
