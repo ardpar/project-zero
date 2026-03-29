@@ -3801,7 +3801,7 @@ MonoBehaviour:
   _pointsText: {fileID: 13775911}
   _infoText: {fileID: 888904769}
   _resetButton: {fileID: 224211365}
-  _treeData: {fileID: 0}
+  _treeData: {fileID: 11400000, guid: c972d0569ab4f4b8f972f8eb244b1791, type: 2}
   _font: {fileID: 12800000, guid: adc79e9a49e648645ac95441dc6b0bf4, type: 3}
   _resetCost: 50
 --- !u!114 &1832415450

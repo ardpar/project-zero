@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 445491ba29f0542608dfe9cad2c9f904, type: 3}
   m_Name: SkillTreeData
-  m_EditorClassIdentifier: Synthborn.Core:Synthborn.Core.Skills:SkillTreeData
+  m_EditorClassIdentifier: Synthborn.Core::Synthborn.Core.Skills.SkillTreeData
   nodes:
   - id: might_01
     displayName: Sharp Edge
@@ -141,7 +141,7 @@ MonoBehaviour:
     dropRateBonus: 0
   - id: might_08
     displayName: Savage Blows
-    description: Crit DMG +15%
+    description: CritDMG +15%
     branch: 0
     tier: 7
     skillPointCost: 1
@@ -177,7 +177,7 @@ MonoBehaviour:
     dropRateBonus: 0
   - id: might_10
     displayName: Executioner
-    description: DMG +15%, Crit +5%
+    description: DMG+15% Crit+5%
     branch: 0
     tier: 9
     skillPointCost: 1
@@ -357,7 +357,7 @@ MonoBehaviour:
     dropRateBonus: 0
   - id: vit_10
     displayName: Immortal
-    description: HP +15%, Armor +5
+    description: HP+15% Arm+5
     branch: 1
     tier: 9
     skillPointCost: 1
@@ -537,7 +537,7 @@ MonoBehaviour:
     dropRateBonus: 0
   - id: agi_10
     displayName: Phantom
-    description: Speed +10%, Dash CD -10%
+    description: Spd+10% Dash-10%
     branch: 2
     tier: 9
     skillPointCost: 1
@@ -591,7 +591,7 @@ MonoBehaviour:
     dropRateBonus: 0
   - id: fort_03
     displayName: Lucky Find
-    description: Drop Rate +3%
+    description: Drop +3%
     branch: 3
     tier: 2
     skillPointCost: 1
@@ -645,7 +645,7 @@ MonoBehaviour:
     dropRateBonus: 0
   - id: fort_06
     displayName: Prospector
-    description: Drop Rate +5%
+    description: Drop +5%
     branch: 3
     tier: 5
     skillPointCost: 1
@@ -699,7 +699,7 @@ MonoBehaviour:
     dropRateBonus: 0
   - id: fort_09
     displayName: Relic Hunter
-    description: Drop Rate +8%
+    description: Drop +8%
     branch: 3
     tier: 8
     skillPointCost: 1
@@ -717,7 +717,7 @@ MonoBehaviour:
     dropRateBonus: 0.08
   - id: fort_10
     displayName: Midas Touch
-    description: Gold +25%, XP +10%
+    description: Gold+25% XP+10%
     branch: 3
     tier: 9
     skillPointCost: 1
