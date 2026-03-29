@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094643f411046430cbea6d005e73c0c8, type: 3}
+  m_Name: Level3_Temple
+  m_EditorClassIdentifier: Synthborn.Waves::Synthborn.Waves.LevelData
+  levelName: Temple
+  floorTile: {fileID: 11400000, guid: 5d78f1960ffbd468fa28db5a5812585a, type: 2}
+  wallTile: {fileID: 11400000, guid: 14ba7b90cf329476bba94501f2050f03, type: 2}
+  biomeTint: {r: 0.1, g: 0.08, b: 0.06, a: 1}
+  spawnPool:
+  - EnemyData: {fileID: 11400000, guid: 15a1741d3e5c14382a1e0961a9a529aa, type: 2}
+    Weight: 2
+  - EnemyData: {fileID: 11400000, guid: c240c38597b3e46959b89b20ec0a166b, type: 2}
+    Weight: 2
+  - EnemyData: {fileID: 11400000, guid: 326e3e47008f9428eb5c5df50ddb8673, type: 2}
+    Weight: 2
+  - EnemyData: {fileID: 11400000, guid: a3e16031a3a2e42c9a4b459d13178d23, type: 2}
+    Weight: 1
+  - EnemyData: {fileID: 11400000, guid: f4ade2ae76cd74790b349a6a4b79bc89, type: 2}
+    Weight: 1
+  waveCount: 5
+  baseSpawnInterval: 1.5
+  intervalDecreasePerWave: 0.15
+  baseWaveDuration: 90
+  bossData: {fileID: 11400000, guid: 5b69a6b68542e416688245fd55d9489d, type: 2}
+  bossChaserData: {fileID: 11400000, guid: c240c38597b3e46959b89b20ec0a166b, type: 2}
+  difficultyMultiplier: 1.6
+  baseElites: 2
+  maxElites: 5

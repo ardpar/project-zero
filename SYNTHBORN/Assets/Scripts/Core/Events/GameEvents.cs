@@ -227,6 +227,21 @@ namespace Synthborn.Core.Events
         // ─────────────────────────────────────────────
 
         /// <summary>
+        // ─── Heal ───
+        public static event Action<float> OnPlayerHealRequested;
+        public static void RaisePlayerHealRequested(float fraction) => OnPlayerHealRequested?.Invoke(fraction);
+
+        // ─── Gold ───
+        public static event Action<int> OnGoldChanged;
+        public static void GoldChanged(int total) => OnGoldChanged?.Invoke(total);
+
+        // ─── Level/Stage ───
+        public static event Action<int, string> OnLevelStarted;
+        public static void LevelStarted(int level, string name) => OnLevelStarted?.Invoke(level, name);
+
+        public static event Action<int> OnLevelCleared;
+        public static void LevelCleared(int level) => OnLevelCleared?.Invoke(level);
+
         /// Clears ALL event subscriptions. Call on run reset or scene unload
         /// to prevent stale subscribers from leaking across runs.
         /// </summary>
@@ -255,6 +270,10 @@ namespace Synthborn.Core.Events
             OnHPOrbRequested        = null;
             OnMutationApplied       = null;
             OnSynergyActivated      = null;
+            OnPlayerHealRequested   = null;
+            OnGoldChanged           = null;
+            OnLevelStarted          = null;
+            OnLevelCleared          = null;
         }
     }
 }

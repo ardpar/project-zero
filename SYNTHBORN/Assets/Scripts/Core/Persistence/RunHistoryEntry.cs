@@ -12,6 +12,7 @@ namespace Synthborn.Core.Persistence
         public int wavesCleared;
         public int mutationsAcquired;
         public int cellsEarned;
+        public int levelReached;
         public bool victory;
     }
 }

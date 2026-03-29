@@ -148,6 +148,26 @@ namespace Synthborn.Core
             if (_mutationUI != null && _mutationManager != null && _mutationDatabase != null)
                 _mutationUI.Initialize(_mutationManager, _mutationDatabase);
 
+            // Wire gold drop on enemy death
+            GoldManager.ResetRun();
+            GameEvents.OnEnemyDied += (pos, enemy, xp) =>
+            {
+                var brain = enemy != null ? enemy.GetComponent<Synthborn.Enemies.EnemyBrain>() : null;
+                if (brain?.Data != null)
+                {
+                    int tierIndex = (int)brain.Data.Tier;
+                    int gold = GoldManager.RollGoldDrop(tierIndex);
+                    GoldManager.AddGold(gold);
+                }
+            };
+
+            // Wire player heal event
+            if (_playerHealth != null)
+            {
+                var phForHeal = _playerHealth;
+                GameEvents.OnPlayerHealRequested += (fraction) => phForHeal.HealFraction(fraction);
+            }
+
             // Wire Player
             if (_playerController != null)
                 _playerController.Initialise(stats);

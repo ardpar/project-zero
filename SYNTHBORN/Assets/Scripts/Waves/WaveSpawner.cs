@@ -35,6 +35,12 @@ namespace Synthborn.Waves
         private bool _elitesSpawned;
         private bool _miniBossSpawned;
 
+        // Dynamic level override
+        private WaveDefinition[] _dynamicWaves;
+        private EnemyData _dynamicBossData;
+        private EnemyData _dynamicBossChaserData;
+        private float _difficultyMultiplier = 1f;
+
         /// <summary>Current wave number (1-based, for display).</summary>
         public int CurrentWaveDisplay => _currentWave + 1;
 
@@ -54,6 +60,23 @@ namespace Synthborn.Waves
         private void Start()
         {
             DailySeedManager.Initialize();
+            // Initial start is now handled by LevelManager.
+            // If no LevelManager exists, start wave 0 as fallback.
+            if (FindFirstObjectByType<LevelManager>() == null)
+                StartWave(0);
+        }
+
+        /// <summary>
+        /// Called by LevelManager to start a new level with dynamic wave definitions.
+        /// Resets wave state and begins wave 0.
+        /// </summary>
+        public void StartNewLevel(WaveDefinition[] waves, EnemyData bossData, EnemyData bossChaserData, float difficultyMultiplier)
+        {
+            _dynamicWaves = waves;
+            _dynamicBossData = bossData;
+            _dynamicBossChaserData = bossChaserData;
+            _difficultyMultiplier = difficultyMultiplier;
+            _state = SpawnerState.WaveActive;
             StartWave(0);
         }
 
@@ -130,23 +153,27 @@ namespace Synthborn.Waves
         private void UpdateBossPhase(float dt)
         {
             _spawnTimer -= dt;
-            if (_spawnTimer <= 0f && _aliveCount < _waveTable.maxAliveEnemies && _waveTable.bossChaserData != null)
+            var chaser = _dynamicBossChaserData ?? _waveTable.bossChaserData;
+            if (_spawnTimer <= 0f && _aliveCount < _waveTable.maxAliveEnemies && chaser != null)
             {
-                SpawnSpecificEnemy(_waveTable.bossChaserData);
+                SpawnSpecificEnemy(chaser);
                 _spawnTimer = _waveTable.bossChaserSpawnInterval;
             }
         }
 
+        private WaveDefinition[] ActiveWaves => _dynamicWaves ?? _waveTable.waves;
+
         private void StartWave(int waveIndex)
         {
-            if (waveIndex >= _waveTable.waves.Length)
+            var waves = ActiveWaves;
+            if (waves == null || waveIndex >= waves.Length)
             {
                 StartBossPhase();
                 return;
             }
 
             _currentWave = waveIndex;
-            var wave = _waveTable.waves[_currentWave];
+            var wave = waves[_currentWave];
             _waveTimer = wave.Duration;
             _waveDuration = wave.Duration;
             _spawnTimer = 0f;
@@ -169,10 +196,9 @@ namespace Synthborn.Waves
             _state = SpawnerState.BossPhase;
             _spawnTimer = _waveTable.bossChaserSpawnInterval;
 
-            if (_waveTable.bossData != null)
-            {
-                SpawnSpecificEnemy(_waveTable.bossData);
-            }
+            var boss = _dynamicBossData ?? _waveTable.bossData;
+            if (boss != null)
+                SpawnSpecificEnemy(boss);
 
             GameEvents.BossSpawned();
         }
@@ -243,8 +269,9 @@ namespace Synthborn.Waves
 
         private WaveDefinition GetCurrentWaveDefinition()
         {
-            int idx = Mathf.Min(_currentWave, _waveTable.waves.Length - 1);
-            return _waveTable.waves[idx];
+            var waves = ActiveWaves;
+            int idx = Mathf.Min(_currentWave, waves.Length - 1);
+            return waves[idx];
         }
 
         private void HandleEnemyDied(Vector2 pos, GameObject enemy, int xp)
@@ -255,7 +282,7 @@ namespace Synthborn.Waves
             var brain = enemy != null ? enemy.GetComponent<EnemyBrain>() : null;
             if (brain != null && brain.Data != null && brain.Data.Tier == EnemyTier.Boss && _state == SpawnerState.BossPhase)
             {
-                _state = SpawnerState.Complete;
+                _state = SpawnerState.Paused; // Wait for LevelManager to start next level
                 GameEvents.RaiseBossDefeated();
             }
         }

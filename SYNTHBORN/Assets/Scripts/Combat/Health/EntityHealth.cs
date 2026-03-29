@@ -185,6 +185,12 @@ namespace Synthborn.Combat.Health
                 GameEvents.RaisePlayerHPChanged(_currentHp, _maxHp);
         }
 
+        /// <summary>Heals a fraction of max HP (0-1). E.g. 0.3 = 30% max HP.</summary>
+        public void HealFraction(float fraction)
+        {
+            Heal(Mathf.RoundToInt(_maxHp * fraction));
+        }
+
         // ─────────────────────────────────────────────
         // Death
         // ─────────────────────────────────────────────
