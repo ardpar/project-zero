@@ -102,14 +102,17 @@ namespace Synthborn.Waves
             }
         }
 
+        private int MaxAliveEnemies => _waveTable != null ? _waveTable.maxAliveEnemies : 200;
+
         private void UpdateWaveActive(float dt)
         {
-            if (_waveTable == null || _enemyPool == null) return;
+            if (_enemyPool == null) return;
+            if (ActiveWaves == null) return;
 
             _waveTimer -= dt;
             _spawnTimer -= dt;
 
-            if (_spawnTimer <= 0f && _aliveCount < _waveTable.maxAliveEnemies)
+            if (_spawnTimer <= 0f && _aliveCount < MaxAliveEnemies)
             {
                 SpawnEnemy();
                 var wave = GetCurrentWaveDefinition();
@@ -117,7 +120,7 @@ namespace Synthborn.Waves
             }
 
             // Mini-boss spawn at 50% of wave duration (wave 4+, random chance)
-            if (!_miniBossSpawned && _waveDuration > 0f && _waveTable.miniBossData != null)
+            if (!_miniBossSpawned && _waveDuration > 0f && _waveTable != null && _waveTable.miniBossData != null)
             {
                 float elapsed = _waveDuration - _waveTimer;
                 if (elapsed >= _waveDuration * 0.5f && CurrentWaveDisplay >= _waveTable.miniBossStartWave)
@@ -153,15 +156,15 @@ namespace Synthborn.Waves
         private void UpdateBossPhase(float dt)
         {
             _spawnTimer -= dt;
-            var chaser = _dynamicBossChaserData ?? _waveTable.bossChaserData;
-            if (_spawnTimer <= 0f && _aliveCount < _waveTable.maxAliveEnemies && chaser != null)
+            var chaser = _dynamicBossChaserData ?? (_waveTable != null ? _waveTable.bossChaserData : null);
+            if (_spawnTimer <= 0f && _aliveCount < MaxAliveEnemies && chaser != null)
             {
                 SpawnSpecificEnemy(chaser);
-                _spawnTimer = _waveTable.bossChaserSpawnInterval;
+                _spawnTimer = _waveTable != null ? _waveTable.bossChaserSpawnInterval : 3f;
             }
         }
 
-        private WaveDefinition[] ActiveWaves => _dynamicWaves ?? _waveTable.waves;
+        private WaveDefinition[] ActiveWaves => _dynamicWaves ?? (_waveTable != null ? _waveTable.waves : null);
 
         private void StartWave(int waveIndex)
         {
@@ -187,16 +190,16 @@ namespace Synthborn.Waves
         private void EndWave()
         {
             GameEvents.WaveCleared();
-            _breakTimer = _waveTable.waveBreakDuration;
+            _breakTimer = _waveTable != null ? _waveTable.waveBreakDuration : 3f;
             _state = SpawnerState.WaveBreak;
         }
 
         private void StartBossPhase()
         {
             _state = SpawnerState.BossPhase;
-            _spawnTimer = _waveTable.bossChaserSpawnInterval;
+            _spawnTimer = _waveTable != null ? _waveTable.bossChaserSpawnInterval : 3f;
 
-            var boss = _dynamicBossData ?? _waveTable.bossData;
+            var boss = _dynamicBossData ?? (_waveTable != null ? _waveTable.bossData : null);
             if (boss != null)
                 SpawnSpecificEnemy(boss);
 
@@ -247,7 +250,7 @@ namespace Synthborn.Waves
             if (_playerTransform == null) return Vector2.zero;
 
             Vector2 playerPos = _playerTransform.position;
-            float minDist = _waveTable.minSpawnDistance;
+            float minDist = _waveTable != null ? _waveTable.minSpawnDistance : 12f;
 
             for (int attempt = 0; attempt < 5; attempt++)
             {
