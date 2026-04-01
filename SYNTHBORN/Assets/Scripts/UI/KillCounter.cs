@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Synthborn.Core.Events;
 
 namespace Synthborn.UI
@@ -10,7 +11,7 @@ namespace Synthborn.UI
     /// </summary>
     public class KillCounter : MonoBehaviour
     {
-        [SerializeField] private Text _popupText;
+        [SerializeField] private TMP_Text _popupText;
 
         private int _killCount;
         private CanvasGroup _canvasGroup;

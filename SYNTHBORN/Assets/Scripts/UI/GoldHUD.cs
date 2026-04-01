@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Synthborn.Core.Events;
 using Synthborn.Core.Persistence;
 
@@ -10,7 +11,7 @@ namespace Synthborn.UI
     /// </summary>
     public class GoldHUD : MonoBehaviour
     {
-        [SerializeField] private Text _goldText;
+        [SerializeField] private TMP_Text _goldText;
 
         private void OnEnable()
         {

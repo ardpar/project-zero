@@ -9,7 +9,8 @@
         "Synthborn.Mutations",
         "Synthborn.Waves",
         "Synthborn.Enemies",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

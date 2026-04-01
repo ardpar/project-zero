@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Synthborn.Core.Events;
 
 namespace Synthborn.UI
@@ -10,7 +11,7 @@ namespace Synthborn.UI
     /// </summary>
     public class WaveBanner : MonoBehaviour
     {
-        [SerializeField] private Text _bannerText;
+        [SerializeField] private TMP_Text _bannerText;
         [SerializeField] private float _displayDuration = 1.5f;
         [SerializeField] private float _fadeDuration = 0.4f;
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Synthborn.Core.Persistence;
 
 namespace Synthborn.UI
@@ -12,8 +13,8 @@ namespace Synthborn.UI
     public class StatPointUI : MonoBehaviour
     {
         [SerializeField] private Transform _statContainer;
-        [SerializeField] private Text _unspentText;
-        [SerializeField] private Font _font;
+        [SerializeField] private TMP_Text _unspentText;
+        [SerializeField] private TMP_FontAsset _font;
 
         private static readonly string[] StatNames = { "MASS", "RESILIENCE", "VELOCITY", "VARIANCE", "YIELD" };
         private static readonly string[] StatDesc = { "Damage", "HP", "Speed", "Crit", "XP Gain" };
@@ -49,18 +50,18 @@ namespace Synthborn.UI
             rowGO.GetComponent<RectTransform>().sizeDelta = new Vector2(220, 28);
 
             // Stat name + value
-            var textGO = new GameObject("Text", typeof(RectTransform), typeof(Text));
+            var textGO = new GameObject("Text", typeof(RectTransform), typeof(TextMeshProUGUI));
             textGO.transform.SetParent(rowGO.transform, false);
             var tRect = textGO.GetComponent<RectTransform>();
             tRect.anchorMin = Vector2.zero; tRect.anchorMax = new Vector2(0.7f, 1f);
             tRect.sizeDelta = Vector2.zero; tRect.offsetMin = Vector2.zero; tRect.offsetMax = Vector2.zero;
-            var text = textGO.GetComponent<Text>();
-            text.text = $"<color=#{ColorUtility.ToHtmlStringRGB(StatColors[index])}>{StatNames[index]}</color>  {ch.statPoints[index]}  <size=10>({StatDesc[index]})</size>";
+            var text = textGO.GetComponent<TextMeshProUGUI>();
+            text.text = $"<color=#{ColorUtility.ToHtmlStringRGB(StatColors[index])}>{StatNames[index]}</color>  {ch.statPoints[index]}  <size=70%>({StatDesc[index]})</size>";
             text.fontSize = 13;
             text.color = Color.white;
-            text.alignment = TextAnchor.MiddleLeft;
-            text.font = _font;
-            text.supportRichText = true;
+            text.alignment = TextAlignmentOptions.MidlineLeft;
+            if (_font != null) text.font = _font;
+            text.richText = true;
             text.raycastTarget = false;
 
             // "+" button
@@ -75,13 +76,15 @@ namespace Synthborn.UI
                 : new Color(0.12f, 0.12f, 0.12f);
             btnGO.GetComponent<Button>().interactable = canAdd;
 
-            var plusGO = new GameObject("Plus", typeof(RectTransform), typeof(Text));
+            var plusGO = new GameObject("Plus", typeof(RectTransform), typeof(TextMeshProUGUI));
             plusGO.transform.SetParent(btnGO.transform, false);
             var pRect = plusGO.GetComponent<RectTransform>();
             pRect.anchorMin = Vector2.zero; pRect.anchorMax = Vector2.one; pRect.sizeDelta = Vector2.zero;
-            var plus = plusGO.GetComponent<Text>();
+            var plus = plusGO.GetComponent<TextMeshProUGUI>();
             plus.text = "+"; plus.fontSize = 16; plus.color = canAdd ? Color.white : Color.gray;
-            plus.alignment = TextAnchor.MiddleCenter; plus.font = _font; plus.raycastTarget = false;
+            plus.alignment = TextAlignmentOptions.Center;
+            if (_font != null) plus.font = _font;
+            plus.raycastTarget = false;
 
             if (canAdd)
             {

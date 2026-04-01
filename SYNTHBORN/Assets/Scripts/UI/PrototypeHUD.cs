@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Synthborn.Core.Events;
 using Synthborn.Mutations;
 
@@ -12,15 +13,15 @@ namespace Synthborn.UI
     {
         [Header("HP Bar")]
         [SerializeField] private Image _hpFill;
-        [SerializeField] private Text _hpText;
+        [SerializeField] private TMP_Text _hpText;
 
         [Header("XP Bar")]
         [SerializeField] private Image _xpFill;
-        [SerializeField] private Text _levelText;
+        [SerializeField] private TMP_Text _levelText;
 
         [Header("Wave / Chamber")]
-        [SerializeField] private Text _waveText;
-        [SerializeField] private Text _chamberText;
+        [SerializeField] private TMP_Text _waveText;
+        [SerializeField] private TMP_Text _chamberText;
 
         [Header("Dash Cooldown")]
         [SerializeField] private Image _dashCDFill;

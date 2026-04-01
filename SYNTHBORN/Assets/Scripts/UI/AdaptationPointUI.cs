@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Synthborn.Core.Events;
 using Synthborn.Progression;
 
@@ -21,11 +22,11 @@ namespace Synthborn.UI
 
         [Header("Parameter Rows")]
         [SerializeField] private Button[] _paramButtons = new Button[5];
-        [SerializeField] private Text[] _paramLabels = new Text[5];
-        [SerializeField] private Text[] _paramValues = new Text[5];
+        [SerializeField] private TMP_Text[] _paramLabels = new TMP_Text[5];
+        [SerializeField] private TMP_Text[] _paramValues = new TMP_Text[5];
 
         [Header("Unspent Display")]
-        [SerializeField] private Text _unspentText;
+        [SerializeField] private TMP_Text _unspentText;
 
         private void OnEnable()
         {

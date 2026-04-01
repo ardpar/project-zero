@@ -1,5 +1,6 @@
 using UnityEngine;
 using Synthborn.Core.Events;
+using Synthborn.Core.Persistence;
 using Synthborn.Core.Stats;
 
 namespace Synthborn.Progression
@@ -120,6 +121,44 @@ namespace Synthborn.Progression
         private void OnRunEnd()
         {
             ResetAll();
+            // Clear adaptation data from save on death
+            SaveToCharacter();
+        }
+
+        // ─── Save / Load Integration ───
+
+        /// <summary>
+        /// Save current adaptation state to CharacterSaveData.
+        /// Called during calibration interval save.
+        /// </summary>
+        public void SaveToCharacter()
+        {
+            var ch = SaveManager.Character;
+            if (ch == null) return;
+            ch.adaptationUnspentPoints = _unspentPoints;
+            System.Array.Copy(_allocatedPoints, ch.adaptationAllocated, 5);
+        }
+
+        /// <summary>
+        /// Load adaptation state from CharacterSaveData.
+        /// Called when resuming a run from save.
+        /// </summary>
+        public void LoadFromCharacter()
+        {
+            var ch = SaveManager.Character;
+            if (ch == null) return;
+
+            // Reset stats first
+            ResetAll();
+
+            _unspentPoints = ch.adaptationUnspentPoints;
+            for (int i = 0; i < 5; i++)
+            {
+                int points = ch.adaptationAllocated[i];
+                _allocatedPoints[i] = points;
+                if (points > 0)
+                    ApplyStatDelta(i, points);
+            }
         }
 
         private void ApplyStatDelta(int paramIndex, int pointsDelta)

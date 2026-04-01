@@ -3,7 +3,8 @@
     "rootNamespace": "Synthborn.Waves",
     "references": [
         "Synthborn.Core",
-        "Synthborn.Enemies"
+        "Synthborn.Enemies",
+        "Synthborn.Progression"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

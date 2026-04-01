@@ -82,6 +82,10 @@ namespace Synthborn.Waves
                 FragmentManager.AddFragments(goldBonus);
                 ch.gold = FragmentManager.RunFragments;
 
+                // Save adaptation points alongside character data
+                var apm = FindAnyObjectByType<Synthborn.Progression.AdaptationPointManager>();
+                if (apm != null) apm.SaveToCharacter();
+
                 SaveManager.SaveSlot();
             }
 

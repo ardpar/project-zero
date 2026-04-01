@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 using Synthborn.Core;
 
 namespace Synthborn.UI
@@ -10,7 +10,7 @@ namespace Synthborn.UI
     /// </summary>
     public class DailySeedDisplay : MonoBehaviour
     {
-        [SerializeField] private Text _seedText;
+        [SerializeField] private TMP_Text _seedText;
 
         private void Start()
         {

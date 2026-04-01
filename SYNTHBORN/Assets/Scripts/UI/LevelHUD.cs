@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 using Synthborn.Core.Events;
 
 namespace Synthborn.UI
@@ -9,7 +9,7 @@ namespace Synthborn.UI
     /// </summary>
     public class LevelHUD : MonoBehaviour
     {
-        [SerializeField] private Text _levelText;
+        [SerializeField] private TMP_Text _levelText;
 
         private int _currentLevel = 1;
 

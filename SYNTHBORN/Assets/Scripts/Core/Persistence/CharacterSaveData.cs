@@ -18,7 +18,7 @@ namespace Synthborn.Core.Persistence
         // Progression
         public int characterLevel = 1;
         public int characterXP;
-        public int[] statPoints = new int[5]; // STR, VIT, AGI, LCK, WIS
+        public int[] statPoints = new int[5]; // MASS, RESILIENCE, VELOCITY, VARIANCE, YIELD
         public int unspentStatPoints;
         public int unspentSkillPoints;
 
@@ -49,6 +49,10 @@ namespace Synthborn.Core.Persistence
 
         // Discovered Synthesis Recipes (recipe IDs)
         public List<string> discoveredRecipes = new();
+
+        // Run-içi Adaptation Points (saved during calibration interval, reset on death)
+        public int adaptationUnspentPoints;
+        public int[] adaptationAllocated = new int[5]; // MASS, RESILIENCE, VELOCITY, VARIANCE, YIELD
 
         // Star Ratings (best star count per level, index = level-1)
         public List<int> levelStars = new();

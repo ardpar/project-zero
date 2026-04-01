@@ -97,16 +97,16 @@ namespace Synthborn.Core
                     }
                 }
 
-                // Apply stat points (STR=DMG, VIT=HP, AGI=Speed, LCK=Crit, WIS=XP via UpgradeManager)
-                float strBonus = character.statPoints[0] * 0.02f; // +2% DMG per point
-                float vitBonus = character.statPoints[1] * 0.03f; // +3% HP per point
-                float agiBonus = character.statPoints[2] * 0.02f; // +2% Speed per point
-                float lckBonus = character.statPoints[3] * 0.01f; // +1% Crit per point
+                // Apply stat points (MASS=DMG, RESILIENCE=HP, VELOCITY=Speed, VARIANCE=Crit, YIELD=XP via UpgradeManager)
+                float massBonus = character.statPoints[0] * 0.02f; // +2% DMG per point
+                float resBonus = character.statPoints[1] * 0.03f;  // +3% HP per point
+                float velBonus = character.statPoints[2] * 0.02f;  // +2% Speed per point
+                float varBonus = character.statPoints[3] * 0.01f;  // +1% Crit per point
                 stats.ApplyMutation(
-                    damageModifier: strBonus,
-                    hpModifier: vitBonus,
-                    speedModifier: agiBonus,
-                    critChance: lckBonus
+                    damageModifier: massBonus,
+                    hpModifier: resBonus,
+                    speedModifier: velBonus,
+                    critChance: varBonus
                 );
 
                 // Apply equipped item stats

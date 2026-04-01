@@ -25,13 +25,15 @@
 
 - **Target Framerate**: 60 fps
 - **Frame Budget**: 16.6 ms
-- **Draw Calls**: [TO BE CONFIGURED — profile after MVP]
-- **Memory Ceiling**: [TO BE CONFIGURED — profile after MVP]
+- **Draw Calls**: [PENDING BUILD PROFILING — editor baseline captured 2026-04-02]
+- **Memory Ceiling**: [PENDING BUILD PROFILING — estimated 200-400 MB for standalone]
+- **Profiling Baseline**: `tests/performance/profiling-baseline-2026-04-02.md`
 
 ## Testing
 
 - **Framework**: Unity Test Framework (NUnit-based)
-- **Minimum Coverage**: [TO BE CONFIGURED]
+- **Test Assembly**: `Synthborn.Tests.EditMode` (41 tests passing)
+- **Minimum Coverage**: Core stat systems, progression formulas, config defaults
 - **Required Tests**: Balance formulas, gameplay systems, enemy spawning
 
 ## Forbidden Patterns
@@ -41,6 +43,10 @@
 - `Resources.Load()` — use Addressables
 - Built-in Render Pipeline — use URP
 - `ComponentSystem` (old DOTS) — use `ISystem`
+- `UnityEngine.UI.Text` — use `TMPro.TMP_Text` / `TextMeshProUGUI` (migrated Sprint 18)
+- `Shader.Find()` at runtime — use serialized material references
+- `new List<T>()` in hot paths — pre-allocate and reuse
+- `Vector2.Distance()` for range checks — use `sqrMagnitude`
 
 ## Allowed Libraries / Addons
 
@@ -50,4 +56,5 @@
 ## Architecture Decisions Log
 
 <!-- Quick reference linking to full ADRs in docs/architecture/ -->
-- [No ADRs yet — use /architecture-decision to create one]
+- ADR-003: ObjectPool System (`docs/architecture/adr-003-object-pool.md`)
+- ADR-004: Adaptation Points System (`docs/architecture/adr-004-adaptation-points.md`)
