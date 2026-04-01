@@ -1,0 +1,27 @@
+{
+    "name": "Synthborn.Tests.EditMode",
+    "rootNamespace": "Synthborn.Tests",
+    "references": [
+        "Synthborn.Core",
+        "Synthborn.Combat",
+        "Synthborn.Progression",
+        "Synthborn.Enemies",
+        "Synthborn.Player",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -8,14 +8,11 @@ namespace Synthborn.Progression
     /// <summary>
     /// Pooled HP orb: dropped by enemies on death (5% chance).
     /// Magnetizes to player and heals on contact.
+    /// Tuning values driven by HPOrbConfig ScriptableObject.
     /// </summary>
     public class HPOrb : MonoBehaviour, IPoolable
     {
-        [SerializeField] private float _pickupRadius = 1.5f;
-        [SerializeField] private float _magnetSpeed = 12f;
-        [SerializeField] private float _collectDistance = 0.3f;
-        [SerializeField] private float _lifetime = 15f;
-        [SerializeField] private int _healAmount = 10;
+        [SerializeField] private HPOrbConfig _config;
 
         private float _timer;
         private bool _magnetized;
@@ -23,14 +20,23 @@ namespace Synthborn.Progression
         private EntityHealth _playerHealth;
         private ObjectPool<HPOrb> _pool;
 
+        // Cached squared distances for zero-sqrt comparisons
+        private float _sqrPickupRadius;
+        private float _sqrCollectDistance;
+
         public void SetPool(ObjectPool<HPOrb> pool) => _pool = pool;
 
         public void Init(Transform player, EntityHealth playerHealth)
         {
             _player = player;
             _playerHealth = playerHealth;
-            _timer = _lifetime;
+            _timer = _config != null ? _config.lifetime : 15f;
             _magnetized = false;
+
+            float pickup = _config != null ? _config.pickupRadius : 1.5f;
+            float collect = _config != null ? _config.collectDistance : 0.3f;
+            _sqrPickupRadius = pickup * pickup;
+            _sqrCollectDistance = collect * collect;
         }
 
         private void Update()
@@ -40,19 +46,22 @@ namespace Synthborn.Progression
             _timer -= Time.deltaTime;
             if (_timer <= 0f) { ReturnToPool(); return; }
 
-            float dist = Vector2.Distance(transform.position, _player.position);
+            Vector2 offset = (Vector2)_player.position - (Vector2)transform.position;
+            float sqrDist = offset.sqrMagnitude;
 
-            if (!_magnetized && dist < _pickupRadius)
+            if (!_magnetized && sqrDist < _sqrPickupRadius)
                 _magnetized = true;
 
             if (_magnetized)
             {
-                Vector2 dir = ((Vector2)_player.position - (Vector2)transform.position).normalized;
-                transform.Translate(dir * _magnetSpeed * Time.deltaTime);
+                float speed = _config != null ? _config.magnetSpeed : 12f;
+                Vector2 dir = offset.normalized;
+                transform.Translate(dir * speed * Time.deltaTime);
 
-                if (dist < _collectDistance)
+                if (sqrDist < _sqrCollectDistance)
                 {
-                    _playerHealth?.Heal(_healAmount);
+                    int heal = _config != null ? _config.healAmount : 10;
+                    _playerHealth?.Heal(heal);
                     ReturnToPool();
                 }
             }
@@ -67,7 +76,7 @@ namespace Synthborn.Progression
         public void OnPoolGet()
         {
             _magnetized = false;
-            _timer = _lifetime;
+            _timer = _config != null ? _config.lifetime : 15f;
             gameObject.SetActive(true);
         }
 

@@ -11,6 +11,7 @@ namespace Synthborn.Core.VFX
     public class DamageNumberSpawner : MonoBehaviour
     {
         [SerializeField] private int _maxNumbers = 20;
+        [SerializeField] private DamageNumberConfig _config;
 
         private ObjectPool<DamageNumber> _pool;
 
@@ -22,6 +23,7 @@ namespace Synthborn.Core.VFX
                 go.transform.SetParent(transform);
                 var dn = go.AddComponent<DamageNumber>();
                 dn.SetPool(_pool);
+                if (_config != null) dn.SetConfig(_config);
                 return dn;
             }, _maxNumbers);
         }

@@ -85,8 +85,8 @@ namespace Synthborn.Enemies
 
         private void TickChase()
         {
-            float dist = DistanceToPlayer();
-            if (dist <= _shooterData.ShootRange)
+            float dist = SqrDistanceToPlayer();
+            if (dist <= _shooterData.ShootRange * _shooterData.ShootRange)
             {
                 SetState(EnemyState.Shooting);
                 return;
@@ -99,8 +99,8 @@ namespace Synthborn.Enemies
         private void TickShooting()
         {
             // Return to chase if player moves out of range
-            float dist = DistanceToPlayer();
-            if (dist > _shooterData.ShootRange)
+            float dist = SqrDistanceToPlayer();
+            if (dist > _shooterData.ShootRange * _shooterData.ShootRange)
             {
                 SetState(EnemyState.Chase);
                 return;
@@ -140,10 +140,10 @@ namespace Synthborn.Enemies
         // Helpers
         // ------------------------------------------------------------------ //
 
-        private float DistanceToPlayer()
+        private float SqrDistanceToPlayer()
         {
             if (playerTransform == null) return float.MaxValue;
-            return Vector2.Distance(rb.position, (Vector2)playerTransform.position);
+            return (rb.position - (Vector2)playerTransform.position).sqrMagnitude;
         }
     }
 }

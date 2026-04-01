@@ -31,6 +31,7 @@ namespace Synthborn.Core.Pool
                 T instance = _factory();
                 instance.gameObject.SetActive(false);
                 _pool.Push(instance);
+                TotalCreated++;
             }
         }
 
@@ -40,7 +41,16 @@ namespace Synthborn.Core.Pool
         /// </summary>
         public T Get()
         {
-            T instance = _pool.Count > 0 ? _pool.Pop() : _factory();
+            T instance;
+            if (_pool.Count > 0)
+            {
+                instance = _pool.Pop();
+            }
+            else
+            {
+                instance = _factory();
+                TotalCreated++;
+            }
             instance.gameObject.SetActive(true);
             instance.OnPoolGet();
             return instance;
@@ -50,9 +60,11 @@ namespace Synthborn.Core.Pool
         /// Returns an instance to the pool and deactivates its GameObject.
         /// <see cref="IPoolable.OnPoolReturn"/> is called before deactivation.
         /// </summary>
+        /// <remarks>Safe against double-return — skips if instance is already inactive.</remarks>
         public void Return(T instance)
         {
             if (instance == null) return;
+            if (!instance.gameObject.activeSelf) return; // already returned
             instance.OnPoolReturn();
             instance.gameObject.SetActive(false);
             _pool.Push(instance);
@@ -60,5 +72,11 @@ namespace Synthborn.Core.Pool
 
         /// <summary>Number of available (inactive) instances.</summary>
         public int AvailableCount => _pool.Count;
+
+        /// <summary>Total instances created by this pool.</summary>
+        public int TotalCreated { get; private set; }
+
+        /// <summary>Number of currently active (in-use) instances.</summary>
+        public int ActiveCount => TotalCreated - _pool.Count;
     }
 }

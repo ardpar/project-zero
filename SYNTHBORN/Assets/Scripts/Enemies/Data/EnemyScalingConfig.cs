@@ -57,6 +57,18 @@ namespace Synthborn.Enemies
         public float BossXpMultiplier { get; private set; } = 20f;
 
         // ------------------------------------------------------------------ //
+        // Contact Damage
+        // ------------------------------------------------------------------ //
+
+        /// <summary>
+        /// Time interval between contact damage ticks (seconds).
+        /// Default 0.5s. Safe range 0.2–1.0.
+        /// </summary>
+        [field: SerializeField, Range(0.2f, 1f),
+            Tooltip("Seconds between contact damage ticks. Default 0.5.")]
+        public float ContactDamageInterval { get; private set; } = 0.5f;
+
+        // ------------------------------------------------------------------ //
         // Speed Cap
         // ------------------------------------------------------------------ //
 
@@ -68,6 +80,15 @@ namespace Synthborn.Enemies
         [field: SerializeField, Range(0.5f, 1f),
             Tooltip("Max enemy speed as fraction of player speed. Default 0.9.")]
         public float SpeedCapFraction { get; private set; } = 0.9f;
+
+        /// <summary>
+        /// Absolute speed cap in units/second. Computed as SpeedCapFraction * playerBaseSpeed.
+        /// Set this to match your PlayerConfig.baseMoveSpeed * SpeedCapFraction.
+        /// Default 4.5 = 0.9 * 5.0 (player base speed).
+        /// </summary>
+        [field: SerializeField, Range(2f, 8f),
+            Tooltip("Absolute max enemy speed in units/sec. Default 4.5 (0.9 * 5.0 player speed).")]
+        public float AbsoluteSpeedCap { get; private set; } = 4.5f;
 
         // ------------------------------------------------------------------ //
         // Helpers

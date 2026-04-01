@@ -98,8 +98,8 @@ namespace Synthborn.Enemies
 
         private void TickChase()
         {
-            float dist = DistanceToPlayer();
-            if (dist <= _exploderData.ExplodeRange)
+            float dist = SqrDistanceToPlayer();
+            if (dist <= _exploderData.ExplodeRange * _exploderData.ExplodeRange)
             {
                 SetState(EnemyState.Priming);
                 return;
@@ -157,24 +157,30 @@ namespace Synthborn.Enemies
         private void SpawnWarning()
         {
             if (_exploderData.WarningPrefab == null) return;
-            _warningInstance = Instantiate(_exploderData.WarningPrefab, transform.position, Quaternion.identity);
+
+            // Reuse cached instance if available; instantiate once per Exploder lifetime
+            if (_warningInstance == null)
+                _warningInstance = Instantiate(_exploderData.WarningPrefab, transform.position, Quaternion.identity);
+            else
+                _warningInstance.transform.position = transform.position;
+
+            _warningInstance.SetActive(true);
         }
 
         private void DestroyWarning()
         {
             if (_warningInstance == null) return;
-            Destroy(_warningInstance);
-            _warningInstance = null;
+            _warningInstance.SetActive(false);
         }
 
         // ------------------------------------------------------------------ //
         // Helpers
         // ------------------------------------------------------------------ //
 
-        private float DistanceToPlayer()
+        private float SqrDistanceToPlayer()
         {
             if (playerTransform == null) return float.MaxValue;
-            return Vector2.Distance(rb.position, (Vector2)playerTransform.position);
+            return (rb.position - (Vector2)playerTransform.position).sqrMagnitude;
         }
     }
 }

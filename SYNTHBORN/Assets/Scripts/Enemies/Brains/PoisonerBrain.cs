@@ -6,6 +6,7 @@ namespace Synthborn.Enemies
     /// <summary>
     /// Two-state brain: Chase → Dead.
     /// Like ChaserBrain but drops poison trail segments while moving.
+    /// Uses a shared static pool for PoisonTrailSegment to avoid per-drop allocations.
     ///
     /// Behaviour:
     ///   Chase — moves toward the player, drops poison trail every TrailInterval.
@@ -17,11 +18,34 @@ namespace Synthborn.Enemies
         private PoisonerData _poisonerData;
         private float _trailTimer;
 
+        private static ObjectPool<PoisonTrailSegment> _trailPool;
+        private static bool _poolInitialized;
+
         public override void Initialize(Transform player, int waveNumber, ObjectPool<EnemyBrain> pool, EnemyData overrideData = null)
         {
             _trailTimer = 0f;
             base.Initialize(player, waveNumber, pool, overrideData);
             _poisonerData = data as PoisonerData;
+
+            EnsureTrailPool();
+        }
+
+        private void EnsureTrailPool()
+        {
+            if (_poolInitialized && _trailPool != null) return;
+            if (_poisonerData?.TrailPrefab == null) return;
+
+            var prefab = _poisonerData.TrailPrefab;
+            _trailPool = new ObjectPool<PoisonTrailSegment>(() =>
+            {
+                var go = Instantiate(prefab);
+                go.name = "PoisonTrail_Pooled";
+                var segment = go.GetComponent<PoisonTrailSegment>();
+                if (segment == null) segment = go.AddComponent<PoisonTrailSegment>();
+                segment.SetPool(_trailPool);
+                return segment;
+            }, 20);
+            _poolInitialized = true;
         }
 
         protected override void EnterState(EnemyState newState) { }
@@ -49,19 +73,22 @@ namespace Synthborn.Enemies
         {
             if (_poisonerData.TrailPrefab == null) return;
 
-            var segment = Instantiate(_poisonerData.TrailPrefab, transform.position, Quaternion.identity);
-
-            // Configure the trail segment
-            var trail = segment.GetComponent<PoisonTrailSegment>();
-            if (trail != null)
+            PoisonTrailSegment trail;
+            if (_trailPool != null)
             {
-                trail.Initialize(_poisonerData.TrailDuration, _poisonerData.TrailDamagePerSecond, _poisonerData.TrailRadius);
+                trail = _trailPool.Get();
+                trail.transform.position = transform.position;
+                trail.transform.rotation = Quaternion.identity;
             }
             else
             {
-                // Fallback: destroy after duration
-                Destroy(segment, _poisonerData.TrailDuration);
+                // Fallback if pool not initialized
+                var segment = Instantiate(_poisonerData.TrailPrefab, transform.position, Quaternion.identity);
+                trail = segment.GetComponent<PoisonTrailSegment>();
+                if (trail == null) return;
             }
+
+            trail.Initialize(_poisonerData.TrailDuration, _poisonerData.TrailDamagePerSecond, _poisonerData.TrailRadius);
         }
     }
 }

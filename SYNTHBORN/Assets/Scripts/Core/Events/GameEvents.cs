@@ -265,6 +265,16 @@ namespace Synthborn.Core.Events
         public static void CalibrationIntervalStarted() => OnCalibrationIntervalStarted?.Invoke();
         public static void ReturnToArenaMap() => OnReturnToArenaMap?.Invoke();
 
+        // ─── Adaptation Points ───
+        /// <summary>Raised when adaptation points are awarded on level-up. int: total unspent.</summary>
+        public static event Action<int> OnAdaptationPointsAwarded;
+        public static void RaiseAdaptationPointsAwarded(int unspent) => OnAdaptationPointsAwarded?.Invoke(unspent);
+
+        /// <summary>Raised when a point is allocated. int1: paramIndex, int2: new total for param, int3: remaining unspent.</summary>
+        public static event Action<int, int, int> OnAdaptationPointAllocated;
+        public static void RaiseAdaptationPointAllocated(int param, int newTotal, int unspent) =>
+            OnAdaptationPointAllocated?.Invoke(param, newTotal, unspent);
+
         /// Clears ALL event subscriptions. Call on run reset or scene unload
         /// to prevent stale subscribers from leaking across runs.
         /// </summary>
@@ -303,6 +313,8 @@ namespace Synthborn.Core.Events
             OnChamberCleared        = null;
             OnCalibrationIntervalStarted = null;
             OnReturnToArenaMap      = null;
+            OnAdaptationPointsAwarded = null;
+            OnAdaptationPointAllocated = null;
         }
     }
 }

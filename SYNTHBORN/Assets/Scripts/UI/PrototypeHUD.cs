@@ -32,12 +32,14 @@ namespace Synthborn.UI
         private float _xpTargetFill;
         private float _xpCurrentFill;
         private Synthborn.Player.PlayerController _playerController;
+        private Synthborn.Waves.TrialManager _trialManager;
 
         private void Start()
         {
             var player = GameObject.FindWithTag("Player");
             if (player != null)
                 _playerController = player.GetComponent<Synthborn.Player.PlayerController>();
+            _trialManager = FindAnyObjectByType<Synthborn.Waves.TrialManager>();
         }
 
         private void Update()
@@ -116,18 +118,18 @@ namespace Synthborn.UI
         private void UpdateChamber(int chamberNumber)
         {
             if (_chamberText == null) return;
-            var tm = FindAnyObjectByType<Synthborn.Waves.TrialManager>();
-            if (tm?.CurrentChamber != null && tm.CurrentBiomeConfig != null)
-                _chamberText.text = $"Deneme Odas\u0131 {chamberNumber} \u2014 {tm.CurrentBiomeConfig.displayName}";
-            else if (tm?.CurrentChamber != null)
+            if (_trialManager == null) _trialManager = FindAnyObjectByType<Synthborn.Waves.TrialManager>();
+            if (_trialManager?.CurrentChamber != null && _trialManager.CurrentBiomeConfig != null)
+                _chamberText.text = $"Deneme Odas\u0131 {chamberNumber} \u2014 {_trialManager.CurrentBiomeConfig.displayName}";
+            else if (_trialManager?.CurrentChamber != null)
                 _chamberText.text = $"Deneme Odas\u0131 {chamberNumber}";
         }
 
         private void UpdateChamberFromTrialManager()
         {
-            var tm = FindAnyObjectByType<Synthborn.Waves.TrialManager>();
-            if (tm != null && tm.IsTrialActive && tm.CurrentChamber != null)
-                UpdateChamber(tm.CurrentChamber.chamberNumber);
+            if (_trialManager == null) _trialManager = FindAnyObjectByType<Synthborn.Waves.TrialManager>();
+            if (_trialManager != null && _trialManager.IsTrialActive && _trialManager.CurrentChamber != null)
+                UpdateChamber(_trialManager.CurrentChamber.chamberNumber);
         }
 
         private void OnMutationApplied(string mutationId, bool isSlot)

@@ -33,9 +33,9 @@ namespace Synthborn.Progression
             _lifetime = _config != null ? _config.gemLifetime : 30f;
             _magnetized = false;
 
-            // Fallback: find XPManager if not set
+            // Warn if XPManager not injected — do not search at runtime
             if (_xpManager == null)
-                _xpManager = Object.FindFirstObjectByType<XPManager>();
+                Debug.LogError("[XPGem] XPManager not set — call SetXPManager before Init.", this);
         }
 
         private void Update()

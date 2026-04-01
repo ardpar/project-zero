@@ -30,8 +30,7 @@ namespace Synthborn.Combat
                 var col = _hitBuffer[i];
                 if (col == null) continue;
 
-                var damageable = col.GetComponent<IDamageable>();
-                if (damageable != null && damageable.IsDead) continue;
+                if (col.TryGetComponent<IDamageable>(out var damageable) && damageable.IsDead) continue;
 
                 float dist = ((Vector2)col.transform.position - origin).sqrMagnitude;
                 if (dist < nearestDist)

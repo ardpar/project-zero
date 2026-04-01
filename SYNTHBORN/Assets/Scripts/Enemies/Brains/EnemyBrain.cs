@@ -74,8 +74,7 @@ namespace Synthborn.Enemies
         /// <summary>Effective speed after wave scaling and hard cap (computed in Initialize).</summary>
         protected float effectiveSpeed;
 
-        // Contact damage
-        private const float ContactDamageInterval = 0.5f; // GDD default; tuning knob lives in EnemyData but interval is global
+        // Contact damage interval read from scalingConfig (data-driven)
         private float _contactDamageTimer;
 
         // Death guard — prevents re-entrant death from double-subscribing events
@@ -225,7 +224,8 @@ namespace Synthborn.Enemies
             if (data == null || col == null) return;
 
             _contactDamageTimer += Time.fixedDeltaTime;
-            if (_contactDamageTimer < ContactDamageInterval) return;
+            float interval = scalingConfig != null ? scalingConfig.ContactDamageInterval : 0.5f;
+            if (_contactDamageTimer < interval) return;
 
             _contactDamageTimer = 0f;
 
@@ -250,8 +250,8 @@ namespace Synthborn.Enemies
         private float ComputeEffectiveSpeed(int waveNumber)
         {
             float scaled = data.MoveSpeed * (1f + waveNumber * data.SpeedScalePerWave);
-            // Hard cap — scalingConfig expresses cap as a fraction of player base speed (5.0 u/s)
-            float cap = scalingConfig.SpeedCapFraction * 5f; // Player base speed = 5.0 (PlayerConfig default)
+            // Hard cap from data-driven config (no hardcoded player speed)
+            float cap = scalingConfig.AbsoluteSpeedCap;
             return Mathf.Min(scaled, cap);
         }
 
@@ -286,13 +286,8 @@ namespace Synthborn.Enemies
             if (data.DeathSfx != null)
                 GameEvents.RaiseSfxRequested(data.DeathSfx, transform.position);
 
-            // Return to pool next frame to avoid destroying during physics step
-            StartCoroutine(ReturnToPoolNextFrame());
-        }
-
-        private System.Collections.IEnumerator ReturnToPoolNextFrame()
-        {
-            yield return null;
+            // Return to pool directly — OnPoolReturn only disables the object,
+            // which is safe during physics callbacks
             _pool?.Return(this);
         }
     }

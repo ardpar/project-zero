@@ -141,8 +141,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34df93afd42794bb6b7cfc6a35c76cb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Synthborn.Progression::Synthborn.Progression.HPOrb
-  _pickupRadius: 1.5
-  _magnetSpeed: 12
-  _collectDistance: 0.3
-  _lifetime: 15
-  _healAmount: 10
+  _config: {fileID: 11400000, guid: d0135f47a20954479bca9bb3fe4eec8b, type: 2}

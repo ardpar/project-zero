@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0da694b72b8ff4e228bf4694903e8711, type: 3}
+  m_Name: DamageNumberConfig
+  m_EditorClassIdentifier: Synthborn.Core::Synthborn.Core.VFX.DamageNumberConfig
+  lifetime: 0.8
+  horizontalDrift: 0.5
+  upwardSpeed: 1.5
+  yDamping: 0.95
+  normalFontSize: 48
+  critFontSize: 64
+  normalCharSize: 0.15
+  critCharSize: 0.2
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  critColor: {r: 1, g: 0.9, b: 0.2, a: 1}
