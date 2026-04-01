@@ -54,6 +54,9 @@ namespace Synthborn.Core.Persistence
         public int adaptationUnspentPoints;
         public int[] adaptationAllocated = new int[5]; // MASS, RESILIENCE, VELOCITY, VARIANCE, YIELD
 
+        // Signal Archive (discovered lore fragment IDs — persistent across runs)
+        public List<string> signalArchiveEntries = new();
+
         // Star Ratings (best star count per level, index = level-1)
         public List<int> levelStars = new();
 

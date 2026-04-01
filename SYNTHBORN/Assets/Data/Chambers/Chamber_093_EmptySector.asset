@@ -40,6 +40,7 @@ MonoBehaviour:
   maxElites: 10
   chamberNumber: 93
   biomeLayer: 5
-  pressureRating: 5
+  pressureRating: 4
   adjacentChambers: 5e0000005900000061000000
+  isBossRoom: 0
   pressureMultiplierOverride: 0

@@ -40,4 +40,5 @@ MonoBehaviour:
   biomeLayer: 0
   pressureRating: 2
   adjacentChambers: 0c0000000f00000011000000
+  isBossRoom: 1
   pressureMultiplierOverride: 0

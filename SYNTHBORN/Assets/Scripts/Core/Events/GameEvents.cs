@@ -275,6 +275,12 @@ namespace Synthborn.Core.Events
         public static void RaiseAdaptationPointAllocated(int param, int newTotal, int unspent) =>
             OnAdaptationPointAllocated?.Invoke(param, newTotal, unspent);
 
+        // ─── Lore / Signal Archive ───
+        /// <summary>Raised when a lore fragment is discovered. string1: fragmentId, string2: title.</summary>
+        public static event Action<string, string> OnLoreFragmentDiscovered;
+        public static void RaiseLoreFragmentDiscovered(string fragmentId, string title) =>
+            OnLoreFragmentDiscovered?.Invoke(fragmentId, title);
+
         /// Clears ALL event subscriptions. Call on run reset or scene unload
         /// to prevent stale subscribers from leaking across runs.
         /// </summary>
@@ -315,6 +321,7 @@ namespace Synthborn.Core.Events
             OnReturnToArenaMap      = null;
             OnAdaptationPointsAwarded = null;
             OnAdaptationPointAllocated = null;
+            OnLoreFragmentDiscovered = null;
         }
     }
 }
