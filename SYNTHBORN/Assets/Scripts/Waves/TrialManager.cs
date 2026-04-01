@@ -182,6 +182,17 @@ namespace Synthborn.Waves
             CurrentBiomeConfig = FindBiomeConfig(CurrentChamber.biomeLayer);
             SwapBiome(CurrentChamber);
             ConfigureWaves(CurrentChamber);
+
+            // Set biome music stems on AdaptiveMusicManager
+            var musicManager = FindAnyObjectByType<Synthborn.Core.Audio.AdaptiveMusicManager>();
+            if (musicManager != null && CurrentBiomeConfig != null)
+            {
+                musicManager.SetBiomeStems(
+                    CurrentBiomeConfig.biomeCalmStem,
+                    CurrentBiomeConfig.biomeCombatStem,
+                    CurrentBiomeConfig.biomeBossStem);
+            }
+
             GameEvents.ChamberStarted(chamberNumber);
         }
 

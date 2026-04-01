@@ -23,6 +23,9 @@ namespace Synthborn.Core.Audio
         [SerializeField] private AudioClip _playerDeathClip;
         [SerializeField] private AudioClip _bossSpawnClip;
         [SerializeField] private AudioClip _hpPickupClip;
+        [SerializeField] private AudioClip _synthesisClip;
+        [SerializeField] private AudioClip _craftClip;
+        [SerializeField] private AudioClip _loreDiscoveryClip;
 
         private AudioSource _source;
 
@@ -49,6 +52,9 @@ namespace Synthborn.Core.Audio
             if (_playerDeathClip == null) _playerDeathClip = GenerateChirp(600f, 100f, 0.6f);
             if (_bossSpawnClip == null) _bossSpawnClip = GenerateChirp(100f, 400f, 0.5f);
             if (_hpPickupClip == null) _hpPickupClip = GenerateChirp(600f, 900f, 0.15f);
+            if (_synthesisClip == null) _synthesisClip = GenerateChirp(300f, 1400f, 0.5f);
+            if (_craftClip == null) _craftClip = GenerateChirp(500f, 800f, 0.25f);
+            if (_loreDiscoveryClip == null) _loreDiscoveryClip = GenerateChirp(400f, 1200f, 0.6f);
         }
 
         private void OnEnable()
@@ -64,6 +70,7 @@ namespace Synthborn.Core.Audio
             GameEvents.OnPlayerDied += OnPlayerDied;
             GameEvents.OnBossSpawned += OnBossSpawned;
             GameEvents.OnPlayerHealRequested += OnHPPickup;
+            GameEvents.OnLoreFragmentDiscovered += OnLoreDiscovered;
         }
 
         private void OnDisable()
@@ -79,6 +86,7 @@ namespace Synthborn.Core.Audio
             GameEvents.OnPlayerDied -= OnPlayerDied;
             GameEvents.OnBossSpawned -= OnBossSpawned;
             GameEvents.OnPlayerHealRequested -= OnHPPickup;
+            GameEvents.OnLoreFragmentDiscovered -= OnLoreDiscovered;
         }
 
         private void OnDamage(Vector2 p, int d, bool crit) => Play(_hitClip);
@@ -98,6 +106,7 @@ namespace Synthborn.Core.Audio
         private void OnPlayerDied() => Play(_playerDeathClip, 0.6f);
         private void OnBossSpawned() => Play(_bossSpawnClip, 0.6f);
         private void OnHPPickup(float _) => Play(_hpPickupClip, 0.3f);
+        private void OnLoreDiscovered(string id, string title) => Play(_loreDiscoveryClip, 0.5f);
 
         private void Play(AudioClip clip, float volume = 0.3f)
         {

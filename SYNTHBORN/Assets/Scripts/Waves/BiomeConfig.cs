@@ -30,5 +30,15 @@ namespace Synthborn.Waves
 
         [Tooltip("Locked room color on Arena Map.")]
         public Color mapLockedColor = new Color(0.1f, 0.1f, 0.1f);
+
+        [Header("Audio")]
+        [Tooltip("Calm/ambient music stem for this biome. Plays during wave breaks and calibration intervals.")]
+        public AudioClip biomeCalmStem;
+
+        [Tooltip("Combat music stem for this biome. Plays during waves.")]
+        public AudioClip biomeCombatStem;
+
+        [Tooltip("Boss music stem for this biome. Falls back to biomeCombatStem if null.")]
+        public AudioClip biomeBossStem;
     }
 }
