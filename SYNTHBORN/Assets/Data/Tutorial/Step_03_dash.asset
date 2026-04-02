@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1580231b4a2074ec5881299d7e8d765d, type: 3}
+  m_Name: Step_03_dash
+  m_EditorClassIdentifier: Synthborn.UI::Synthborn.UI.TutorialStep
+  stepId: dash
+  trigger: 1
+  hintText: "SPACE ile at\u0131l \u2014 Arena'n\u0131n testlerinden ka\xE7."
+  delayBeforeShow: 1
+  displayDuration: 5
+  requiresAction: 1
+  completionTrigger: 10

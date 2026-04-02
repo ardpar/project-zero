@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1580231b4a2074ec5881299d7e8d765d, type: 3}
+  m_Name: Step_06_boss
+  m_EditorClassIdentifier: Synthborn.UI::Synthborn.UI.TutorialStep
+  stepId: boss
+  trigger: 8
+  hintText: "STAB\u0130L\u0130ZED TESP\u0130T ED\u0130LD\u0130 \u2014 \xF6nceki bir
+    Subject'in son formu."
+  delayBeforeShow: 0.5
+  displayDuration: 5
+  requiresAction: 0
+  completionTrigger: 0

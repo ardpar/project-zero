@@ -1365,8 +1365,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c29b207e873406998f944887755050, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Synthborn.UI::Synthborn.UI.TutorialOverlay
-  _hintText: {fileID: 564149895}
-  _displayDuration: 3.5
+  _hintText: {fileID: 0}
+  _skipButton: {fileID: 0}
+  _defaultDisplayDuration: 3.5
   _fadeDuration: 0.5
 --- !u!225 &398851184
 CanvasGroup:
@@ -17413,6 +17414,7 @@ RectTransform:
   - {fileID: 56510300}
   - {fileID: 683768669}
   - {fileID: 293332318}
+  - {fileID: 1549026300}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -17718,6 +17720,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541302323}
   m_CullTransparentMesh: 1
+--- !u!1 &1549026299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1549026300}
+  - component: {fileID: 1549026301}
+  m_Layer: 0
+  m_Name: TutorialManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1549026300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549026299}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1436797394}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1549026301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549026299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a3da56d6cd004d04b4c1085a17ea4a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Synthborn.UI::Synthborn.UI.TutorialManager
+  _steps:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _overlay: {fileID: 398851183}
 --- !u!1 &1553571834
 GameObject:
   m_ObjectHideFlags: 0
@@ -17959,6 +18015,9 @@ MonoBehaviour:
   _playerDeathClip: {fileID: 0}
   _bossSpawnClip: {fileID: 0}
   _hpPickupClip: {fileID: 0}
+  _synthesisClip: {fileID: 0}
+  _craftClip: {fileID: 0}
+  _loreDiscoveryClip: {fileID: 0}
 --- !u!114 &1553571847
 MonoBehaviour:
   m_ObjectHideFlags: 0
