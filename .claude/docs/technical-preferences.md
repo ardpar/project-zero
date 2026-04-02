@@ -56,5 +56,9 @@
 ## Architecture Decisions Log
 
 <!-- Quick reference linking to full ADRs in docs/architecture/ -->
-- ADR-003: ObjectPool System (`docs/architecture/adr-003-object-pool.md`)
-- ADR-004: Adaptation Points System (`docs/architecture/adr-004-adaptation-points.md`)
+- ADR-003: ObjectPool System (`docs/architecture/ADR-003-object-pool-system.md`)
+- ADR-004: Adaptation Points (`docs/architecture/ADR-004-adaptation-points-system.md`)
+- ADR-005: Lore Delivery / Signal Archive (`docs/architecture/ADR-005-lore-delivery-system.md`)
+- ADR-006: Event-Driven Tutorial (`docs/architecture/ADR-006-event-driven-tutorial.md`)
+- ADR-007: Biome Adaptive Music (`docs/architecture/ADR-007-biome-adaptive-music.md`)
+- ADR-008: TextMeshPro Migration (`docs/architecture/ADR-008-textmeshpro-migration.md`)
