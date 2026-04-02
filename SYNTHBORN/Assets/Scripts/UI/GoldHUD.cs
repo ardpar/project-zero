@@ -15,17 +15,17 @@ namespace Synthborn.UI
 
         private void OnEnable()
         {
-            GameEvents.OnGoldChanged += OnGoldChanged;
+            GameEvents.OnFragmentChanged += OnGoldChanged;
         }
 
         private void OnDisable()
         {
-            GameEvents.OnGoldChanged -= OnGoldChanged;
+            GameEvents.OnFragmentChanged -= OnGoldChanged;
         }
 
         private void Start()
         {
-            UpdateDisplay(GoldManager.RunGold);
+            UpdateDisplay(FragmentManager.RunFragments);
         }
 
         private void OnGoldChanged(int total)

@@ -126,8 +126,7 @@ namespace Synthborn.UI
         private void OnLevelSelected(int levelNumber)
         {
             // Store selected level for gameplay scene to read
-            PlayerPrefs.SetInt("SelectedLevel", levelNumber);
-            PlayerPrefs.Save();
+            RunSessionData.SelectedLevel = levelNumber;
             SceneManager.LoadScene("SampleScene");
         }
 

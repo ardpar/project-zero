@@ -216,9 +216,8 @@ namespace Synthborn.UI
 
         private void StartTrial(int chamberNumber)
         {
-            PlayerPrefs.SetInt("SelectedChamber", chamberNumber);
-            PlayerPrefs.SetInt("SelectedLevel", 0); // Clear legacy level
-            PlayerPrefs.Save();
+            RunSessionData.SelectedChamber = chamberNumber;
+            RunSessionData.SelectedLevel = 0; // Clear legacy level
             SceneManager.LoadScene("SampleScene");
         }
 

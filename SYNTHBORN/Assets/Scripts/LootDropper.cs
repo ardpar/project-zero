@@ -45,7 +45,7 @@ public class LootDropper : MonoBehaviour
         if (brain?.Data == null) return;
 
         int tierIndex = (int)brain.Data.Tier;
-        int currentLevel = PlayerPrefs.GetInt("SelectedLevel", 1);
+        int currentLevel = Synthborn.Core.Persistence.RunSessionData.SelectedLevel;
 
         // Get pressure from TrialManager for rarity scaling
         float pressureBoost = 0f;

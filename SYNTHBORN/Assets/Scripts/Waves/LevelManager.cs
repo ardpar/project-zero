@@ -48,17 +48,17 @@ namespace Synthborn.Waves
         private void Start()
         {
             // If TrialManager is handling this run, defer to it
-            int selectedChamber = PlayerPrefs.GetInt("SelectedChamber", 0);
+            int selectedChamber = Synthborn.Core.Persistence.RunSessionData.SelectedChamber;
             if (selectedChamber > 0) return;
 
-            int selectedLevel = PlayerPrefs.GetInt("SelectedLevel", 1);
+            int selectedLevel = Synthborn.Core.Persistence.RunSessionData.SelectedLevel;
             StartLevel(selectedLevel);
         }
 
         private void OnBossDefeated()
         {
             // If TrialManager is handling this run, skip legacy flow
-            int selectedChamber = PlayerPrefs.GetInt("SelectedChamber", 0);
+            int selectedChamber = Synthborn.Core.Persistence.RunSessionData.SelectedChamber;
             if (selectedChamber > 0) return;
 
             var ch = Synthborn.Core.Persistence.SaveManager.Character;

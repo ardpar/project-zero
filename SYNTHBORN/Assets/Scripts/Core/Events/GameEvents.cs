@@ -243,9 +243,7 @@ namespace Synthborn.Core.Events
         // ─── Substrate Fragments ───
         public static event Action<int> OnFragmentChanged;
         public static void FragmentChanged(int total) => OnFragmentChanged?.Invoke(total);
-        // Legacy aliases
-        public static event Action<int> OnGoldChanged { add => OnFragmentChanged += value; remove => OnFragmentChanged -= value; }
-        public static void GoldChanged(int total) => FragmentChanged(total);
+        // Legacy alias removed — use OnFragmentChanged directly
 
         // ─── Level/Stage ───
         public static event Action<int, string> OnLevelStarted;

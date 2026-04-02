@@ -114,8 +114,8 @@ namespace Synthborn.Core
                 ? $"\n<color=#FFD700>+{newAchievements} Achievement{(newAchievements > 1 ? "s" : "")}!</color>"
                 : "";
 
-            // Get current map level from PlayerPrefs (set by WorldMapScreen)
-            int mapLevel = PlayerPrefs.GetInt("SelectedLevel", 0);
+            // Get current map level from RunSessionData
+            int mapLevel = Synthborn.Core.Persistence.RunSessionData.SelectedLevel;
             string levelInfo = mapLevel > 0 ? $"Map Level: {mapLevel}\n" : "";
 
             _statsText.text =

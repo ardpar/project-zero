@@ -54,18 +54,15 @@ namespace Synthborn.UI
             });
 
             CreateShopItem("Rejenerasyon Ampul\u00fc", "Deneme ba\u015flang\u0131c\u0131nda %50 HP", 100, () => {
-                PlayerPrefs.SetInt("ShopHealPotion", 1);
-                PlayerPrefs.Save();
+                RunSessionData.ShopHealPotion = true;
             });
 
             CreateShopItem("XP Kataliz\u00f6r", "Sonraki deneme i\u00e7in +%50 XP", 200, () => {
-                PlayerPrefs.SetInt("ShopXPScroll", 1);
-                PlayerPrefs.Save();
+                RunSessionData.ShopXPScroll = true;
             });
 
             CreateShopItem("Olas\u0131l\u0131k Mod\u00fcl\u00fc", "Sonraki deneme i\u00e7in +%25 drop", 250, () => {
-                PlayerPrefs.SetInt("ShopLuckyCoin", 1);
-                PlayerPrefs.Save();
+                RunSessionData.ShopLuckyCoin = true;
             });
         }
 

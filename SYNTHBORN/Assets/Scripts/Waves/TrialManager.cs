@@ -52,7 +52,7 @@ namespace Synthborn.Waves
 
         private void Start()
         {
-            int selectedChamber = PlayerPrefs.GetInt("SelectedChamber", 0);
+            int selectedChamber = Synthborn.Core.Persistence.RunSessionData.SelectedChamber;
 
             // If SelectedChamber is set, use trial system; otherwise fall through to LevelManager
             if (selectedChamber > 0)
