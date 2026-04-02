@@ -12,4 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445cdcd407dff4003bd8edc5d89caf4a, type: 3}
   m_Name: LoreDatabase
   m_EditorClassIdentifier: Assembly-CSharp::Synthborn.Lore.LoreDatabase
-  fragments: []
+  fragments:
+  - {fileID: 11400000, guid: 99b643d0e276e4f24aed8d07271e3597, type: 2}
+  - {fileID: 11400000, guid: e4c91f79f817245f49b55970cfde1782, type: 2}
+  - {fileID: 11400000, guid: 4044caedd31f54d5f9167c41b4ec3df5, type: 2}
+  - {fileID: 11400000, guid: ef57d963750c54654b68b4cb8b14331f, type: 2}
+  - {fileID: 11400000, guid: cca23c09aaf24472ab9fa19e1cd5551f, type: 2}
+  - {fileID: 11400000, guid: 87fe89efb29314bcfbb445cb9262459b, type: 2}
+  - {fileID: 11400000, guid: b9613d6375ea1482bb309765b2b5e0c9, type: 2}
+  - {fileID: 11400000, guid: 6a3bb1bd02a0f4dffb50b55810a9e9e9, type: 2}
+  - {fileID: 11400000, guid: d3fae38a4691240cea5039076a202674, type: 2}
+  - {fileID: 11400000, guid: 33bc41ad4699241deaf0fdf52da63a2e, type: 2}
+  - {fileID: 11400000, guid: 7a453d003b5614d83a80fe5257231582, type: 2}
+  - {fileID: 11400000, guid: aa8823e57a1f942ada16f924de9bc4ac, type: 2}
+  - {fileID: 11400000, guid: 2dae25fc2cc8344aebcaea6647e655c9, type: 2}
+  - {fileID: 11400000, guid: 2495ff3cb0ab541c1b849b2c4bd28bd3, type: 2}
+  - {fileID: 11400000, guid: af39c5bb64a6949ad94cd0d72e819bc3, type: 2}
+  - {fileID: 11400000, guid: 0fa76ca255ed44d0fbaeb918b5a69bd4, type: 2}
+  - {fileID: 11400000, guid: 8a439f2f8ec89443fb87ed6b2048a416, type: 2}
+  - {fileID: 11400000, guid: 64fab11ceed644899ad28e7960ec5452, type: 2}
+  - {fileID: 11400000, guid: 7f5a70c70f5204e688433e5a54eae9a9, type: 2}
+  - {fileID: 11400000, guid: f3972a45ddb644d22873f971f6abcf45, type: 2}

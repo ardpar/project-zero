@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9e8be4904fb4aa59ca1b6aa053dd82, type: 3}
+  m_Name: lore_corruption_02
+  m_EditorClassIdentifier: Assembly-CSharp::Synthborn.Lore.LoreFragment
+  fragmentId: lore_corruption_02
+  title: 'Stabilized Profil: Bilinmeyen'
+  category: 3
+  biome: 4
+  content: "Bu Stabilized'\u0131n \xF6nceki Subject designasyonu bulunamad\u0131.
+    Arena kay\u0131tlar\u0131nda e\u015Fle\u015Fme yok. Daha \xF6nce hi\xE7 kaydedilmemi\u015F
+    bir form. Nas\u0131l?"
+  sortOrder: 2

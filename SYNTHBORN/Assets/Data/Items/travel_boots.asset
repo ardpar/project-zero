@@ -19,7 +19,7 @@ MonoBehaviour:
   <Rarity>k__BackingField: 0
   <HpModifier>k__BackingField: 0
   <DamageModifier>k__BackingField: 0
-  <SpeedModifier>k__BackingField: 0.05
+  <SpeedModifier>k__BackingField: 0.25
   <CritChance>k__BackingField: 0
   <AttackSpeedModifier>k__BackingField: 0
   <ArmorFlat>k__BackingField: 0

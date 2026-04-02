@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9e8be4904fb4aa59ca1b6aa053dd82, type: 3}
+  m_Name: lore_atrium_01
+  m_EditorClassIdentifier: Assembly-CSharp::Synthborn.Lore.LoreFragment
+  fragmentId: lore_atrium_01
+  title: "Operasyon G\xFCnl\xFC\u011F\xFC 001"
+  category: 0
+  biome: 0
+  content: "Giri\u015F protokol\xFC nominal. SUBJECT-FINAL, Substrat profili do\u011Fruland\u0131.
+    Arena sens\xF6rleri aktif. \u0130lk dalga parametreleri y\xFCklendi."
+  sortOrder: 1

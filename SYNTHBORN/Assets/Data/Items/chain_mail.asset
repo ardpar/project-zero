@@ -17,10 +17,10 @@ MonoBehaviour:
   <Description>k__BackingField: Uncommon Armor
   <SlotType>k__BackingField: 1
   <Rarity>k__BackingField: 1
-  <HpModifier>k__BackingField: 0.05
+  <HpModifier>k__BackingField: 0.25
   <DamageModifier>k__BackingField: 0
   <SpeedModifier>k__BackingField: 0
   <CritChance>k__BackingField: 0
   <AttackSpeedModifier>k__BackingField: 0
-  <ArmorFlat>k__BackingField: 8
+  <ArmorFlat>k__BackingField: 40
   <DashCooldownModifier>k__BackingField: 0

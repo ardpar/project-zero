@@ -18,9 +18,9 @@ MonoBehaviour:
   <SlotType>k__BackingField: 2
   <Rarity>k__BackingField: 2
   <HpModifier>k__BackingField: 0
-  <DamageModifier>k__BackingField: 0.2
+  <DamageModifier>k__BackingField: 0.7
   <SpeedModifier>k__BackingField: 0
-  <CritChance>k__BackingField: 0.05
-  <AttackSpeedModifier>k__BackingField: 0.1
+  <CritChance>k__BackingField: 0.175
+  <AttackSpeedModifier>k__BackingField: 0.35
   <ArmorFlat>k__BackingField: 0
   <DashCooldownModifier>k__BackingField: 0

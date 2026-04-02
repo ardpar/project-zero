@@ -17,9 +17,9 @@ MonoBehaviour:
   <Description>k__BackingField: Epic Helmet
   <SlotType>k__BackingField: 0
   <Rarity>k__BackingField: 3
-  <HpModifier>k__BackingField: 0.1
-  <DamageModifier>k__BackingField: 0.05
-  <SpeedModifier>k__BackingField: 0.05
+  <HpModifier>k__BackingField: 0.35
+  <DamageModifier>k__BackingField: 0.175
+  <SpeedModifier>k__BackingField: 0.175
   <CritChance>k__BackingField: 0
   <AttackSpeedModifier>k__BackingField: 0
   <ArmorFlat>k__BackingField: 0

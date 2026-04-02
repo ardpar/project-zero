@@ -17,10 +17,10 @@ MonoBehaviour:
   <Description>k__BackingField: Legendary Boots
   <SlotType>k__BackingField: 4
   <Rarity>k__BackingField: 4
-  <HpModifier>k__BackingField: 0.05
+  <HpModifier>k__BackingField: 0.25
   <DamageModifier>k__BackingField: 0
-  <SpeedModifier>k__BackingField: 0.25
+  <SpeedModifier>k__BackingField: 1.25
   <CritChance>k__BackingField: 0
-  <AttackSpeedModifier>k__BackingField: 0.05
+  <AttackSpeedModifier>k__BackingField: 0.25
   <ArmorFlat>k__BackingField: 0
-  <DashCooldownModifier>k__BackingField: 0.15
+  <DashCooldownModifier>k__BackingField: 0.75

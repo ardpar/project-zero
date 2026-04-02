@@ -17,10 +17,10 @@ MonoBehaviour:
   <Description>k__BackingField: Legendary Armor
   <SlotType>k__BackingField: 1
   <Rarity>k__BackingField: 4
-  <HpModifier>k__BackingField: 0.3
-  <DamageModifier>k__BackingField: 0.05
+  <HpModifier>k__BackingField: 1.5
+  <DamageModifier>k__BackingField: 0.25
   <SpeedModifier>k__BackingField: 0
   <CritChance>k__BackingField: 0
   <AttackSpeedModifier>k__BackingField: 0
-  <ArmorFlat>k__BackingField: 20
-  <DashCooldownModifier>k__BackingField: 0.05
+  <ArmorFlat>k__BackingField: 100
+  <DashCooldownModifier>k__BackingField: 0.25

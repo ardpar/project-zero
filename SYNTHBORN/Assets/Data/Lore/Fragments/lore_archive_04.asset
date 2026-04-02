@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9e8be4904fb4aa59ca1b6aa053dd82, type: 3}
+  m_Name: lore_archive_04
+  m_EditorClassIdentifier: Assembly-CSharp::Synthborn.Lore.LoreFragment
+  fragmentId: lore_archive_04
+  title: "Kurulum \u0130ndeksi"
+  category: 5
+  biome: 2
+  content: "ARENA KURULUM \u0130NDEKS\u0130 \u2014 Toplam tesis say\u0131s\u0131:
+    [S\u0130L\u0130NM\u0130\u015E]. Aktif tesis: 1. Bu kayd\u0131n varl\u0131\u011F\u0131
+    ba\u015Fka tesislerin varl\u0131\u011F\u0131n\u0131 ima eder. Ya da etmez."
+  sortOrder: 4

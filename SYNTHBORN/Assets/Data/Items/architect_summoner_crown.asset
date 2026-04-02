@@ -18,10 +18,10 @@ MonoBehaviour:
     n\xF6ral \xF6r\xFCnt\xFC."
   <SlotType>k__BackingField: 0
   <Rarity>k__BackingField: 4
-  <HpModifier>k__BackingField: 0.15
-  <DamageModifier>k__BackingField: 0.1
+  <HpModifier>k__BackingField: 0.75
+  <DamageModifier>k__BackingField: 0.5
   <SpeedModifier>k__BackingField: 0
-  <CritChance>k__BackingField: 0.05
-  <AttackSpeedModifier>k__BackingField: 0.1
-  <ArmorFlat>k__BackingField: 5
+  <CritChance>k__BackingField: 0.25
+  <AttackSpeedModifier>k__BackingField: 0.5
+  <ArmorFlat>k__BackingField: 25
   <DashCooldownModifier>k__BackingField: 0

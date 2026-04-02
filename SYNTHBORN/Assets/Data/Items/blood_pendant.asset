@@ -17,8 +17,8 @@ MonoBehaviour:
   <Description>k__BackingField: Epic Accessory
   <SlotType>k__BackingField: 5
   <Rarity>k__BackingField: 3
-  <HpModifier>k__BackingField: 0.2
-  <DamageModifier>k__BackingField: 0.15
+  <HpModifier>k__BackingField: 0.7
+  <DamageModifier>k__BackingField: 0.52500004
   <SpeedModifier>k__BackingField: 0
   <CritChance>k__BackingField: 0
   <AttackSpeedModifier>k__BackingField: 0

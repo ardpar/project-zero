@@ -17,10 +17,10 @@ MonoBehaviour:
   <Description>k__BackingField: Uncommon Helmet
   <SlotType>k__BackingField: 0
   <Rarity>k__BackingField: 1
-  <HpModifier>k__BackingField: 0.08
+  <HpModifier>k__BackingField: 0.39999998
   <DamageModifier>k__BackingField: 0
   <SpeedModifier>k__BackingField: 0
   <CritChance>k__BackingField: 0
   <AttackSpeedModifier>k__BackingField: 0
-  <ArmorFlat>k__BackingField: 3
+  <ArmorFlat>k__BackingField: 15
   <DashCooldownModifier>k__BackingField: 0

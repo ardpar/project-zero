@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9e8be4904fb4aa59ca1b6aa053dd82, type: 3}
+  m_Name: lore_archive_01
+  m_EditorClassIdentifier: Assembly-CSharp::Synthborn.Lore.LoreFragment
+  fragmentId: lore_archive_01
+  title: "Operasyon G\xFCnl\xFC\u011F\xFC 099"
+  category: 0
+  biome: 2
+  content: "Ar\u015Fiv katman\u0131 eri\u015Fime kapat\u0131ld\u0131. Mimar'\u0131n
+    ayr\u0131l\u0131\u015F\u0131ndan sonra bak\u0131m yap\u0131lmad\u0131. Toz ve
+    sessizlik. Ama sens\xF6rler hala veri topluyor."
+  sortOrder: 1

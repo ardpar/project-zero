@@ -22,5 +22,5 @@ MonoBehaviour:
   <SpeedModifier>k__BackingField: 0
   <CritChance>k__BackingField: 0
   <AttackSpeedModifier>k__BackingField: 0
-  <ArmorFlat>k__BackingField: 5
+  <ArmorFlat>k__BackingField: 25
   <DashCooldownModifier>k__BackingField: 0

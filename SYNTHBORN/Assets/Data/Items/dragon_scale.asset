@@ -17,10 +17,10 @@ MonoBehaviour:
   <Description>k__BackingField: Epic Armor
   <SlotType>k__BackingField: 1
   <Rarity>k__BackingField: 3
-  <HpModifier>k__BackingField: 0.15
+  <HpModifier>k__BackingField: 0.52500004
   <DamageModifier>k__BackingField: 0
-  <SpeedModifier>k__BackingField: -0.03
+  <SpeedModifier>k__BackingField: -0.105
   <CritChance>k__BackingField: 0
   <AttackSpeedModifier>k__BackingField: 0
-  <ArmorFlat>k__BackingField: 15
+  <ArmorFlat>k__BackingField: 52
   <DashCooldownModifier>k__BackingField: 0

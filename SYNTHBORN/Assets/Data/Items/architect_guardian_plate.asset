@@ -18,10 +18,10 @@ MonoBehaviour:
     kristalize z\u0131rh plakalar\u0131."
   <SlotType>k__BackingField: 1
   <Rarity>k__BackingField: 4
-  <HpModifier>k__BackingField: 0.25
+  <HpModifier>k__BackingField: 1.25
   <DamageModifier>k__BackingField: 0
-  <SpeedModifier>k__BackingField: -0.05
+  <SpeedModifier>k__BackingField: -0.25
   <CritChance>k__BackingField: 0
   <AttackSpeedModifier>k__BackingField: 0
-  <ArmorFlat>k__BackingField: 15
+  <ArmorFlat>k__BackingField: 75
   <DashCooldownModifier>k__BackingField: 0

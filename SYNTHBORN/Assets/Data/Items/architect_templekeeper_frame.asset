@@ -18,10 +18,10 @@ MonoBehaviour:
     hareket \xE7ekirde\u011Fi."
   <SlotType>k__BackingField: 4
   <Rarity>k__BackingField: 4
-  <HpModifier>k__BackingField: 0.1
+  <HpModifier>k__BackingField: 0.5
   <DamageModifier>k__BackingField: 0
-  <SpeedModifier>k__BackingField: 0.2
+  <SpeedModifier>k__BackingField: 1
   <CritChance>k__BackingField: 0
   <AttackSpeedModifier>k__BackingField: 0
-  <ArmorFlat>k__BackingField: 8
+  <ArmorFlat>k__BackingField: 40
   <DashCooldownModifier>k__BackingField: 0

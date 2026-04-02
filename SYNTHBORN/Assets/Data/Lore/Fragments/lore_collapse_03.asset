@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9e8be4904fb4aa59ca1b6aa053dd82, type: 3}
+  m_Name: lore_collapse_03
+  m_EditorClassIdentifier: Assembly-CSharp::Synthborn.Lore.LoreFragment
+  fragmentId: lore_collapse_03
+  title: "Anonim Kay\u0131t"
+  category: 2
+  biome: 3
+  content: "Buray\u0131 daha \xF6nce g\xF6rd\xFCm. Biliyorum g\xF6rd\xFCm. Ama hat\u0131rlam\u0131yorum
+    ne zaman. Bu duvardaki \xE7atlak \u2014 tan\u0131d\u0131k. Bunu kim yazd\u0131?"
+  sortOrder: 3

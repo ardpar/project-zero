@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9e8be4904fb4aa59ca1b6aa053dd82, type: 3}
+  m_Name: lore_atrium_04
+  m_EditorClassIdentifier: Assembly-CSharp::Synthborn.Lore.LoreFragment
+  fragmentId: lore_atrium_04
+  title: "Mimar Ar\u015Fivi: Giri\u015F"
+  category: 1
+  biome: 0
+  content: "'Deney deneycinin varl\u0131\u011F\u0131n\u0131 gerektirir.' \u2014 Kaynak
+    belirsiz. Bu c\xFCmle Atrium'un temel ta\u015F\u0131na kaz\u0131nm\u0131\u015F.
+    Mimar d\xF6neminden kalma."
+  sortOrder: 4

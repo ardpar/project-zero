@@ -20,7 +20,7 @@ MonoBehaviour:
   <HpModifier>k__BackingField: 0
   <DamageModifier>k__BackingField: 0
   <SpeedModifier>k__BackingField: 0
-  <CritChance>k__BackingField: 0.05
+  <CritChance>k__BackingField: 0.25
   <AttackSpeedModifier>k__BackingField: 0
   <ArmorFlat>k__BackingField: 0
   <DashCooldownModifier>k__BackingField: 0

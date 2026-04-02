@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9e8be4904fb4aa59ca1b6aa053dd82, type: 3}
+  m_Name: lore_archive_02
+  m_EditorClassIdentifier: Assembly-CSharp::Synthborn.Lore.LoreFragment
+  fragmentId: lore_archive_02
+  title: "PRIME-SUBSTRATE \xC7\u0131kar\u0131m Kayd\u0131"
+  category: 1
+  biome: 2
+  content: "PRIME-SUBSTRATE buradan \xE7\u0131kar\u0131ld\u0131. Tarih belirsiz.
+    Arena kay\u0131tlar\u0131 bu noktada kesintiye u\u011Fruyor. \xC7\u0131kar\u0131m
+    sonras\u0131 t\xFCm Subject'ler kopyadan t\xFCretildi."
+  sortOrder: 2

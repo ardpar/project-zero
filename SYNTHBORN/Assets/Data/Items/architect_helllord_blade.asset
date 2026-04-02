@@ -18,10 +18,10 @@ MonoBehaviour:
     uzant\u0131s\u0131n\u0131n yeniden kalibre edilmi\u015F formu."
   <SlotType>k__BackingField: 2
   <Rarity>k__BackingField: 4
-  <HpModifier>k__BackingField: -0.1
-  <DamageModifier>k__BackingField: 0.3
+  <HpModifier>k__BackingField: -0.5
+  <DamageModifier>k__BackingField: 1.5
   <SpeedModifier>k__BackingField: 0
-  <CritChance>k__BackingField: 0.08
-  <AttackSpeedModifier>k__BackingField: 0.15
+  <CritChance>k__BackingField: 0.39999998
+  <AttackSpeedModifier>k__BackingField: 0.75
   <ArmorFlat>k__BackingField: 0
   <DashCooldownModifier>k__BackingField: 0

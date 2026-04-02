@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9e8be4904fb4aa59ca1b6aa053dd82, type: 3}
+  m_Name: lore_assay_04
+  m_EditorClassIdentifier: Assembly-CSharp::Synthborn.Lore.LoreFragment
+  fragmentId: lore_assay_04
+  title: 'Stabilized Profil: LACERATE-3'
+  category: 3
+  biome: 1
+  content: "Eski designasyonu: SUBJECT-003. Mutasyon e\u015Fi\u011Fi a\u015F\u0131ld\u0131\u011F\u0131nda
+    stabilize oldu. Art\u0131k sald\u0131rgan, art\u0131k bilin\xE7li de\u011Fil.
+    Arena onu test materyali olarak kullan\u0131yor."
+  sortOrder: 4

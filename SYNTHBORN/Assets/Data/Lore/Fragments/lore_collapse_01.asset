@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9e8be4904fb4aa59ca1b6aa053dd82, type: 3}
+  m_Name: lore_collapse_01
+  m_EditorClassIdentifier: Assembly-CSharp::Synthborn.Lore.LoreFragment
+  fragmentId: lore_collapse_01
+  title: "Biome Raporu: \xC7\xF6k\xFC\u015F"
+  category: 4
+  biome: 3
+  content: "Bu katmanda bir \u015Fey oldu. Arena kay\u0131tlar\u0131 bozuk. Duvarlar
+    \xE7atlam\u0131\u015F, zemin e\u011Frilmi\u015F. Ne oldu\u011Funu Arena bile
+    bilmiyor \u2014 ya da s\xF6ylemiyor."
+  sortOrder: 1
