@@ -18,15 +18,9 @@ MonoBehaviour:
   biomeTint: {r: 0.06, g: 0.08, b: 0.12, a: 1}
   spawnPool:
   - EnemyData: {fileID: 11400000, guid: 15a1741d3e5c14382a1e0961a9a529aa, type: 2}
-    Weight: 2
+    Weight: 5
   - EnemyData: {fileID: 11400000, guid: c240c38597b3e46959b89b20ec0a166b, type: 2}
-    Weight: 1
-  - EnemyData: {fileID: 11400000, guid: 326e3e47008f9428eb5c5df50ddb8673, type: 2}
-    Weight: 2
-  - EnemyData: {fileID: 11400000, guid: a3e16031a3a2e42c9a4b459d13178d23, type: 2}
-    Weight: 1
-  - EnemyData: {fileID: 11400000, guid: f4ade2ae76cd74790b349a6a4b79bc89, type: 2}
-    Weight: 1
+    Weight: 3
   waveCount: 5
   baseSpawnInterval: 1.14
   intervalDecreasePerWave: 0.15
@@ -40,4 +34,5 @@ MonoBehaviour:
   biomeLayer: 0
   pressureRating: 1
   adjacentChambers: 090000000e000000
+  isBossRoom: 0
   pressureMultiplierOverride: 0
