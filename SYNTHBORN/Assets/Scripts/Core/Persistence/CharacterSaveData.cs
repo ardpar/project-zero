@@ -11,6 +11,9 @@ namespace Synthborn.Core.Persistence
     [Serializable]
     public class CharacterSaveData
     {
+        /// <summary>Save format version. Increment when adding/changing fields. Current: 1.</summary>
+        public int saveVersion = 1;
+
         // Identity
         public string characterName = "";
         public int classType; // 0=Warrior, 1=Rogue, 2=Mage, 3=Sentinel

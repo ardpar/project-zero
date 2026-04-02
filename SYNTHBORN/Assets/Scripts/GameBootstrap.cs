@@ -43,6 +43,9 @@ namespace Synthborn.Core
         [SerializeField] private MutationDatabase _mutationDatabase;
         [SerializeField] private SynergyManager _synergyManager;
         [SerializeField] private SpriteCompositor _spriteCompositor;
+        [SerializeField] private StatPointConfig _statPointConfig;
+        [SerializeField] private ItemDatabase _itemDatabase;
+        [SerializeField] private SkillTreeData _skillTreeData;
 
         private void Awake()
         {
@@ -97,11 +100,15 @@ namespace Synthborn.Core
                     }
                 }
 
-                // Apply stat points (MASS=DMG, RESILIENCE=HP, VELOCITY=Speed, VARIANCE=Crit, YIELD=XP via UpgradeManager)
-                float massBonus = character.statPoints[0] * 0.02f; // +2% DMG per point
-                float resBonus = character.statPoints[1] * 0.03f;  // +3% HP per point
-                float velBonus = character.statPoints[2] * 0.02f;  // +2% Speed per point
-                float varBonus = character.statPoints[3] * 0.01f;  // +1% Crit per point
+                // Apply stat points from meta-progression (values from StatPointConfig SO)
+                float massMult = _statPointConfig != null ? _statPointConfig.massMultiplier : 0.02f;
+                float resMult = _statPointConfig != null ? _statPointConfig.resilienceMultiplier : 0.03f;
+                float velMult = _statPointConfig != null ? _statPointConfig.velocityMultiplier : 0.02f;
+                float varMult = _statPointConfig != null ? _statPointConfig.varianceMultiplier : 0.01f;
+                float massBonus = character.statPoints[0] * massMult;
+                float resBonus = character.statPoints[1] * resMult;
+                float velBonus = character.statPoints[2] * velMult;
+                float varBonus = character.statPoints[3] * varMult;
                 stats.ApplyMutation(
                     damageModifier: massBonus,
                     hpModifier: resBonus,
@@ -110,13 +117,11 @@ namespace Synthborn.Core
                 );
 
                 // Apply equipped item stats
-                var itemDB = Resources.Load<ItemDatabase>("ItemDatabase");
-                if (itemDB != null) InventoryManager.SetDatabase(itemDB);
+                if (_itemDatabase != null) InventoryManager.SetDatabase(_itemDatabase);
                 InventoryManager.ApplyEquipmentToStats(stats);
 
                 // Apply skill tree bonuses
-                var skillTree = Resources.Load<SkillTreeData>("SkillTreeData");
-                if (skillTree != null) SkillTreeManager.SetTreeData(skillTree);
+                if (_skillTreeData != null) SkillTreeManager.SetTreeData(_skillTreeData);
                 SkillTreeManager.ApplyToStats(stats);
             }
             else

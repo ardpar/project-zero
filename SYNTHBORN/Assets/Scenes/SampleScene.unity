@@ -17894,6 +17894,9 @@ MonoBehaviour:
   _mutationDatabase: {fileID: 11400000, guid: f865b249c94044db38477a3e0734df8a, type: 2}
   _synergyManager: {fileID: 1553571841}
   _spriteCompositor: {fileID: 1839279973}
+  _statPointConfig: {fileID: 0}
+  _itemDatabase: {fileID: 11400000, guid: dc084e2cb6d0843b79dc3064b102b6c0, type: 2}
+  _skillTreeData: {fileID: 11400000, guid: c972d0569ab4f4b8f972f8eb244b1791, type: 2}
 --- !u!114 &1553571840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17923,10 +17926,26 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1af5ac31a554d425fa4b7c643de13f55, type: 2}
   - {fileID: 11400000, guid: cc328fa16dd0f45e994928ffc255863b, type: 2}
   - {fileID: 11400000, guid: e27469da3dbc14b77b8c2f031bd0bf05, type: 2}
+  - {fileID: 11400000, guid: cfff2582b55634f408f2ff9c5f5ee6e0, type: 2}
+  - {fileID: 11400000, guid: 4babaf2b14a8e41f4952fd7b58aa6a51, type: 2}
   - {fileID: 11400000, guid: 4bbda241f1ea64e07b0d8706c78528af, type: 2}
   - {fileID: 11400000, guid: ede0d4dbdec034daaaea10ba32a39929, type: 2}
+  - {fileID: 11400000, guid: 023eb17169c6149da9038ba486ec6220, type: 2}
+  - {fileID: 11400000, guid: 64a55b5d5c8e54187b2b0e8cffafeeb7, type: 2}
+  - {fileID: 11400000, guid: fab1a240470be48d5981891ac6c08ae8, type: 2}
+  - {fileID: 11400000, guid: d55e0b6a997f546d789d64a7ab242aab, type: 2}
   - {fileID: 11400000, guid: 95f3413552570488fbacbf47d6684771, type: 2}
+  - {fileID: 11400000, guid: 26b46bd60039748cbb538db63c2bb840, type: 2}
+  - {fileID: 11400000, guid: 8b151f6f12c084ebeb9b6a42482aa92d, type: 2}
   - {fileID: 11400000, guid: 6ffbee6cb856c4cd6b44cb206dd64461, type: 2}
+  - {fileID: 11400000, guid: 111a89e3545384898b563fe90aaca6a5, type: 2}
+  - {fileID: 11400000, guid: 5c466145243854964b8b9d06dd0eb963, type: 2}
+  - {fileID: 11400000, guid: bd7bf6ea270a54b2ba732a14cace4172, type: 2}
+  - {fileID: 11400000, guid: 9f2cf86dd22e24f7e90021c8c9b1020c, type: 2}
+  - {fileID: 11400000, guid: 97aabaf604ec84b84b38f5d775fbd3af, type: 2}
+  - {fileID: 11400000, guid: 09984c5e9589446478562b191b7be026, type: 2}
+  - {fileID: 11400000, guid: c2b9b94efc8dd4dce9d8b45c035c07a4, type: 2}
+  - {fileID: 11400000, guid: bd7da7e65f82649509af77fc01e69d96, type: 2}
 --- !u!114 &1553571842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18088,6 +18107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LootDropper
   _itemDatabase: {fileID: 11400000, guid: dc084e2cb6d0843b79dc3064b102b6c0, type: 2}
+  _lootConfig: {fileID: 0}
 --- !u!114 &1553571851
 MonoBehaviour:
   m_ObjectHideFlags: 0

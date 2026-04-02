@@ -9,6 +9,9 @@ namespace Synthborn.Core.Persistence
     [Serializable]
     public class SaveData
     {
+        /// <summary>Save format version. Increment when adding/changing fields. Current: 1.</summary>
+        public int saveVersion = 1;
+
         public int totalCells;
         public List<string> unlockedMutationIds = new();
         public int totalRuns;

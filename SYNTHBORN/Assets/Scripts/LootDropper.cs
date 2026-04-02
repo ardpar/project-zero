@@ -13,6 +13,7 @@ using Synthborn.Waves;
 public class LootDropper : MonoBehaviour
 {
     [SerializeField] private ItemDatabase _itemDatabase;
+    [SerializeField] private LootConfig _lootConfig;
 
     private readonly System.Collections.Generic.List<string> _runLoot = new();
     private TrialManager _trialManager;
@@ -53,18 +54,22 @@ public class LootDropper : MonoBehaviour
 
         ItemData droppedItem = null;
 
+        float normalChance = _lootConfig != null ? _lootConfig.normalDropChance : 0.05f;
+        float eliteChance = _lootConfig != null ? _lootConfig.eliteDropChance : 0.30f;
+        float eliteUpgrade = _lootConfig != null ? _lootConfig.eliteRarityUpgradeThreshold : 0.3f;
+
         switch (tierIndex)
         {
-            case 0: // Normal — base 5% chance, pressure-boosted
-                if (Random.value < 0.05f * (1f + pressureBoost))
+            case 0: // Normal
+                if (Random.value < normalChance * (1f + pressureBoost))
                     droppedItem = GetRandomItemOfMinRarity(ItemRarity.Baseline);
                 break;
-            case 1: // Elite — base 30%, pressure-boosted
-                if (Random.value < 0.30f * (1f + pressureBoost))
+            case 1: // Elite
+                if (Random.value < eliteChance * (1f + pressureBoost))
                     droppedItem = GetRandomItemOfMinRarity(
-                        pressureBoost >= 0.3f ? ItemRarity.Reinforced : ItemRarity.Calibrated);
+                        pressureBoost >= eliteUpgrade ? ItemRarity.Reinforced : ItemRarity.Calibrated);
                 break;
-            case 2: // Stabilized (Boss) — guaranteed, rarity scales with pressure
+            case 2: // Stabilized (Boss) — guaranteed
                 droppedItem = GetStabilizedLoot(currentLevel, pressureBoost);
                 break;
         }
@@ -92,17 +97,23 @@ public class LootDropper : MonoBehaviour
         ItemRarity minRarity;
         float roll = Random.value;
 
-        float legendaryThreshold = 0.10f + pressureBoost * 0.5f;
-        float epicThreshold = 0.30f + pressureBoost * 0.3f;
+        float legBase = _lootConfig != null ? _lootConfig.legendaryBaseThreshold : 0.10f;
+        float legScale = _lootConfig != null ? _lootConfig.legendaryPressureScale : 0.5f;
+        float epicBase = _lootConfig != null ? _lootConfig.epicBaseThreshold : 0.30f;
+        float epicScale = _lootConfig != null ? _lootConfig.epicPressureScale : 0.3f;
+        int legMinLvl = _lootConfig != null ? _lootConfig.legendaryMinLevel : 8;
+        int epicMinLvl = _lootConfig != null ? _lootConfig.epicMinLevel : 4;
 
-        if (level >= 8 && roll < legendaryThreshold)
+        float legendaryThreshold = legBase + pressureBoost * legScale;
+        float epicThreshold = epicBase + pressureBoost * epicScale;
+
+        if (level >= legMinLvl && roll < legendaryThreshold)
         {
-            // Try boss-specific Architect-Grade item first
             var bossItem = GetBossSpecificItem();
             if (bossItem != null) return bossItem;
             minRarity = ItemRarity.ArchitectGrade;
         }
-        else if (level >= 4 && roll < epicThreshold)
+        else if (level >= epicMinLvl && roll < epicThreshold)
             minRarity = ItemRarity.Anomalous;
         else
             minRarity = ItemRarity.Reinforced;
