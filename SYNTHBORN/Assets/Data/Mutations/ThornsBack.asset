@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0042a8f9b4cfc4bde991d4c9d86afd7e, type: 3}
+  m_Name: ThornsBack
+  m_EditorClassIdentifier: Synthborn.Mutations::Synthborn.Mutations.MutationData
+  id: ThornsBack
+  displayName: "Diken S\u0131rt\u0131"
+  description: "S\u0131rtta dikenler \xE7\u0131kar. Temas hasar\u0131 d\xFC\u015Fmanlar\u0131
+    zedeler."
+  category: 0
+  slot: 3
+  rarity: 0
+  speedModifier: 0
+  dashCooldownModifier: 0
+  hpModifier: 0
+  armorFlat: 3
+  damageModifier: 0.05
+  critChance: 0
+  critMultiplierBonus: 0
+  attackSpeedModifier: 0
+  synergyTags:
+  - thorns
+  - defense
+  - back
+  slotSprite: {fileID: 0}
+  icon: {fileID: 0}

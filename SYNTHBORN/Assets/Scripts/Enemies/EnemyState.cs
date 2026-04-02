@@ -27,6 +27,12 @@ namespace Synthborn.Enemies
         /// <summary>Summoner only: stationary, spawning minions.</summary>
         Summoning = 7,
 
+        /// <summary>Shielder: blocking, shield raised toward player.</summary>
+        Shielding = 8,
+
+        /// <summary>Teleporter: blinking to a new position.</summary>
+        Teleporting = 9,
+
         /// <summary>Entity is dead: collider disabled, pooled return pending.</summary>
         Dead      = 4,
     }

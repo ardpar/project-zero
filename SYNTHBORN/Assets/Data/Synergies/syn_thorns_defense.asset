@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 244cc6d6eed2648dda788b967f54aaef, type: 3}
+  m_Name: syn_thorns_defense
+  m_EditorClassIdentifier: Synthborn.Mutations::Synthborn.Mutations.SynergyData
+  id: syn_thorns_defense
+  displayName: Demir Diken
+  description: "Thorns + Defense: Temas hasar\u0131 ve z\u0131rh birlikte g\xFC\xE7lenir."
+  requiredTags:
+  - thorns
+  - defense
+  speedModifier: 0
+  dashCooldownModifier: 0
+  hpModifier: 0
+  armorFlat: 10
+  damageModifier: 0.1
+  critChance: 0
+  critMultiplierBonus: 0
+  attackSpeedModifier: 0

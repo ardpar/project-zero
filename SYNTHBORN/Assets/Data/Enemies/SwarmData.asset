@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1654155fc91f4616aaf3462eb1bf7e0, type: 3}
+  m_Name: SwarmData
+  m_EditorClassIdentifier: Synthborn.Enemies::Synthborn.Enemies.EnemyData
+  <Id>k__BackingField: swarm
+  <Tier>k__BackingField: 0
+  <BaseHp>k__BackingField: 5
+  <ContactDamage>k__BackingField: 2
+  <MoveSpeed>k__BackingField: 3.5
+  <SpeedScalePerWave>k__BackingField: 0.04
+  <HitboxRadius>k__BackingField: 0.2
+  <BaseXp>k__BackingField: 1
+  <HpDropChance>k__BackingField: 0.02
+  <DeathVfx>k__BackingField: {fileID: 0}
+  <DeathSfx>k__BackingField: {fileID: 0}
